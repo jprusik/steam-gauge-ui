@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,6 +10,26 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,chrome=1" />
+    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="description" content="%REACT_APP_NAME% allows you to get a customizable summary of your Steam account, including game values, install sizes, and play time." />
+    <meta name="keywords" content="Steam, Steam profile, Steam calculator, steam stats, Steam games, steam account, steam tables, steam profile size, steam account value, steam play time, steam friends, steam friends games in common" />
+    <meta name="author" content="%REACT_APP_AUTHOR_NAME%" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="%REACT_APP_AUTHOR_HANDLE%" />
+    <meta name="twitter:creator" content="%REACT_APP_AUTHOR_HANDLE%" />
+    <meta name="twitter:title" content="%REACT_APP_NAME% | Get the value and size of your Steam account" />
+    <meta name="twitter:description" content="%REACT_APP_NAME% allows you to get a customizable summary of your Steam account, including game values, install sizes, and play time." />
+    <meta name="twitter:image:src" content="%PUBLIC_URL%/favicon-large.png" />
+    <meta name="twitter:domain" content="%REACT_APP_PRETTY_DOMAIN_URL%" />
+    <meta property="og:site_name" content="%REACT_APP_NAME%" />
+    <meta property="og:title" content="%REACT_APP_NAME% | Get the value and size of your Steam account" />
+    <meta property="og:url" content=%PUBLIC_URL% />
+    <meta property="og:description" content="%REACT_APP_NAME% allows you to get a customizable summary of your Steam account, including game values, install sizes, and play time." />
+    <meta property="og:image" content="%PUBLIC_URL%/favicon-large.png" />
+
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -19,7 +39,13 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>%REACT_APP_NAME%</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   </head>
   <body>
     <noscript>
