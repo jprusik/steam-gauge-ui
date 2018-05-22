@@ -1,0 +1,22 @@
+@import '../styles/index';
+
+.content-main {
+  margin: 0px auto 20px auto;
+  width: 100%;
+  max-width: 640px;
+
+  line-height: 1.5em;
+  margin: 5% auto;
+  width: 640px;
+
+  p,
+  ul li {
+    color: #b0aeac;
+  }
+  h2 {
+    text-align: center;
+  }
+  li {
+    margin: 1em 0px;
+  }
+}

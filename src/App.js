@@ -1,21 +1,32 @@
-import React, { Component } from 'react';
-import logo from './assets/logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import MetaTags from 'react-meta-tags';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+import AppHead from './components/appHead';
+import AppBody from './components/appBody';
+import AppFoot from './components/appFoot';
+
+const App = () => (
+  <Router>
+    <div>
+      <MetaTags>
+        {
+        // global meta tags here
+        // TODO: clean up these metatags and reference static asset paths
+        // these lines prevent the site from being indexed
+        process.env.REACT_APP_DISABLE_INDEXING_P &&
+          <React.Fragment>
+            <meta name="robots" content="noindex, nofollow" />
+            <meta name="googlebot" content="noindex" />
+          </React.Fragment>
+        }
+      </MetaTags>
+      <AppHead />
+      <AppBody />
+      {/* TODO: App & Search Loader  */}
+      <AppFoot />
+    </div>
+  </Router>
+);
 
 export default App;
