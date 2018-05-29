@@ -1,8 +1,7 @@
-@import "colors";
 @import "custom";
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+@media (min-width: 1420px) {
+  .container {
+    width: 1420px;
+  }
 }

@@ -20,28 +20,6 @@
 .text-centered {
   text-align: center; }
 
-.site-info {
-  max-width: 640px;
-  padding: 5px 0;
-  margin: 0 auto;
-  color: #B0AEAC;
-  font-size: 0.7em;
-  text-align: center;
-  clear: both; }
-
-.debug-box {
-  width: 80%;
-  max-width: 420px;
-  margin: 10px auto;
-  color: white;
-  background: none;
-  line-height: 1em;
-  font-size: 0.7em;
-  border: 1px solid #EEEEEE;
-  border-radius: 4px;
-  padding: 9.5px;
-  font-family: 'Menlo','Monaco','Consolas','Courier New',monospace; }
-
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -53,66 +31,15 @@ body {
   margin-bottom: 140px;
   color: #9d9d9d; }
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  /*height: 60px;*/
-  /*background-color: #f5f5f5;*/ }
-
 .container .text-muted {
   margin: 20px 0; }
 
 /* Bootstrap overrides
 -------------------------------------------------- */
-body {
-  padding-top: 70px;
-  padding-bottom: 30px;
-  background-color: #1b2838;
-  font-size: 16px; }
 
 .modal {
   color: #3d3d3d;
   padding: 0; }
-
-.navbar-inverse,
-.footer-inverse {
-  font-size: 14px;
-  background-color: #171a21;
-  border-color: #080808;
-  background-image: none; }
-
-.navbar-inverse {
-  color: #b8b6b4;
-  text-transform: uppercase; }
-
-.navbar-inverse .navbar-brand {
-  color: #eee;
-  text-shadow: #2a2a2a 1px 1px 0px !important;
-  font-family: Impact,Arial,sans-serif;
-  letter-spacing: 1px;
-  font-size: 28px; }
-
-.steam-logout .btn-primary,
-.steam-login .btn-primary {
-  text-transform: capitalize;
-  background-color: transparent;
-  background-image: none;
-  border-color: #9d9d9d;
-  color: #9d9d9d; }
-
-.steam-logout .btn-primary:hover,
-.steam-login .btn-primary:hover {
-  border-color: #FFFFFF;
-  color: #FFFFFF; }
-
-.steam-logout .btn-primary:active,
-.steam-login .btn-primary:active {
-  background-color: transparent; }
-
-.navbar-inverse .navbar-collapse > ul.navbar-nav > li.dropdown {
-  display: none; }
 
 .jumbotron {
   background: rgba(0, 0, 0, 0.2);
@@ -196,12 +123,3 @@ body {
 
 .table-hover > tbody > tr:hover {
   background-color: #444444; }
-
-@media (min-width: 1420px) {
-  .container {
-    width: 1420px; } }
-
-@media (max-width: 767px) {
-  .steam-logout .btn-group,
-  .steam-login .btn-group {
-    padding-left: 15px; } }

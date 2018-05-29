@@ -7,16 +7,16 @@ const HomePage = () => {
   return (
     <div id="content-main" style={{ margin: '5% auto', width: '90%', maxWidth: '640px' }}>
       <div style={{ margin: '35px auto', textAlign: 'center' }}>
-        <h1 style={{ color: '#EEEEEE', letterSpacing: '2px', fontFamily: 'Impact,Arial,sans-serif', textTransform: 'uppercase' }}><i class="fa fa-dashboard" style={{ fontSize: '1.25em' }}></i> {process.env.REACT_APP_NAME}</h1>
-        <p class="italic">Get the value and size of your Steam account</p>
+        <h1 style={{ color: '#EEEEEE', letterSpacing: '2px', fontFamily: 'Impact,Arial,sans-serif', textTransform: 'uppercase' }}><i className="fa fa-dashboard" style={{ fontSize: '1.25em' }}></i> {process.env.REACT_APP_NAME}</h1>
+        <p className="italic">Get the value and size of your Steam account</p>
       </div>
-      <form class="account-search-form open-modal-form" action="./account" method="get" title="Account Search">
-        <label for="basic-url" style={{ fontSize: '11px' }}>Your Steam profile URL:</label>
-        <div class="input-group">
-          <span class="input-group-addon steam-profile-url" style={{ padding: '6px', fontSize: '12px', color: 'grey', borderWidth: 0, borderRight: '1px solid #CCCCCC' }}>https://steamcommunity.com/id/</span>
-          <input type="text" class="form-control url-text" id="basic-url" style={{ borderColor: '#FFFFFF' }} name="username" placeholder="username or id" />
-          <span class="input-group-btn">
-            <button class="btn btn-default search-submit" type="submit"><i class="fa fa-search fa-fw"></i></button>
+      <form className="account-search-form open-modal-form" action="./account" method="get" title="Account Search">
+        <label htmlFor="basic-url" style={{ fontSize: '11px' }}>Your Steam profile URL:</label>
+        <div className="input-group">
+          <span className="input-group-addon steam-profile-url" style={{ padding: '6px', fontSize: '12px', color: 'grey', borderWidth: 0, borderRight: '1px solid #CCCCCC' }}>https://steamcommunity.com/id/</span>
+          <input type="text" className="form-control url-text" id="basic-url" style={{ borderColor: '#FFFFFF' }} name="username" placeholder="username or id" />
+          <span className="input-group-btn">
+            <button className="btn btn-default search-submit" type="submit"><i className="fa fa-search fa-fw"></i></button>
           </span>
         </div>
       </form>

@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import './appFoot.scss';
 
 const AppFoot = () => {
   return (
     <footer className="footer footer-inverse">
       <div className="container">
-        <div classNameName="text-muted">
+        <div className="text-muted">
           <div style={{ textAlign: "center", width: "100%" }}>
             <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/privacy">Privacy</Link>
           </div>
