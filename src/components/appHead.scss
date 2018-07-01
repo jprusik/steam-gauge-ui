@@ -14,31 +14,45 @@
     font-size: 28px;
   }
 
-  .navbar-collapse > ul.navbar-nav > li.dropdown {
-    display: none;
-  }
-
-  .steam-logout,
-  .steam-login {
-    .btn-primary {
-      text-transform: capitalize;
-      background-color: transparent;
-      background-image: none;
-      border-color: #9d9d9d;
-      color: #9d9d9d;
-
-      &:hover {
-        border-color: #ffffff;
-        color: #ffffff;
+  .navbar-collapse {
+    .navbar-nav {
+      .dropdown {
+        display: none;
       }
 
-      &:active {
-        background-color: transparent;
+      .steam-account {
+        a {
+          color: #8bb9e0;
+
+          &:hover {
+            color: #FFFFFF;
+          }
+        }
       }
-    }
-    @media screen and (max-width: 767px) {
-      .btn-group {
-        padding-left: 15px;
+
+      .steam-logout,
+      .steam-login {
+        .btn-primary {
+          text-transform: capitalize;
+          background-color: transparent;
+          background-image: none;
+          border-color: #9d9d9d;
+          color: #9d9d9d;
+
+          &:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+          }
+
+          &:active {
+            background-color: transparent;
+          }
+        }
+        @media screen and (max-width: 767px) {
+          .btn-group {
+            padding-left: 15px;
+          }
+        }
       }
     }
   }

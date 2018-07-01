@@ -9,7 +9,7 @@ import PrivacyPage from '../pages/privacy';
 import ReceiptPage from '../pages/receipt';
 
 const urlRedirect = (url) => {
-  return () => window.location = url;
+  return () => { window.location = url };
 }
 
 const AppBody = () => {
@@ -18,7 +18,7 @@ const AppBody = () => {
   return (
     <div className="container" role="main">
       <Route exact path="/" component={ HomePage } />
-      <Route path="/account" component={ AccountPage } />
+      <Route path="/account/:id" component={ AccountPage } />
       <Route path="/about" component={ AboutPage } />
       <Route path="/privacy" component={ PrivacyPage } />
       <Route path="/receipt" component={ ReceiptPage } />

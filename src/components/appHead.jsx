@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import UserNavItems from './userNavItems'
 import './appHead.scss';
 
-const AppHead = (loginStatus) => {
+const AppHead = ({ user }) => {
   return (
     <nav className="navbar navbar-inverse navbar-fixed-top">
       <div className="container">
@@ -26,14 +27,7 @@ const AppHead = (loginStatus) => {
             <li>
               <Link to="/receipt"><i className="fa fa-file-o" style={{marginRight: '0.5em'}}></i>Receipt</Link>
             </li>
-            <li className="steam-login">
-              <div className="btn-group">
-                {
-                  (!loginStatus.user || !loginStatus.user.account_id) &&
-                  <Link to="/login" className="btn btn-primary btn-sm navbar-btn">Log in</Link>
-                }
-              </div>
-            </li>
+            <UserNavItems user={user} />
           </ul>
         </div>
       </div>
