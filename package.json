@@ -2,6 +2,20 @@
   "name": "steam-gauge-react",
   "version": "0.1.0",
   "private": true,
+  "proxy": {
+    "/authorize": {
+      "target": "http://localhost:5000"
+    },
+    "/current_user": {
+      "target": "http://localhost:5000"
+    },
+    "/logout": {
+      "target": "http://localhost:5000"
+    },
+    "/api": {
+      "target": "http://localhost:5000"
+    }
+  },
   "dependencies": {
     "node-sass": "^4.9.0",
     "node-sass-chokidar": "^1.3.0",
