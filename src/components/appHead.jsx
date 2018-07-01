@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './appHead.scss';
 
-const AppHead = () => {
+const AppHead = (loginStatus) => {
   return (
     <nav className="navbar navbar-inverse navbar-fixed-top">
       <div className="container">
@@ -28,7 +28,10 @@ const AppHead = () => {
             </li>
             <li className="steam-login">
               <div className="btn-group">
-                <Link to="/login" className="btn btn-primary btn-sm navbar-btn">Log in</Link>
+                {
+                  (!loginStatus.user || !loginStatus.user.account_id) &&
+                  <Link to="/login" className="btn btn-primary btn-sm navbar-btn">Log in</Link>
+                }
               </div>
             </li>
           </ul>
