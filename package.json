@@ -1,6 +1,19 @@
 {
-  "name": "steam-gauge-react",
+  "name": "steam-gauge-ui",
   "version": "0.1.0",
+  "description": "Steam Gauge allows you to get a customizable summary of your Steam account, including game values, install sizes, and play time.",
+  "keywords": ["Steam", "Steam profile", "Steam calculator", "steam stats", "Steam games", "steam account", "steam tables", "steam profile size", "steam account value", "steam play time", "steam friends", "steam friends games in common"],
+  "homepage": "https://mysteamgauge.com",
+  "bugs": "mailto:jon@mysteamgauge.com",
+  "author": {
+    "name": "Jonathan Prusik",
+    "email": "jprusik@classynemesis.com",
+    "url": "https://jonathanprusik.com"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
   "private": true,
   "proxy": {
     "/authorize": {
