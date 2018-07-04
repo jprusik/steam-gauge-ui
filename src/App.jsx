@@ -28,6 +28,8 @@ class App extends Component {
   }
 
   render() {
+    const user = this.state.user;
+
     return (
       <Router>
         <div>
@@ -43,8 +45,8 @@ class App extends Component {
               </React.Fragment>
             }
           </MetaTags>
-          <AppHead user={this.state.user} />
-          <AppBody />
+          <AppHead user={user} />
+          <AppBody {...this.state} />
           {/* TODO: App & Search Loader  */}
           <AppFoot />
         </div>

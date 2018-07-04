@@ -9,7 +9,8 @@ import PrivacyPage from '../pages/privacy';
 import ReceiptPage from '../pages/receipt';
 
 const urlRedirect = (url) => {
-  return () => { window.location = url };
+    window.location = url;
+    return null;
 }
 
 const RouteWithComponentProps = ({ component: Component, componentProps, ...routeProps }) => (
@@ -26,7 +27,7 @@ const AppBody = ({ user }) => {
       <Route path="/about" component={ AboutPage } />
       <Route path="/privacy" component={ PrivacyPage } />
       <Route path="/receipt" component={ ReceiptPage } />
-      <Route path="/login" component={ urlRedirect(loginUrl) }/>
+      <Route path="/login" render={ () => urlRedirect(loginUrl) }/>
     </div>
   );
 }

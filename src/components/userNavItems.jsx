@@ -11,7 +11,7 @@ function accountLink(id) {
 
 function logoutLink() {
   return (
-    <li key="login" className="steam-logout">
+    <li key="logout" className="steam-logout">
       <div className="btn-group">
         {/* Must be an anchor for the request to get proxied */}
         <a href="/logout" className="btn btn-primary btn-sm navbar-btn">Log out</a>
