@@ -12,12 +12,16 @@ const urlRedirect = (url) => {
   return () => { window.location = url };
 }
 
-const AppBody = () => {
+const RouteWithComponentProps = ({ component: Component, componentProps, ...routeProps }) => (
+    <Route {...routeProps} render={() => <Component {...componentProps} />} />
+);
+
+const AppBody = ({ user }) => {
   const loginUrl = process.env.REACT_APP_OPEN_ID_URL
 
   return (
     <div className="container" role="main">
-      <Route exact path="/" component={ HomePage } />
+      <RouteWithComponentProps exact path="/" component={ HomePage } componentProps={ { user } } />
       <Route path="/account/:id" component={ AccountPage } />
       <Route path="/about" component={ AboutPage } />
       <Route path="/privacy" component={ PrivacyPage } />
