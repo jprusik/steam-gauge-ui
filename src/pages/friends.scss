@@ -1,0 +1,46 @@
+@import "../styles/index";
+
+.jumbotron {
+  a {
+    color: #8bb9e0;
+  }
+
+  .useravatar {
+    height: 70px;
+    width: auto;
+    display: inline-block;
+    padding-right: 15px;
+  }
+
+  .userhead {
+    color: #eeeeee;
+    display: inline-block;
+    vertical-align: bottom;
+    min-height: 70px;
+    margin: 0;
+    width: 100%;
+    max-width: 930px;
+  }
+
+  .row {
+    min-height: 2em;
+
+    &:first-child {
+      margin-top: 15px;
+    }
+
+    .app-title {
+      font-style: italic;
+    }
+
+    .custom-share {
+      &.twitter {
+        color: #0094c2;
+      }
+
+      &.google-plus {
+        color: #d94f30;
+      }
+    }
+  }
+}

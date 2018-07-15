@@ -4,6 +4,7 @@ import './appBody.scss';
 
 import HomePage from '../pages/home';
 import AccountPage from '../pages/account';
+import FriendsPage from '../pages/friends';
 import AboutPage from '../pages/about';
 import PrivacyPage from '../pages/privacy';
 import ReceiptPage from '../pages/receipt';
@@ -24,6 +25,7 @@ const AppBody = ({ user }) => {
     <div className="container" role="main">
       <RouteWithComponentProps exact path="/" component={ HomePage } componentProps={ { user } } />
       <Route path="/account/:id" component={ AccountPage } />
+      <Route path="/friends/:id" component={ FriendsPage } />
       <Route path="/about" component={ AboutPage } />
       <Route path="/privacy" component={ PrivacyPage } />
       <Route path="/receipt" component={ ReceiptPage } />

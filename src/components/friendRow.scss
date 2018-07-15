@@ -1,0 +1,79 @@
+@import "../styles/index";
+
+.friend-entry {
+  padding: 1em 0;
+  margin-right: 0;
+  margin-left: 0;
+  font-size: 0.75em;
+
+  &:nth-child(odd) {
+    background-color: #3d3d3d;
+  }
+
+  &:nth-child(even) {
+    background-color: #333333;
+  }
+
+  .friend-avatar {
+  }
+
+  .friend-persona {
+    font-size: 1.5em;
+  }
+
+  .friend-id {
+  }
+
+  .friend-status {
+    i {
+      padding-right: 0.5em;
+
+      &.fa-ban {
+        color: #ff6c00;
+      }
+      &.fa-circle {
+        color: green;
+      }
+      &.fa-adjust {
+        color: #ffd100;
+      }
+      &.fa-question-sign {
+        color: gray;
+      }
+    }
+
+    .friend-current-game {
+      font-weight: bold;
+      line-height: 1.5em;
+    }
+  }
+  .friend-most-played {
+    .most-common-description {
+      font-weight: bold;
+      line-height: 1.5em;
+    }
+
+    .app-title {
+      font-style: italic;
+    }
+  }
+  .friend-message {
+    .fa-comment {
+      text-decoration: none;
+      padding-right: 0.5em;
+    }
+  }
+
+  .friend-game-list {
+    margin: 0;
+    padding: 0 1em;
+    border: 0 solid gray;
+    border-left: 1px solid #eee;
+    border-radius: 5px;
+    line-height: 2em;
+    list-style: none;
+
+    .friend-gamerow {
+    }
+  }
+}
