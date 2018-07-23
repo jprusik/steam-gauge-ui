@@ -21,7 +21,8 @@ class FriendsPage extends Component {
     super(props);
     this.state = {
       'searchedUser': {},
-      'friendList': []
+      'friendList': [],
+      'friendListBuilt': false
     }
   }
 
@@ -75,7 +76,8 @@ class FriendsPage extends Component {
 
       return updatedData;
     })
-    .then(data => this.setState({ 'friendList': data }));
+    .then(data => this.setState({ 'friendList': data }))
+    .then(()=> this.setState({ 'friendListBuilt': true }));
   }
 
   render() {
@@ -111,7 +113,7 @@ class FriendsPage extends Component {
           </div>
         </div>
       </div>,
-      friendRows(this.state.friendList, this.state.searchedUser)
+      this.state.friendListBuilt && friendRows(this.state.friendList, this.state.searchedUser)
     ];
   };
 };
