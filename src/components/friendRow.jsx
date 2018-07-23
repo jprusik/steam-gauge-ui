@@ -2,20 +2,31 @@ import React from 'react';
 
 import './friendRow.scss';
 
+const friendSteamLoginStatus = (personastate) => {
+  // TODO: Move to shared constants
+  const personaStateMap = {
+    '0': {'name': 'Offline', 'class': 'ban'},
+    '1': {'name': 'Online', 'class': 'circle'},
+    '2': {'name': 'Busy', 'class': 'adjust'},
+    '3': {'name': 'Away', 'class': 'adjust'},
+    '4': {'name': 'on Snooze', 'class': 'adjust'},
+    '5': {'name': 'looking to trade', 'class': 'adjust'},
+    '6': {'name': 'looking to play', 'class': 'adjust'}
+  }
+
+  const stateText = personaStateMap[personastate].name;
+  const stateClass = personaStateMap[personastate].class;
+
+  return (
+    <div className="friend-status">
+      <span className="friend-current-game">This user is currently:</span>
+      <br/>
+      <i className={`fa fa-${stateClass}`}></i>{stateText}
+    </div>
+  )
+};
+
 const FriendRow = ({ friendData, searchUserData }) => {
-  const userSteamLoginStatus = () => {
-    const stateText = 'Unknown';
-    const stateClass = 'adjust';
-
-    return (
-      <div className="friend-status">
-        <span className="friend-current-game">This user is currently:</span>
-        <br/>
-        <i className={`fa fa-${stateClass}`}></i>{stateText}
-      </div>
-    )
-  };
-
   const commonApps = friendData.apps || [];
   const mostCommonPlayed = { 'name': 'App Name', 'playTimeHours': 0.0 };
 
@@ -39,7 +50,7 @@ const FriendRow = ({ friendData, searchUserData }) => {
         <a className="friend-id" href={friendData.profileurl} target="_blank" rel="noopener noreferrer">{friendData.steamid}</a>
         <br/>
         <br/>
-        { userSteamLoginStatus() }
+        { friendSteamLoginStatus(friendData.personastate) }
         <br/>
         <div className="friend-most-played">
           <span className="most-common-description">Most played common game:</span>
