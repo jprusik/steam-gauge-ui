@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 import './friendRow.scss';
 
@@ -27,12 +28,12 @@ const friendSteamLoginStatus = (personastate) => {
 };
 
 const FriendRow = ({ friendData, searchUserData }) => {
-  const commonApps = friendData.apps || [];
+  const commonApps = _.get(friendData, 'apps.games', []);;
   const mostCommonPlayed = { 'name': 'App Name', 'playTimeHours': 0.0 };
 
   const appRow = (apps) => {
     if (apps.length > 0) {
-      return apps.map(app => <li className="friend-gamerow">app.name</li>);
+      return apps.map(app => <li key={app.appid} className="friend-gamerow">{app.name}</li>);
     }
     return <li>This user has no multiplayer games in common with { searchUserData.personaname }</li>
   }
