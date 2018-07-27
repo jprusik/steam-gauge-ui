@@ -13,7 +13,8 @@ const buildFriendList = (friends) => {
 };
 
 const friendRows = (friends, searchUser) => {
-  return friends.map(friend => <FriendRow key={friend.steamid} friendData={friend} searchUserData={searchUser} />);
+  const orderedFriends = _.orderBy(friends, 'steamid');
+  return orderedFriends.map(friend => <FriendRow key={friend.steamid} friendData={friend} searchUserData={searchUser} />);
 }
 
 class FriendsPage extends Component {
@@ -27,9 +28,9 @@ class FriendsPage extends Component {
   }
 
   componentDidMount() {
+    // TODO: if the searched user matches logged in user, use logged in user object instead of querying a new one
     const searchedAccountId = this.props.match.params.id;
 
-    // TODO: if the searched user matches logged in user, use logged in user object instead of querying a new one
     // Get data for user searched
     fetchAccountDetails(searchedAccountId)
     .then(data => {
@@ -49,34 +50,29 @@ class FriendsPage extends Component {
     fetchFriendsList(searchedAccountId)
     .then(data => {
       const friendList = _.get(data, 'data.friendslist.friends', []);
-      const friendIds = buildFriendList(friendList);
-
       this.setState({ 'friendList': friendList });
-      return friendIds;
+      return buildFriendList(friendList);
     })
     .then(data => fetchAccountDetails(data))
     .then(data => {
       const detailsList = _.get(data, 'data.players', []);
-      const friendDetails = _.merge(detailsList, this.state.friendList);
-
-      return friendDetails;
+      this.setState(prevState => ({
+        'friendList': _.merge([...prevState.friendList], detailsList)
+      }));
+      return this.state.friendList;
     })
     .then(data => {
-      this.setState({ 'friendList': data });
-
-      const updatedData = data.map((player) => {
-        const accountApps = fetchAccountApps(player.steamid)
+      this.setState({ 'friendList': [] });
+      data.forEach(player => {
+        fetchAccountApps(player.steamid)
         .then(appData => {
           const appList = _.get(appData, 'data', []);
-          return appList;
+          this.setState(prevState => ({
+            'friendList': [...prevState.friendList, { ...player, 'apps': appList }]
+          }));
         });
-
-        return { 'apps': accountApps, ...player };
       });
-
-      return updatedData;
     })
-    .then(data => this.setState({ 'friendList': data }))
     .then(()=> this.setState({ 'friendListBuilt': true }));
   }
 
