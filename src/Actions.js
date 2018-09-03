@@ -1,5 +1,8 @@
 function checkResponseStatus(response) {
-  if (response.ok) {
+  const contentTypeHeader = response.headers.get('Content-Type');
+  const isJSON = contentTypeHeader && contentTypeHeader.match(/application\/json/i);
+
+  if (response.ok && isJSON) {
     return response;
   }
   return throwError(response);
