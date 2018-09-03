@@ -28,7 +28,7 @@ const friendSteamLoginStatus = (personastate) => {
 };
 
 const FriendRow = ({ friendData, searchUserData }) => {
-  const commonApps = _.get(friendData, 'apps.games', []);;
+  const commonApps = _.get(friendData, 'apps.games', []);
   const mostCommonPlayed = { 'name': 'App Name', 'playTimeHours': 0.0 };
 
   const appRow = (apps) => {

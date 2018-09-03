@@ -35,6 +35,19 @@ export const checkLoginStatus = () => {
 }
 
 
+export const fetchMultiplayerApps = () => {
+  const fetchOptions = {
+    accept: 'application/json',
+    credentials: 'same-origin'
+  }
+
+  return fetch('/api/1.0/apps?filter_multiplayer=true', fetchOptions)
+  .then(checkResponseStatus)
+  .then(response => response.json())
+  .catch(handleError);
+}
+
+
 export const fetchAccountDetails = (account_id) => {
   const fetchOptions = {
     accept: 'application/json',
