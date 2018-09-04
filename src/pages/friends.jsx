@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MetaTags from 'react-meta-tags';
 import _ from 'lodash';
 
-import { fetchAccountApps, fetchAccountDetails, fetchFriendsList } from '../Actions';
+import { fetchAccountApps, fetchAccountDetails, fetchFriendsList, fetchMultiplayerApps } from '../Actions';
 
 import FriendRow from '../components/friendRow';
 
@@ -12,9 +12,9 @@ const buildFriendList = (friends) => {
   return friends.map(friend => friend.steamid);
 };
 
-const friendRows = (friends, searchUser) => {
+const friendRows = (friends, searchUser, multiplayerAppList) => {
   const orderedFriends = _.orderBy(friends, 'steamid');
-  return orderedFriends.map(friend => <FriendRow key={friend.steamid} friendData={friend} searchUserData={searchUser} />);
+  return orderedFriends.map(friend => <FriendRow key={friend.steamid} friendData={friend} searchUserData={searchUser} multiplayerAppList={multiplayerAppList} />);
 }
 
 class FriendsPage extends Component {
@@ -23,13 +23,22 @@ class FriendsPage extends Component {
     this.state = {
       'searchedUser': {},
       'friendList': [],
-      'friendListBuilt': false
+      'friendListBuilt': false,
+      'multiplayerAppList': [],
+      'multiplayerAppListBuilt': false
     }
   }
 
   componentDidMount() {
     // TODO: if the searched user matches logged in user, use logged in user object instead of querying a new one
     const searchedAccountId = this.props.match.params.id;
+
+    fetchMultiplayerApps()
+    .then(data => {
+      const parsedData = _.get(data, 'data.applist.apps', []);
+      const multiplayerAppList = parsedData.map(app => app.appid);
+      this.setState({ multiplayerAppList, 'multiplayerAppListBuilt': true });
+    });
 
     // Get data for user searched
     fetchAccountDetails(searchedAccountId)
@@ -109,7 +118,7 @@ class FriendsPage extends Component {
           </div>
         </div>
       </div>,
-      this.state.friendListBuilt && friendRows(this.state.friendList, this.state.searchedUser)
+      (this.state.friendListBuilt && this.state.multiplayerAppListBuilt) && friendRows(this.state.friendList, this.state.searchedUser, this.state.multiplayerAppList)
     ];
   };
 };

@@ -13,7 +13,7 @@ const friendSteamLoginStatus = (personastate) => {
     '4': {'name': 'on Snooze', 'class': 'adjust'},
     '5': {'name': 'looking to trade', 'class': 'adjust'},
     '6': {'name': 'looking to play', 'class': 'adjust'}
-  }
+  };
 
   const stateText = personaStateMap[personastate].name;
   const stateClass = personaStateMap[personastate].class;
@@ -24,19 +24,24 @@ const friendSteamLoginStatus = (personastate) => {
       <br/>
       <i className={`fa fa-${stateClass}`}></i>{stateText}
     </div>
-  )
+  );
 };
 
-const FriendRow = ({ friendData, searchUserData }) => {
+const FriendRow = ({ friendData, searchUserData, multiplayerAppList }) => {
   const commonApps = _.get(friendData, 'apps.games', []);
   const mostCommonPlayed = { 'name': 'App Name', 'playTimeHours': 0.0 };
 
   const appRow = (apps) => {
     if (apps.length > 0) {
-      return apps.map(app => <li key={app.appid} className="friend-gamerow">{app.name}</li>);
+      return apps.map(app => {
+        if (multiplayerAppList.indexOf(app.appid) > -1) {
+          return <li key={app.appid} className="friend-gamerow">{app.name}</li>;
+        }
+        return null;
+      });
     }
-    return <li>This user has no multiplayer games in common with { searchUserData.personaname }</li>
-  }
+    return <li>This user has no multiplayer games in common with { searchUserData.personaname }</li>;
+  };
 
   return (
     <div key="content-body" className="row featurette friend-entry">
