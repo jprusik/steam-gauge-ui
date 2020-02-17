@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
 
@@ -10,14 +10,22 @@ import Footer from './components/Footer';
 const App = (props) => {
   // empty object (instead of `null`) default for easier downstream destructuring
   const [user, setUser] = useState({});
+  const [loginStateChecked, setLoginStateChecked] = useState(false)
 
   // TODO: When/How often do we want to check login status?
-  useEffect(() => {
+  async function maybeCheckLogin() {
     if (!user || !user.session_start) {
-      checkLoginStatus()
-        .then(data => setUser(data));
+      const userData = await checkLoginStatus();
+
+      if (userData.session_start) {
+        setUser(userData)
+      }
+
+      setLoginStateChecked(true)
     }
-  }, []);
+  }
+
+  !loginStateChecked && maybeCheckLogin();
 
   return (
     <Router>
