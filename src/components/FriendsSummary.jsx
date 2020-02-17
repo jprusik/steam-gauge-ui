@@ -1,5 +1,5 @@
 import React from 'react';
-import {steamFriendsShareTwitter} from "../constants/urls";
+import {steamFriendsShareTwitter} from '../constants/urls';
 import {
   groupMultiplayerAppsByAccountsOwnedByCount,
   groupMultiplayerAppsByAccountsPlaytime
@@ -34,7 +34,7 @@ const FriendsSummary = ({userId, accounts = [], multiplayerApps = []}) => {
       totalOwnedAppsCounts[appId] > totalOwnedAppsCounts[mostOwnedId]
       ? appId
       : mostOwnedId
-    );
+    , {});
 
   const mostOwnedCommonApp = userApps.find(({appid}) => `${appid}` === mostOwnedCommonAppId);
 
@@ -43,7 +43,7 @@ const FriendsSummary = ({userId, accounts = [], multiplayerApps = []}) => {
       totalOwnedAppsCounts[appId] < totalOwnedAppsCounts[mostOwnedId]
       ? appId
       : mostOwnedId
-    );
+    , {});
 
   const leastOwnedCommonApp = userApps.find(({appid}) => `${appid}` === leastOwnedCommonAppId);
 
@@ -58,7 +58,7 @@ const FriendsSummary = ({userId, accounts = [], multiplayerApps = []}) => {
       (totalOwnedAppsPlaytime[appId]/userFriendsCount) > (totalOwnedAppsPlaytime[mostPlayedOnAverageId]/userFriendsCount)
       ? appId
       : mostPlayedOnAverageId
-    );
+    , {});
 
   const highestAveragePlaytimeCommonApp = userApps.find(({appid}) => `${appid}` === highestAveragePlaytimeCommonAppId);
 

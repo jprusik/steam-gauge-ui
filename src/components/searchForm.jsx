@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {resolveUsername} from '../actions';
+import './SearchForm.scss';
 
 const isValidSteamIdFormat = (steamId) => !!steamId.match(/^\d+$/g);
 

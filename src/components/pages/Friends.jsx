@@ -1,15 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {useParams} from "react-router-dom";
+import {useParams} from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
 import {
   fetchAccountApps,
   fetchAccountDetails,
   fetchFriendsList,
   fetchMultiplayerApps
-} from '../actions';
-import FriendsSummary from '../components/FriendsSummary';
-import FriendRows from '../components/FriendRows';
-import SearchForm from '../components/SearchForm';
+} from '../../actions';
+import FriendRows from '../FriendRows';
+import FriendsSummary from '../FriendsSummary';
+import SearchForm from '../SearchForm';
+import TitleIntro from '../TitleIntro';
+import AccountOptions from '../AccountOptions';
+import SpecialNotice from '../SpecialNotice';
 
 const getAccountsApps = accountsDetails =>
   Promise.all(accountsDetails.map(async account => {
@@ -22,7 +25,7 @@ const getAccountsApps = accountsDetails =>
     };
   }));
 
-const FriendsPage = () => {
+const FriendsPage = ({user}) => {
   const {id: searchedUserId} = useParams();
   const [userFriends, setUserFriends] = useState();
 
@@ -48,7 +51,8 @@ const FriendsPage = () => {
       } = friendsListData || {}
 
       // assemble comma-separated ids of all friends
-      const userFriendsIds = userFriendsList.reduce((csvUsers, {steamid}) => steamid && `${csvUsers},${steamid}`, "")
+      const userFriendsIds = userFriendsList
+        .reduce((csvUsers, {steamid}) => steamid && `${csvUsers},${steamid}`, '')
 
       // add `searchedUserId` so we can get all accounts with one request
       const userAndFriendIds = `${searchedUserId},${userFriendsIds}`;
@@ -56,6 +60,8 @@ const FriendsPage = () => {
       const {data: accountsDetailsData} = await fetchAccountDetails(userAndFriendIds) || {};
       const {players: accountsDetails} = accountsDetailsData || {};
 
+      // TODO: if the user account has no apps, skip making any other calls and
+      // render some useful user feedback.
       const accounts = await getAccountsApps(accountsDetails);
 
       setUserFriends({
@@ -74,13 +80,25 @@ const FriendsPage = () => {
         {/* page metatags here */}
       </MetaTags>
 
+      { !searchedUserId && <TitleIntro isFriends /> }
+
       <SearchForm {...{searchType:'friends', ...(!!searchedUserId && {hideLabel: true})}} />
-      <br />
-      { searchedUserId &&
-        <FriendsSummary {...{userId: searchedUserId, ...userFriends}} />
+
+      { !searchedUserId &&
+        <React.Fragment>
+          <div className="option-divider">or</div>
+          <AccountOptions user={user} />
+          <div className="spacer"></div>
+          <SpecialNotice />
+        </React.Fragment>
       }
+
       { searchedUserId &&
-        <FriendRows {...{userId: searchedUserId, ...userFriends}} />
+        <React.Fragment>
+          <br />
+          <FriendsSummary {...{userId: searchedUserId, ...userFriends}} />
+          <FriendRows {...{userId: searchedUserId, ...userFriends}} />
+        </React.Fragment>
       }
     </React.Fragment>
   );

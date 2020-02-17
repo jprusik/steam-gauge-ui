@@ -1,0 +1,13 @@
+.steam-login-button {
+  display: block;
+  width: 114px;
+  height: 43px;
+  margin: auto;
+  background-image: url('../assets/steam_sign_in_button.png');
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+
+  &:hover {
+    background-position: 0px -43px;
+  }
+}

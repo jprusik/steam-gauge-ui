@@ -1,4 +1,24 @@
-@import "custom";
+@import 'custom';
+
+.content-main {
+  margin: 5% auto;
+  width: 90%;
+  max-width: 640px;
+}
+
+.option-divider {
+  width: 100%;
+  text-align: center;
+  display: block;
+  margin: 10px auto;
+  clear: both;
+}
+
+.spacer {
+  height: 1em;
+  width: 100%;
+  clear: both;
+}
 
 @media (min-width: 1420px) {
   .container {

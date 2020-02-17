@@ -1,19 +1,26 @@
-export const getUserMultiplayerAppIds = (userApps, multiplayerApps) => userApps
+export const getUserMultiplayerAppIds = (
+  userApps = [],
+  multiplayerApps = []
+) => userApps
     .filter(({appid}) => multiplayerApps.includes(appid))
     .map(({appid}) => appid);
 
 // Return all multiplayer apps the friend has in common with the user
 export const getCommonMultiplayerGames = ({
-  multiplayerApps,
-  userApps,
-  friendApps,
+  multiplayerApps = [],
+  userApps = [],
+  friendApps = []
 }) => friendApps
   .filter(({appid}) =>
     getUserMultiplayerAppIds(userApps, multiplayerApps)
       .includes(appid)
   );
 
-export const groupMultiplayerAppsByAccountsOwnedByCount = ({userFriends, userApps, multiplayerApps}) => {
+export const groupMultiplayerAppsByAccountsOwnedByCount = ({
+  userFriends = [],
+  userApps = [],
+  multiplayerApps = []
+}) => {
   const userMultiplayerAppIds = getUserMultiplayerAppIds(userApps, multiplayerApps);
 
   return userFriends
@@ -34,7 +41,11 @@ export const groupMultiplayerAppsByAccountsOwnedByCount = ({userFriends, userApp
     }, {});
 }
 
-export const groupMultiplayerAppsByAccountsPlaytime = ({userFriends, userApps, multiplayerApps}) => {
+export const groupMultiplayerAppsByAccountsPlaytime = ({
+  multiplayerApps = [],
+  userApps = [],
+  userFriends = []
+}) => {
   const userMultiplayerAppIds = getUserMultiplayerAppIds(userApps, multiplayerApps);
 
   return userFriends
