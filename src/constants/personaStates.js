@@ -1,9 +1,51 @@
 export const personaStateMap = {
-  '0': {'name': 'Offline', 'class': 'ban'},
-  '1': {'name': 'Online', 'class': 'circle'},
-  '2': {'name': 'Busy', 'class': 'adjust'},
-  '3': {'name': 'Away', 'class': 'adjust'},
-  '4': {'name': 'on Snooze', 'class': 'adjust'},
-  '5': {'name': 'looking to trade', 'class': 'adjust'},
-  '6': {'name': 'looking to play', 'class': 'adjust'}
+  '0': {
+    class: 'offline',
+    color: '#FF6C00',
+    iconCharacter: '\f05e',
+    iconClass: 'ban',
+    name: 'Offline',
+  },
+  '1': {
+    class: 'online',
+    color: 'green',
+    iconCharacter: '\f111',
+    iconClass: 'circle',
+    name: 'Online',
+  },
+  '2': {
+    class: 'busy',
+    color: '#FFD100',
+    iconCharacter: '\f042',
+    iconClass: 'adjust',
+    name: 'Busy',
+  },
+  '3': {
+    class: 'away',
+    color: '#FFD100',
+    iconCharacter: '\f042',
+    iconClass: 'adjust',
+    name: 'Away',
+  },
+  '4': {
+    class: 'snooze',
+    color: '#FFD100',
+    iconCharacter: '\f042',
+    iconClass: 'adjust',
+    name: 'on Snooze',
+  },
+  '5': {
+    class: 'seeking_trade',
+    color: '#FFD100',
+    iconCharacter: '\f042',
+    iconClass: 'adjust',
+    name: 'looking to trade',
+  },
+  '6': {
+    class: 'seeking_play',
+    color: '#FFD100',
+    iconCharacter: '\f042',
+    iconClass: 'adjust',
+    name: 'looking to play',
+  },
 };
