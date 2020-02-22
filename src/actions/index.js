@@ -91,9 +91,9 @@ export const checkLoginStatus = () => {
   }
 
   return fetch('/current_user', fetchOptions)
-  .then(checkResponseStatus)
-  .then(response => response.json())
-  .catch(handleError);
+    .then(checkResponseStatus)
+    .then(response => response.json())
+    .catch(handleError);
 }
 
 export const resolveUsername = (username) =>
@@ -102,11 +102,14 @@ export const resolveUsername = (username) =>
 export const fetchMultiplayerApps = () =>
   get({requestApi: 'apps?filter_multiplayer=true', useCache: true});
 
-export const fetchAccountDetails = (account_id) =>
-  get({requestApi: `accounts/${account_id}`, useCache: true});
+export const fetchAccountDetails = (accountId) =>
+  get({requestApi: `accounts/${accountId}`, useCache: true});
 
-export const fetchAccountApps = (account_id) =>
-  get({requestApi: `accounts/${account_id}/apps`, useCache: true});
+export const fetchAccountApps = (accountId) =>
+  get({requestApi: `accounts/${accountId}/apps`, useCache: true});
 
-export const fetchFriendsList = (account_id) =>
-  get({requestApi: `accounts/${account_id}/friends`, useCache: true});
+export const fetchFriendsList = (accountId) =>
+  get({requestApi: `accounts/${accountId}/friends`, useCache: true});
+
+export const fetchAppDetails = (appId) =>
+  get({requestApi: `apps/${appId}`, useCache: true});
