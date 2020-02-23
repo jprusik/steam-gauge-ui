@@ -96,6 +96,20 @@ export const checkLoginStatus = () => {
     .catch(handleError);
 }
 
+export const logoutUser = () => {
+  const fetchOptions = {
+    accept: 'application/json',
+    cache: 'no-store',
+    credentials: 'same-origin',
+    method: 'PUT'
+  }
+
+  return fetch('/logout', fetchOptions)
+    .then(checkResponseStatus)
+    .then(response => response.json())
+    .catch(handleError);
+}
+
 export const resolveUsername = (username) =>
   get({requestApi: `username/${username}`, useCache: true});
 

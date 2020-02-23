@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import UserNavItems from './UserNavItems'
 import './Header.scss';
 
-const Header = ({user}) => (
+const Header = ({user, setUser}) => (
   <nav className="navbar navbar-inverse navbar-fixed-top">
     <div className="container">
       <div className="navbar-header">
@@ -26,7 +26,7 @@ const Header = ({user}) => (
           <li>
             <Link to="/receipt"><i className="fa fa-file-o" style={{marginRight: '0.5em'}}></i>Receipt</Link>
           </li>
-          <UserNavItems user={user} />
+          <UserNavItems user={user} setUser={setUser} />
         </ul>
       </div>
     </div>

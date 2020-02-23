@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {logoutUser} from '../actions';
+
 
 const AccountLink = ({accountId}) => (
   <li key="account" className="steam-account">
@@ -7,11 +9,13 @@ const AccountLink = ({accountId}) => (
   </li>
 );
 
-const LogoutButton = () => (
+const LogoutButton = ({setUser}) => (
   <li key="logout" className="steam-logout">
     <div className="btn-group">
-      {/* Must be an anchor for the request to get proxied */}
-      <a href="/logout" className="btn btn-primary btn-sm navbar-btn">Log out</a>
+      <button
+        onClick={() => logoutUser().then(response => setUser(response))}
+        className="btn btn-primary btn-sm navbar-btn"
+      >Log out</button>
     </div>
   </li>
 );
@@ -24,12 +28,12 @@ const LoginButton = () => (
   </li>
 );
 
-const UserNavItems = ({user: {account_id: accountId}}) =>
+const UserNavItems = ({user: {account_id: accountId}, setUser}) =>
   !!accountId ?
     (
       <React.Fragment>
         <AccountLink accountId={accountId} />
-        <LogoutButton />
+        <LogoutButton setUser={setUser} />
       </React.Fragment>
     ) : (
       <LoginButton />

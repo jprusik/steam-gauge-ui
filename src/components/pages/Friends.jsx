@@ -1,4 +1,6 @@
+/** @jsx jsx */
 import React, {useState, useEffect} from 'react';
+import {css, jsx} from '@emotion/core';
 import {useParams} from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
 import {
@@ -25,7 +27,7 @@ const getAccountsApps = accountsDetails =>
     };
   }));
 
-const FriendsPage = ({user}) => {
+const FriendsPage = ({user, setUser}) => {
   const {id: searchedUserId} = useParams();
   const [userFriends, setUserFriends] = useState();
 
@@ -86,8 +88,14 @@ const FriendsPage = ({user}) => {
 
       { !searchedUserId &&
         <React.Fragment>
-          <div className="option-divider">or</div>
-          <AccountOptions user={user} />
+          <div css={css`
+            width: 100%;
+            text-align: center;
+            display: block;
+            margin: 10px auto;
+            clear: both;
+          `}>or</div>
+          <AccountOptions user={user} setUser={setUser} />
           <div className="spacer"></div>
           <SpecialNotice />
         </React.Fragment>

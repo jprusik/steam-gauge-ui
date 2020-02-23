@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
-
 import {checkLoginStatus} from './actions';
-import Header from './components/Header';
 import Body from './components/Body';
 import Footer from './components/Footer';
+import Header from './components/Header';
+
 
 const App = (props) => {
   // empty object (instead of `null`) default for easier downstream destructuring
@@ -42,8 +42,8 @@ const App = (props) => {
             </React.Fragment>
           }
         </MetaTags>
-        <Header user={user} />
-        <Body user={user} />
+        <Header user={user} setUser={setUser} />
+        <Body user={user} setUser={setUser} />
         {/* TODO: App & Search Loader  */}
         <Footer />
       </div>
