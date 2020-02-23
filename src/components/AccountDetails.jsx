@@ -3,7 +3,6 @@ import React from 'react';
 import {css, jsx} from '@emotion/core';
 import {personaStateMap} from '../constants/personaStates';
 import {accountCreationDate, timeSince} from '../utils/dates';
-import ShareBar from './ShareBar';
 
 
 const userAvatarStyles = css`
@@ -61,21 +60,14 @@ const AccountDetails = ({
     realname,
     steamid,
     timecreated
-  },
-  toggleModal
+  }
 }) => (
   <table>
     <tbody>
       <tr>
         <td css={css`vertical-align: top; padding: 10px 0px; max-width: 184px;`}>
           { avatarfull &&
-            <React.Fragment>
-              <img css={userAvatarStyles} src={avatarfull} alt="user avatar" />
-              <ShareBar accountId={steamid} />
-              <div css={css`line-height: 1em; color: #8bb9e0; font-size: 0.75em; cursor: pointer;`}>
-                <a onClick={toggleModal(true)}><i className="fa fa-bug"></i>&nbsp;Something off? Report bugs here.</a>
-              </div>
-            </React.Fragment>
+            <img css={userAvatarStyles} src={avatarfull} alt="user avatar" />
           }
         </td>
         <td css={css`vertical-align: top; padding: 10px;`}>
@@ -90,9 +82,8 @@ const AccountDetails = ({
             </a>
           </h2>
           { personaname &&
-            <h4>Steam ID: <a css={css`color: #8bb9e0`} href={`https://steamcommunity.com/profiles/${steamid}`} target="_blank" rel="noopener noreferrer">{steamid}</a></h4>
+            <h4>Steam ID: <a css={css`color: #8bb9e0;`} href={`https://steamcommunity.com/profiles/${steamid}`} target="_blank" rel="noopener noreferrer">{steamid}</a></h4>
           }
-
           <div>
             <React.Fragment>
               <span css={css`font-weight: bold; font-size: 0.75em;`}>This user's status is: </span>
