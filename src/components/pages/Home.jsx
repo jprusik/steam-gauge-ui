@@ -5,6 +5,7 @@ import SearchForm from '../SearchForm';
 import SpecialNotice from '../SpecialNotice';
 import TitleIntro from '../TitleIntro';
 
+
 const optionDividerStyles = css`
   clear: both;
   display: block;
@@ -19,20 +20,29 @@ const spacerStyles = css`
   width: 100%;
 `;
 
-const HomePage = ({
+const contentContainerStyles = css`
+  margin: 5% auto;
+  max-width: 640px;
+  width: 90%;
+
+  @media (min-width: 1420px) {
+    width: 1420px;
+  }
+`;
+
+const Home = ({
   isFriends = false,
-  searchType = 'account',
   setUser,
   user
 }) => (
-  <div className="content-main">
+  <div css={contentContainerStyles}>
     <TitleIntro isFriends={isFriends} />
-    <SearchForm searchType={searchType} />
+    <SearchForm searchType={isFriends ? 'friends' : 'account'} />
     <div css={optionDividerStyles}>or</div>
-    <AccountOptions user={user} setUser={setUser} />
+    <AccountOptions isFriends={isFriends} setUser={setUser} user={user} />
     <div css={spacerStyles} />
     <SpecialNotice />
   </div>
 );
 
-export default HomePage;
+export default Home;

@@ -9,12 +9,13 @@ import {
   fetchFriendsList,
   fetchMultiplayerApps
 } from '../../actions';
+import Home from './Home';
+import AccountOptions from '../AccountOptions';
 import FriendRows from '../FriendRows';
 import FriendsSummary from '../FriendsSummary';
 import SearchForm from '../SearchForm';
-import TitleIntro from '../TitleIntro';
-import AccountOptions from '../AccountOptions';
 import SpecialNotice from '../SpecialNotice';
+import TitleIntro from '../TitleIntro';
 
 const getAccountsApps = accountsDetails =>
   Promise.all(accountsDetails.map(async account => {
@@ -82,31 +83,16 @@ const FriendsPage = ({user, setUser}) => {
         {/* page metatags here */}
       </MetaTags>
 
-      { !searchedUserId && <TitleIntro isFriends /> }
-
-      <SearchForm {...{searchType:'friends', ...(!!searchedUserId && {hideLabel: true})}} />
-
-      { !searchedUserId &&
-        <React.Fragment>
-          <div css={css`
-            width: 100%;
-            text-align: center;
-            display: block;
-            margin: 10px auto;
-            clear: both;
-          `}>or</div>
-          <AccountOptions user={user} setUser={setUser} />
-          <div className="spacer"></div>
-          <SpecialNotice />
-        </React.Fragment>
-      }
-
-      { searchedUserId &&
-        <React.Fragment>
-          <br />
-          <FriendsSummary {...{userId: searchedUserId, ...userFriends}} />
-          <FriendRows {...{userId: searchedUserId, ...userFriends}} />
-        </React.Fragment>
+      { !searchedUserId ? (
+          <Home {...{isFriends: true, setUser, user}} />
+        ) : (
+          <React.Fragment>
+            <SearchForm {...{searchType:'friends', ...(!!searchedUserId && {hideLabel: true})}} />
+            <br />
+            <FriendsSummary {...{userId: searchedUserId, ...userFriends}} />
+            <FriendRows {...{userId: searchedUserId, ...userFriends}} />
+          </React.Fragment>
+        )
       }
     </React.Fragment>
   );

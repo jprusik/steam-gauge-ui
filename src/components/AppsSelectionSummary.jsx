@@ -2,10 +2,11 @@
 import {css, jsx} from '@emotion/core';
 import {timeSince} from '../utils/dates';
 
+
 const appsSelectionSummaryStyles = css`
   color: #eeeeee;
-  margin: 10px 0px;
   font-style: italic;
+  margin: 10px 0px;
 `;
 
 const AppsSelectionSummary = ({

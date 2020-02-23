@@ -3,10 +3,11 @@ import {Switch, Route} from 'react-router-dom';
 import AboutPage from './pages/About';
 import AccountPage from './pages/Account';
 import FriendsPage from './pages/Friends';
-import HomePage from './pages/Home';
+import Home from './pages/Home';
 import PrivacyPage from './pages/Privacy';
 import ReceiptPage from './pages/Receipt';
 import './Body.scss';
+
 
 const urlRedirect = (url) => {
     window.location = url;
@@ -23,7 +24,7 @@ const loginUrl = process.env.REACT_APP_OPEN_ID_URL;
 const Body = ({user, setUser}) => (
   <div className="container" role="main">
     <Switch>
-      <RouteWithComponentProps exact path="/" component={HomePage} componentProps={{user, setUser}} />
+      <RouteWithComponentProps exact path="/" component={Home} componentProps={{user, setUser}} />
       <Route path="/account/:id" component={AccountPage} />
       <RouteWithComponentProps path="/friends/:id" component={FriendsPage} componentProps={{user}} />
       <RouteWithComponentProps path="/friends" component={FriendsPage} componentProps={{user, setUser}} />

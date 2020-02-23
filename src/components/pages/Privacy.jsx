@@ -2,11 +2,13 @@ import React from 'react';
 import MetaTags from 'react-meta-tags';
 import './Privacy.scss';
 
+
 const PrivacyPage = () => (
   <div className="content-main">
     <MetaTags>
       {/* page metatags here */}
     </MetaTags>
+
     <h2>Privacy Policy</h2>
     <p>{ process.env.REACT_APP_NAME } does not collect information on any of its visitors except in the following circumstances:</p>
     <ul>

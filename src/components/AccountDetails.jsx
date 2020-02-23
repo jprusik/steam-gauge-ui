@@ -116,12 +116,12 @@ const AccountDetails = ({
               <br />
               { lastlogoff &&
                 <React.Fragment>
-                  Last logoff: <span id="last_logoff_datetime" title={accountCreationDate(timecreated)}>{ timeSince(lastlogoff * 1000) } ago</span>
+                  Last logoff: <span id="last_logoff_datetime" title={accountCreationDate(timecreated)}>{timeSince(lastlogoff * 1000)} ago</span>
                 </React.Fragment>
               }
               { gameextrainfo &&
                 <React.Fragment>
-                  <br />Currently Playing: <span id="current_app">{ gameextrainfo }</span>
+                  <br />Currently Playing: <span id="current_app">{gameextrainfo}</span>
                 </React.Fragment>
               }
             </div>

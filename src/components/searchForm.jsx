@@ -5,7 +5,7 @@ import './SearchForm.scss';
 
 const isValidSteamIdFormat = (steamId) => !!steamId.match(/^\d+$/g);
 
-const SearchForm = ({searchType, hideLabel=false, hideInputAddon=false}) => {
+const SearchForm = ({searchType = 'account', hideLabel = false, hideInputAddon = false}) => {
   let history = useHistory();
 
   const [searchInput, setSearchInput] = useState('');

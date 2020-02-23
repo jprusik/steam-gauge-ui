@@ -2,6 +2,7 @@ import React from 'react';
 import MetaTags from 'react-meta-tags';
 import './About.scss';
 
+
 const AboutPage = () => (
   <div className="outer-wrapper">
     <MetaTags>
@@ -18,7 +19,7 @@ const AboutPage = () => (
         My name is {process.env.REACT_APP_AUTHOR_NAME}, and I'm a Boston-based Full Stack web engineer who specializes in Python, SQL, and JavaScript. My work has been featured on <a href="https://techcrunch.com/2013/04/01/steam-gauge-gauges-the-sizeprice-of-your-steam">TechCrunch</a> and the front page of <a href="https://news.ycombinator.com/item?id=5472548" rel="nofollow">Hacker News</a>. I like building things that people will use and find useful. <a href={process.env.REACT_APP_DOMAIN_URL}>{process.env.REACT_APP_PRETTY_DOMAIN_URL}</a> is my first Python web app.
       </p>
       <p>
-        I can be contacted via <a href={process.env.REACT_APP_AUTHOR_SOCIAL_PROFILE_TWITTER}>Twitter</a>, <a href={process.env.REACT_APP_AUTHOR_SOCIAL_PROFILE_LINKEDIN}>LinkedIn</a>, <a href={process.env.REACT_APP_AUTHOR_SOCIAL_PROFILE_GOOGLEPLUS}>Google+</a> and <a href={`mailto:${process.env.REACT_APP_SUPPORT_EMAIL}`}>e-mail</a>. Of course, I do occasionally sneak in a game of Civilization on <a href={process.env.REACT_APP_AUTHOR_SOCIAL_PROFILE_STEAM}>Steam</a> as well.
+        I can be contacted via <a href={process.env.REACT_APP_AUTHOR_SOCIAL_PROFILE_TWITTER}>Twitter</a>, <a href={process.env.REACT_APP_AUTHOR_SOCIAL_PROFILE_LINKEDIN}>LinkedIn</a>, and <a href={`mailto:${process.env.REACT_APP_SUPPORT_EMAIL}`}>e-mail</a>. Of course, I do occasionally sneak in a game of Civilization on <a href={process.env.REACT_APP_AUTHOR_SOCIAL_PROFILE_STEAM}>Steam</a> as well.
       </p>
     </div>
   </div>
