@@ -1,14 +1,31 @@
 /** @jsx jsx */
-import React from 'react';
+import {Fragment, useState} from 'react';
 import {css, jsx} from '@emotion/core';
 import {timeSince} from '../utils/dates';
 import ShareBar from './ShareBar';
+import BugReportLink from './BugReportLink';
+import BugReportingDetails from './BugReportingDetails';
 
 
 const appsSelectionSummaryStyles = css`
   color: #eeeeee;
   font-style: italic;
   margin: 10px 0px;
+`;
+
+const secondaryItemsStyles = css`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const SteamReceiptLinkStyles = css`
+  flex: 3 1 auto;
+  font-size: 0.75em;
+  text-align: center;
 `;
 
 const AppsSelectionSummary = ({
@@ -18,6 +35,8 @@ const AppsSelectionSummary = ({
   },
   appsSelection = []
 }) => {
+  const [displayBugDetails, setDisplayBugDetails] = useState(false);
+
   const accountAge = timeSince(timecreated * 1000);
   const minutesPlayed = appsSelection.reduce((totalHours, {playtime_forever = 0}) => (totalHours + playtime_forever), 0);
   const hoursPlayed = minutesPlayed / 60; // TODO: round to nearest whole hour
@@ -27,16 +46,21 @@ const AppsSelectionSummary = ({
   const gbSum = mbSum / 1000; // TODO: round to nearest tenth
 
   return (
-    <React.Fragment>
+    <Fragment>
       <div css={appsSelectionSummaryStyles}>
           { timecreated && `Over the last ${accountAge}, ` }
           you've spent {hoursPlayed} hours playing this selection, which includes {selectionCount} items, is valued at ${usdSum}, and requires {gbSum} GB
       </div>
-      <ShareBar
-        message={`My #Steam account has ${selectionCount} items valued at $${usdSum} and requires ${gbSum} GB of disk space`}
-        url={`${process.env.REACT_APP_DOMAIN_URL}/accounts/${steamid}`}
-      />
-    </React.Fragment>
+      <div css={secondaryItemsStyles}>
+        <ShareBar
+          message={`My #Steam account has ${selectionCount} items valued at $${usdSum} and requires ${gbSum} GB of disk space`}
+          url={`${process.env.REACT_APP_DOMAIN_URL}/accounts/${steamid}`}
+        />
+        <a className="bookmarklet-link" css={SteamReceiptLinkStyles} href="{{ url_for('receipt') }}" target="_blank">Want to know how much you've <span className="italic">spent</span> on Steam?</a>
+        <BugReportLink displayDetails={displayBugDetails} toggleDetails={setDisplayBugDetails} />
+      </div>
+      { displayBugDetails && <BugReportingDetails /> }
+    </Fragment>
   );
 };
 

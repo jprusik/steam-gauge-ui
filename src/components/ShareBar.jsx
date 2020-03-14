@@ -8,7 +8,8 @@ const shareContainerStyles = css`
   display: flex;
   font-size: 12px;
   font-weight: bold;
-  margin: 12px auto;
+  text-align: left;
+  flex: 3 1 auto;
 `;
 
 const shareLinkStyles = (socialNetwork) => css`
