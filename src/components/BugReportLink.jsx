@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import {css, jsx} from '@emotion/core';
 
-
 const bugReportLinkStyles = css`
   color: #8bb9e0;
   cursor: pointer;

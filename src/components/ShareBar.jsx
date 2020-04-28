@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import {css, jsx} from '@emotion/core';
 
-
 const shareContainerStyles = css`
   align-items: center;
   color: #8f98a0;

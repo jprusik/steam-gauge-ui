@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import {css, jsx} from '@emotion/core';
 
-
 export const AppPublishers = ({publishers = []}) => (
   <ul css={css`list-style: none;`}>
     { publishers.map(publisher =>

@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {logoutUser} from '../actions';
 
-
 const AccountLink = ({accountId}) => (
   <li key="account" className="steam-account">
     <Link to={`/account/${accountId}`} className="open-modal"><i className="fa fa-user fa-fw"></i> Your account</Link>
@@ -15,7 +14,9 @@ const LogoutButton = ({setUser}) => (
       <button
         onClick={() => logoutUser().then(response => setUser(response))}
         className="btn btn-primary btn-sm navbar-btn"
-      >Log out</button>
+      >
+        Log out
+      </button>
     </div>
   </li>
 );

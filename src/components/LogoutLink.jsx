@@ -1,7 +1,6 @@
 import React from 'react';
 import {logoutUser} from '../actions';
 
-
 const LogoutLink = ({setUser}) =>
   <button
     onClick={() => logoutUser().then(response => setUser(response))}

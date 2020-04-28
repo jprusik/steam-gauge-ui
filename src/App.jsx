@@ -6,11 +6,10 @@ import Body from './components/Body';
 import Footer from './components/Footer';
 import Header from './components/Header';
 
-
 const App = (props) => {
   // empty object (instead of `null`) default for easier downstream destructuring
   const [user, setUser] = useState({});
-  const [loginStateChecked, setLoginStateChecked] = useState(false)
+  const [loginStateChecked, setLoginStateChecked] = useState(false);
 
   // TODO: When/How often do we want to check login status?
   async function maybeCheckLogin() {

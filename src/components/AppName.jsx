@@ -4,7 +4,6 @@ import {css, jsx} from '@emotion/core';
 import Tooltip from '@material-ui/core/Tooltip';
 import {AppBanner} from './AppBanner';
 
-
 const appNameStyles = css`
   align-items: center;
   display: flex;
@@ -30,6 +29,7 @@ export const AppName = ({img_logo_url, img_icon_url: iconImage, name, app_websit
     { iconImage &&
       <Tooltip title={<AppBanner {...{appid, img_logo_url}} />} arrow>
         <img
+          alt={`${name || appid} icon`}
           css={tooltipImageStyles}
           loading="lazy"
           src={`https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/${appid}/${iconImage}.jpg`}

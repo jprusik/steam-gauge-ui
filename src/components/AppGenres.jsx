@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import {css, jsx} from '@emotion/core';
 
-
 export const AppGenres = ({genres = []}) => (
   <ul css={css`list-style: none;`}>
     { genres.map(genre =>

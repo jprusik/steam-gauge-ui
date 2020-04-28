@@ -5,7 +5,6 @@ import SearchForm from '../SearchForm';
 import SpecialNotice from '../SpecialNotice';
 import TitleIntro from '../TitleIntro';
 
-
 const optionDividerStyles = css`
   clear: both;
   display: block;
@@ -37,7 +36,9 @@ const Home = ({
 }) => (
   <div css={contentContainerStyles}>
     <TitleIntro isFriends={isFriends} />
-    <SearchForm searchType={isFriends ? 'friends' : 'account'} />
+    <SearchForm
+      searchType={isFriends ? 'friends' : 'account'}
+    />
     <div css={optionDividerStyles}>or</div>
     <AccountOptions isFriends={isFriends} setUser={setUser} user={user} />
     <div css={spacerStyles} />

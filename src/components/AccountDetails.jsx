@@ -1,9 +1,8 @@
 /** @jsx jsx */
-import React from 'react';
+import {Fragment} from 'react';
 import {css, jsx} from '@emotion/core';
 import {personaStateMap} from '../constants/personaStates';
 import {accountCreationDate, timeSince} from '../utils/dates';
-
 
 const userAvatarStyles = css`
   @media only screen and (max-width:640px) {
@@ -85,18 +84,18 @@ const AccountDetails = ({
             <h4>Steam ID: <a css={css`color: #8bb9e0;`} href={`https://steamcommunity.com/profiles/${steamid}`} target="_blank" rel="noopener noreferrer">{steamid}</a></h4>
           }
           <div>
-            <React.Fragment>
+            <Fragment>
               <span css={css`font-weight: bold; font-size: 0.75em;`}>This user's status is: </span>
               <span css={personaStateStyles(personastate)}>
                 { personaStateMap[personastate].name }
               </span>
-            </React.Fragment>
+            </Fragment>
 
             <div css={css`color: #eeeeee; font-weight: bold; padding: 0px; font-size: 0.75em;`}>
               { timecreated && timecreated !== 0 && (
-                <React.Fragment>
+                <Fragment>
                   Steam user since { accountCreationDate(timecreated) }
-                </React.Fragment>
+                </Fragment>
               )}
               <br />
               { realname && <span id="user_realname">{realname} | </span> }
@@ -106,14 +105,14 @@ const AccountDetails = ({
               <br />
               <br />
               { lastlogoff &&
-                <React.Fragment>
+                <Fragment>
                   Last logoff: <span id="last_logoff_datetime" title={accountCreationDate(timecreated)}>{timeSince(lastlogoff * 1000)} ago</span>
-                </React.Fragment>
+                </Fragment>
               }
               { gameextrainfo &&
-                <React.Fragment>
+                <Fragment>
                   <br />Currently Playing: <span id="current_app">{gameextrainfo}</span>
-                </React.Fragment>
+                </Fragment>
               }
             </div>
           </div>
