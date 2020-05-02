@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import React, {useState, useEffect} from 'react';
-import {css, jsx} from '@emotion/core';
 import {useParams} from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
 import {
@@ -10,12 +8,10 @@ import {
   fetchMultiplayerApps
 } from '../../actions';
 import Home from './Home';
-import AccountOptions from '../AccountOptions';
 import FriendRows from '../FriendRows';
 import FriendsSummary from '../FriendsSummary';
 import SearchForm from '../SearchForm';
-import SpecialNotice from '../SpecialNotice';
-import TitleIntro from '../TitleIntro';
+import {SectionLoader} from '../Loader';
 
 const getAccountsApps = accountsDetails =>
   Promise.all(accountsDetails.map(async account => {
@@ -74,8 +70,12 @@ const FriendsPage = ({user, setUser}) => {
       });
     }
 
-    getUserFriendsData();
+    searchedUserId && getUserFriendsData();
   }, [searchedUserId]);
+
+  function resetPageData() {
+    setUserFriends(null)
+  }
 
   return (
     <React.Fragment>
@@ -87,10 +87,20 @@ const FriendsPage = ({user, setUser}) => {
           <Home {...{isFriends: true, setUser, user}} />
         ) : (
           <React.Fragment>
-            <SearchForm {...{searchType:'friends', ...(!!searchedUserId && {hideLabel: true})}} />
+            <SearchForm {...{
+              searchType:'friends',
+              onSearchSuccess: resetPageData,
+              ...(!!searchedUserId && {hideLabel: true})
+            }} />
             <br />
-            <FriendsSummary {...{userId: searchedUserId, ...userFriends}} />
-            <FriendRows {...{userId: searchedUserId, ...userFriends}} />
+            { userFriends ? (
+              <React.Fragment>
+                <FriendsSummary {...{userId: searchedUserId, ...userFriends}} />
+                <FriendRows {...{userId: searchedUserId, ...userFriends}} />
+              </React.Fragment>
+            ) : (
+              <SectionLoader />
+            )}
           </React.Fragment>
         )
       }

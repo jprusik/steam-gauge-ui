@@ -1,14 +1,21 @@
 import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {resolveUsername} from '../actions';
+import {Loader} from './Loader';
 import './SearchForm.scss';
 
 const isValidSteamIdFormat = (steamId) => !!steamId.match(/^\d+$/g);
 
-const SearchForm = ({searchType = 'account', hideLabel = false, hideInputAddon = false}) => {
+const SearchForm = ({
+  searchType = 'account',
+  hideLabel = false,
+  hideInputAddon = false,
+  onSearchSuccess = () => {}
+}) => {
   let history = useHistory();
 
   const [searchInput, setSearchInput] = useState('');
+  const [searchIsActive, setSearchIsActive] = useState(false);
   const [formErrors, setFormErrors] = useState([]);
 
   function loadNextPage(steamAccountId) {
@@ -48,16 +55,23 @@ const SearchForm = ({searchType = 'account', hideLabel = false, hideInputAddon =
   function handleChange({target:{value}}) {
     setFormErrors([]);
     setSearchInput(value);
+    // TODO: `getSteamId` onChange + debounce
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
 
-    // TODO: do this check onChange + debounce
     // TODO: display loader
+    setSearchIsActive(true);
+
     const steamAccountId = await getSteamId();
 
-    !!steamAccountId && loadNextPage(steamAccountId);
+    if (steamAccountId) {
+      onSearchSuccess();
+      loadNextPage(steamAccountId);
+    }
+
+    setSearchIsActive(false);
   }
 
   return (
@@ -75,6 +89,7 @@ const SearchForm = ({searchType = 'account', hideLabel = false, hideInputAddon =
         }
         <input
           className="form-control url-text"
+          disabled={searchIsActive}
           id="basic-url"
           name="username"
           onChange={handleChange}
@@ -85,10 +100,13 @@ const SearchForm = ({searchType = 'account', hideLabel = false, hideInputAddon =
         <span className="input-group-btn">
           <button
             className="btn btn-default search-submit"
-            disabled={!searchInput}
+            disabled={!searchInput || searchIsActive}
             type="submit"
           >
-            <i className="fa fa-search fa-fw"></i>
+            { searchIsActive ?
+              <Loader loaderStyles="height: 20px;" /> :
+              <i className="fa fa-search fa-fw"></i>
+            }
           </button>
         </span>
       </div>

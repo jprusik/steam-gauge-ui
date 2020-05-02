@@ -8,7 +8,6 @@ import PrivacyPage from './pages/Privacy';
 import ReceiptPage from './pages/Receipt';
 import './Body.scss';
 
-
 const urlRedirect = (url) => {
     window.location = url;
     return null;
@@ -27,7 +26,7 @@ const Body = ({user, setUser}) => (
       <RouteWithComponentProps exact path="/" component={Home} componentProps={{user, setUser}} />
       <Route path="/account/:id" component={AccountPage} />
       <RouteWithComponentProps path="/friends/:id" component={FriendsPage} componentProps={{user}} />
-      <RouteWithComponentProps path="/friends" component={FriendsPage} componentProps={{user, setUser}} />
+      <RouteWithComponentProps path="/friends" component={Home} componentProps={{isFriends: true, user, setUser}} />
       <Route path="/about" component={AboutPage} />
       <Route path="/privacy" component={PrivacyPage} />
       <Route path="/receipt" component={ReceiptPage} />
