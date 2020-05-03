@@ -29,24 +29,53 @@ const AccountPage = () => {
   const {id: searchedUserId} = useParams();
   const [accountDetails, setUserAccountDetails] = useState();
   const [accountApps, setAccountApps] = useState([]);
+  const [accountDetailsError, setAccountDetailsError] = useState(false);
+  const [accountAppsError, setAccountAppsError] = useState(false);
+  const [accountAppsDetailsLoading, setAccountAppsDetailsLoading] = useState(false);
 
   useEffect(() => {
     async function getAccountData() {
-      if (!searchedUserId) {
-        return {};
+      const {
+        data: {
+          players: [accountData] = []
+        } = {},
+        meta: {
+          success: accountDataSuccess,
+          error_key: accountDataErrorKey,
+          code: accountDataErrorCode
+        }
+      } = await fetchAccountDetails(searchedUserId) || {data: {}};
+
+      if (accountDataSuccess) {
+        setUserAccountDetails(accountData);
+      } else {
+        setAccountDetailsError(accountDataErrorKey || `${accountDataErrorCode}`)
       }
 
-      const {data: {players: [accountData] = []} = {}} = await fetchAccountDetails(searchedUserId) || {};
+      const {
+        data: {
+          games: accountApps
+        } = {},
+        meta: {
+          success: appsDataSuccess,
+          error_key: appsDataErrorKey,
+          code: appsDataErrorCode
+        }
+      } = await fetchAccountApps(searchedUserId) || {data: {}};
 
-      // @TODO Unhandled case: Some accounts return `data.response: {}`
-      const {data: {games: accountApps} = {}} = await fetchAccountApps(searchedUserId) || {};
+      if (appsDataSuccess) {
+        setAccountApps(accountApps);
 
-      setUserAccountDetails(accountData);
-      setAccountApps(accountApps);
+        setAccountAppsDetailsLoading(true);
 
-      // Get apps extended details
-      const appsWithDetails = await getAppsWithDetails(accountApps);
-      setAccountApps(appsWithDetails);
+        // Get apps extended details
+        const appsWithDetails = await getAppsWithDetails(accountApps);
+        setAccountApps(appsWithDetails);
+
+        setAccountAppsDetailsLoading(false);
+      } else {
+        setAccountAppsError(appsDataErrorKey || `${appsDataErrorCode}`)
+      }
     }
 
     searchedUserId && getAccountData();
@@ -54,7 +83,9 @@ const AccountPage = () => {
 
   function resetPageData() {
     setUserAccountDetails(null);
-    setAccountApps([])
+    setAccountApps([]);
+    setAccountDetailsError(false);
+    setAccountAppsError(false);
   }
 
   const selectedApps = accountApps.filter(({tableData: {checked} = {}} = {}) => !!checked);
@@ -72,13 +103,16 @@ const AccountPage = () => {
           ...(!!searchedUserId && {hideLabel: true})
         }} />
         <br />
-          <div className="jumbotron">
-            { accountDetails ? (
-              <AccountDetails accountData={accountDetails} />
+        <div className="jumbotron">
+          { accountDetails ? (
+            <AccountDetails accountData={accountDetails} />
+          ) : accountDetailsError ? (
+              <div>There was a problem fetching your account information from Steam. If this problem persists, check <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy settings</a> and ensure the "My profile" setting is set to "Public".</div>
             ) : (
               <SectionLoader />
-            )}
-          </div>
+            )
+          }
+        </div>
         { accountDetails && accountApps.length > 0 ? (
           <AppsSelectionSummary
             accountData={accountDetails}
@@ -86,15 +120,19 @@ const AccountPage = () => {
               selectedApps : accountApps
             }
           />
-        ) : (
-          <SectionLoader />
-        )}
+        ) : accountAppsError ? (
+            <div>There was a problem fetching your library information from Steam. If this problem persists, make sure the <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">"Game details"</a> setting on your privacy page is set to "Public".</div>
+          ) : (
+            <SectionLoader />
+          )
+        }
         { accountApps.length > 0 ? (
           <AppsDetails
             accountApps={accountApps}
+            detailsLoading={accountAppsDetailsLoading}
             setAccountApps={setAccountApps}
           />
-        ) : (
+        ) : accountAppsError ? null : (
           <div className={`jumbotron`} style={{marginTop: '20px'}}>
             <SectionLoader />
           </div>

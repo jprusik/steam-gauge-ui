@@ -55,7 +55,13 @@ function checkRequestCache(requestURL) {
   return null;
 }
 
-function get({requestApi, fetchOptions, useCache=false}){
+// @TODO cancel in-flight requests if page changes
+function get({
+  fetchOptions,
+  requestApi,
+  returnErrorResponse = true,
+  useCache = false
+}){
   const baseFetchOptions = {
     accept: 'application/json',
     credentials: 'same-origin'
@@ -65,6 +71,7 @@ function get({requestApi, fetchOptions, useCache=false}){
 
   if (useCache) {
     const cachedResponse = checkRequestCache(apiPath);
+
     if (cachedResponse) {
       return cachedResponse;
     }
@@ -74,13 +81,18 @@ function get({requestApi, fetchOptions, useCache=false}){
     .then(checkResponseStatus)
     .then(setRequestCache)
     .then(response => response.json())
-    .catch(handleError);
+    .catch(error => handleError(error, returnErrorResponse));
 }
 
-// TODO: give user feedback on error
-// TODO: push error to health-monitoring service
-const handleError = (error) => {
-  console.error('Something went horribly wrong: '+error.status);
+// @TODO give user feedback on error
+// @TODO push error to health-monitoring service
+const handleError = (error, returnResponse = false) => {
+  console.error('Something went horribly wrong: ' + error.status);
+
+  // @TODO there's probably a better way to do this
+  if (returnResponse) {
+    return Promise.resolve(error.response.json());
+  }
 };
 
 export const checkLoginStatus = () => {
@@ -125,5 +137,10 @@ export const fetchAccountApps = (accountId) =>
 export const fetchFriendsList = (accountId) =>
   get({requestApi: `accounts/${accountId}/friends`, useCache: true});
 
-export const fetchAppDetails = (appId) =>
-  get({requestApi: `apps/${appId}`, useCache: true});
+export const fetchAppDetails = (appId, extendedData = false, signal) =>
+  extendedData ?
+    get({requestApi: `apps/${appId}?fields=developers,publishers,genres,time_to_beat`, useCache: true, returnErrorResponse: true, signal: signal}) :
+    get({requestApi: `apps/${appId}`, useCache: true, returnErrorResponse: true, signal});
+
+export const fetchAppDevelopers = (appId) =>
+  get({requestApi: `apps/${appId}/developers`, useCache: true});
