@@ -10,20 +10,28 @@ const App = (props) => {
   // empty object (instead of `null`) default for easier downstream destructuring
   const [user, setUser] = useState({});
   const [loginStateChecked, setLoginStateChecked] = useState(false);
+  const [checkLoginError, setCheckLoginError] = useState(false);
 
-  // TODO: When/How often do we want to check login status?
+  // @TODO When/How often do we want to check login status?
   async function maybeCheckLogin() {
     if (!user || !user.session_start) {
       const userData = await checkLoginStatus();
+      console.log('maybeCheckLogin -> userData', userData)
 
-      if (userData.session_start) {
-        setUser(userData)
+      if (!userData) {
+        // Either the server is down or the user is having connectivity issues
+        setCheckLoginError(true)
+      } else {
+        if (userData.session_start) {
+          setUser(userData)
+        }
       }
 
       setLoginStateChecked(true)
     }
   }
 
+  // @TODO use an event hook so it doesn't run on every re-render
   !loginStateChecked && maybeCheckLogin();
 
   return (
@@ -32,7 +40,7 @@ const App = (props) => {
         <MetaTags>
           {
           // global meta tags here
-          // TODO: clean up these metatags and reference static asset paths
+          // @TODO clean up these metatags and reference static asset paths
           // these lines prevent the site from being indexed
           process.env.REACT_APP_DISABLE_INDEXING_P &&
             <React.Fragment>
@@ -41,9 +49,9 @@ const App = (props) => {
             </React.Fragment>
           }
         </MetaTags>
-        <Header user={user} setUser={setUser} />
-        <Body user={user} setUser={setUser} />
-        {/* TODO: App & Search Loader  */}
+        <Header setUser={setUser} user={user} />
+        <Body checkLoginError={checkLoginError} setUser={setUser} user={user} />
+        {/* @TODO App & Search Loader  */}
         <Footer />
       </div>
     </Router>
