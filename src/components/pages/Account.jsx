@@ -4,7 +4,7 @@ import MetaTags from 'react-meta-tags';
 import {
   fetchAccountApps,
   fetchAccountDetails,
-  fetchAppDetails
+  fetchAppDetails,
 } from '../../actions';
 import SearchForm from '../SearchForm';
 import AccountDetails from '../AccountDetails';
@@ -12,9 +12,8 @@ import AppsSelectionSummary from '../AppsSelectionSummary';
 import AppsDetails from '../AppsDetails';
 import {SectionLoader} from '../Loader';
 
-const getAppsWithDetails = apps =>{
-  // @TODO: cancel in-flight requests if page changes
-  return Promise.all(apps.map(async app => {
+const getAppsWithDetails = apps =>
+  Promise.all(apps.map(async app => {
     const {appid} = app || {};
     const {data: appDetails = {}} = appid ?
       await fetchAppDetails(appid, true) : {};
@@ -23,7 +22,7 @@ const getAppsWithDetails = apps =>{
       ...appDetails,
       ...app
     };
-  }))};
+  }));
 
 const AccountPage = () => {
   const {id: searchedUserId} = useParams();
@@ -60,8 +59,8 @@ const AccountPage = () => {
           success: appsDataSuccess,
           error_key: appsDataErrorKey,
           code: appsDataErrorCode
-        }
-      } = await fetchAccountApps(searchedUserId) || {data: {}};
+        } = {}
+      } = await fetchAccountApps(searchedUserId) || {};
 
       if (appsDataSuccess) {
         setAccountApps(accountApps);
@@ -79,6 +78,8 @@ const AccountPage = () => {
     }
 
     searchedUserId && getAccountData();
+
+    return () => getAccountData();
   }, [searchedUserId]);
 
   function resetPageData() {
@@ -107,11 +108,10 @@ const AccountPage = () => {
           { accountDetails ? (
             <AccountDetails accountData={accountDetails} />
           ) : accountDetailsError ? (
-              <div>There was a problem fetching your account information from Steam. If this problem persists, check <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy settings</a> and ensure the "My profile" setting is set to "Public".</div>
-            ) : (
-              <SectionLoader />
-            )
-          }
+            <div>There was a problem fetching your account information from Steam. If this problem persists, check <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy settings</a> and ensure the "My profile" setting is set to "Public".</div>
+          ) : (
+            <SectionLoader />
+          )}
         </div>
         { accountDetails && accountApps.length > 0 ? (
           <AppsSelectionSummary
@@ -121,11 +121,10 @@ const AccountPage = () => {
             }
           />
         ) : accountAppsError ? (
-            <div>There was a problem fetching your library information from Steam. If this problem persists, make sure the <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">"Game details"</a> setting on your privacy page is set to "Public".</div>
-          ) : (
-            <SectionLoader />
-          )
-        }
+          <div>There was a problem fetching your library information from Steam. If this problem persists, make sure the "Game details" setting on <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy page</a> is set to "Public".</div>
+        ) : (
+          <SectionLoader />
+        )}
         { accountApps.length > 0 ? (
           <AppsDetails
             accountApps={accountApps}

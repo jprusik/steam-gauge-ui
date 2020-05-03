@@ -27,27 +27,50 @@ const getAccountsApps = accountsDetails =>
 const FriendsPage = ({user, setUser}) => {
   const {id: searchedUserId} = useParams();
   const [userFriends, setUserFriends] = useState();
+  const [multiplayerAppsError, setMultiplayerAppsError] = useState(false);
+  const [friendsListError, setFriendsListError] = useState(false);
 
   useEffect(() => {
     async function getUserFriendsData() {
-      if (!searchedUserId) {
-        return {};
+      // Get list of multiplayer apps
+      const {
+        data: {
+          applist: {
+            apps: multiplayerApps = []
+          } = {}
+        } = {},
+        meta: {
+          success: multiplayerAppsSuccess,
+          error_key: multiplayerAppsErrorKey,
+          code: multiplayerAppsErrorCode
+        } = {}
+      } = await fetchMultiplayerApps() || {};
+
+      if (!multiplayerAppsSuccess) {
+        setMultiplayerAppsError(multiplayerAppsErrorKey || `${multiplayerAppsErrorCode}`);
+
+        return;
       }
 
-      const {data: multiplayerAppsData} = await fetchMultiplayerApps() || {};
-      const {data: friendsListData} = await fetchFriendsList(searchedUserId) || {};
-
+      // Get list of friends
       const {
-        applist: {
-          apps: multiplayerApps = []
-        } = {}
-      } = multiplayerAppsData || {};
+        data: {
+          friendslist: {
+            friends: userFriendsList = []
+          } = {}
+        } = {},
+        meta: {
+          success: friendsListSuccess,
+          error_key: friendsListErrorKey,
+          code: friendsListErrorCode
+        }
+      } = await fetchFriendsList(searchedUserId) || {data: {}};
 
-      const {
-        friendslist: {
-          friends: userFriendsList = []
-        } = {}
-      } = friendsListData || {}
+      if (!friendsListSuccess) {
+        setFriendsListError(friendsListErrorKey || `${friendsListErrorCode}`);
+
+        return;
+      }
 
       // assemble comma-separated ids of all friends
       const userFriendsIds = userFriendsList
@@ -71,6 +94,8 @@ const FriendsPage = ({user, setUser}) => {
     }
 
     searchedUserId && getUserFriendsData();
+
+    return () => getUserFriendsData();
   }, [searchedUserId]);
 
   function resetPageData() {
@@ -98,6 +123,10 @@ const FriendsPage = ({user, setUser}) => {
                 <FriendsSummary {...{userId: searchedUserId, ...userFriends}} />
                 <FriendRows {...{userId: searchedUserId, ...userFriends}} />
               </React.Fragment>
+            ) : friendsListError ? (
+              <div>There was a problem fetching your list of friends from Steam. If this problem persists, make sure the "Friends List" setting on <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy page</a> is set to "Public".</div>
+            ) : multiplayerAppsError ? (
+              <div>There was a problem fetching the multiplayer list.</div>
             ) : (
               <SectionLoader />
             )}

@@ -126,7 +126,7 @@ export const resolveUsername = (username) =>
   get({requestApi: `username/${username}`, useCache: true});
 
 export const fetchMultiplayerApps = () =>
-  get({requestApi: 'apps?filter_multiplayer=true', useCache: true});
+  get({requestApi: 'apps?filter_multiplayer=true', useCache: true, returnErrorResponse: true});
 
 export const fetchAccountDetails = (accountId) =>
   get({requestApi: `accounts/${accountId}`, useCache: true});
@@ -135,7 +135,7 @@ export const fetchAccountApps = (accountId) =>
   get({requestApi: `accounts/${accountId}/apps`, useCache: true});
 
 export const fetchFriendsList = (accountId) =>
-  get({requestApi: `accounts/${accountId}/friends`, useCache: true});
+  get({requestApi: `accounts/${accountId}/friends`, useCache: true, returnErrorResponse: true});
 
 export const fetchAppDetails = (appId, extendedData = false, signal) =>
   extendedData ?
