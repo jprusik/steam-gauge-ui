@@ -1,42 +1,26 @@
-/** @jsx jsx */
 import {Fragment} from 'react';
-import {css, jsx} from '@emotion/core';
+import styled from '@emotion/styled';
 import Tooltip from '@material-ui/core/Tooltip';
 import {AppBanner} from './AppBanner';
 
-const appNameStyles = css`
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  min-width: 150px;
-`;
-
-const tooltipImageStyles = css`
-  flex: 0 1 32px;
-  margin-right: 1em;
-  width: 32px;
-`;
-
-const appNameTextStyles = css`
-  align-items: flex-start;
-  display: flex;
-  flex-flow: column nowrap;
-  flex: 2 2 auto;
-`;
-
-export const AppName = ({img_logo_url, img_icon_url: iconImage, name, app_website, appid}) => (
-  <div css={appNameStyles}>
-    { iconImage &&
+export const AppName = ({
+  app_website,
+  appid,
+  img_icon_url,
+  img_logo_url,
+  name,
+}) => (
+  <AppNameContainer>
+    { img_icon_url &&
       <Tooltip title={<AppBanner {...{appid, img_logo_url}} />} arrow>
-        <img
+        <TooltipImage
           alt={`${name || appid} icon`}
-          css={tooltipImageStyles}
           loading="lazy"
-          src={`https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/${appid}/${iconImage}.jpg`}
+          src={`https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/${appid}/${img_icon_url}.jpg`}
         />
       </Tooltip>
     }
-    <div css={appNameTextStyles}>
+    <AppNameText>
       <a
         href={`https://store.steampowered.com/app/${appid}`}
         rel="noopener noreferrer"
@@ -54,6 +38,26 @@ export const AppName = ({img_logo_url, img_icon_url: iconImage, name, app_websit
           </a>
         </Fragment>
       }
-    </div>
-  </div>
+    </AppNameText>
+  </AppNameContainer>
 );
+
+const AppNameContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 150px;
+`;
+
+const TooltipImage = styled.img`
+  flex: 0 1 32px;
+  margin-right: 1em;
+  width: 32px;
+`;
+
+const AppNameText = styled.div`
+  display: flex;
+  flex: 2 2 auto;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+`;

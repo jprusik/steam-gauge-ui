@@ -1,8 +1,7 @@
-/** @jsx jsx */
-import {css, jsx} from '@emotion/core';
+import {CommaDelimitedUnorderedList} from './CommaDelimitedUnorderedList';
 
 export const AppGenres = ({genres = []}) => (
-  <ul css={css`list-style: none;`}>
+  <CommaDelimitedUnorderedList>
     { genres.map(genre =>
       <li key={genre}>
         <a
@@ -13,5 +12,5 @@ export const AppGenres = ({genres = []}) => (
         </a>
       </li>
     ) }
-  </ul>
+  </CommaDelimitedUnorderedList>
 );

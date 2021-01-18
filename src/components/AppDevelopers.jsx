@@ -1,8 +1,7 @@
-/** @jsx jsx */
-import {css, jsx} from '@emotion/core';
+import {CommaDelimitedUnorderedList} from './CommaDelimitedUnorderedList';
 
 export const AppDevelopers = ({developers = []}) => (
-  <ul css={css`list-style: none;`}>
+  <CommaDelimitedUnorderedList>
     { developers.map(developer =>
       <li key={developer}>
         <a
@@ -13,5 +12,5 @@ export const AppDevelopers = ({developers = []}) => (
         </a>
       </li>
     ) }
-  </ul>
+  </CommaDelimitedUnorderedList>
 );
