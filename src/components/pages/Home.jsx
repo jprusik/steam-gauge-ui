@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import {css, jsx} from '@emotion/core';
+/** @jsxImportSource @emotion/react */
+import {css} from '@emotion/core';
 import AccountOptions from '../AccountOptions';
 import SearchForm from '../SearchForm';
 import SpecialNotice from '../SpecialNotice';

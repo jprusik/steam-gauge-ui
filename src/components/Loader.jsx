@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import {css, jsx, keyframes} from '@emotion/core';
+/** @jsxImportSource @emotion/react */
+import {css, keyframes} from '@emotion/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 const spin = keyframes`

@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import {css, jsx} from '@emotion/core';
+/** @jsxImportSource @emotion/react */
+import {css} from '@emotion/core';
 
 const bugReportLinkStyles = css`
   color: #8bb9e0;

@@ -1,6 +1,6 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import {Fragment} from 'react';
-import {css, jsx} from '@emotion/core';
+import {css} from '@emotion/core';
 import {personaStateMap} from '../constants/personaStates';
 import {accountCreationDate, timeSince} from '../utils/dates';
 

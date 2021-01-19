@@ -1,6 +1,6 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import {Fragment, useState} from 'react';
-import {css, jsx} from '@emotion/core';
+import {css} from '@emotion/core';
 import {timeSince} from '../utils/dates';
 import ShareBar from './ShareBar';
 import BugReportLink from './BugReportLink';
