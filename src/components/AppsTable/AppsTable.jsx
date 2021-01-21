@@ -20,6 +20,7 @@ export function AppsTable({ columns, data }) {
   const {
     canNextPage,
     canPreviousPage,
+    footerGroups,
     getTableBodyProps,
     getTableProps,
     headerGroups,
@@ -29,7 +30,6 @@ export function AppsTable({ columns, data }) {
     preGlobalFilteredRows,
     prepareRow,
     previousPage,
-    selectedFlatRows,
     setGlobalFilter,
     setPageSize,
     state: { pageIndex, pageSize, globalFilter },
@@ -82,7 +82,7 @@ export function AppsTable({ columns, data }) {
               );
             })}
           </tbody>
-          <AppsTableFooter columns={columns} selectedRows={selectedFlatRows} />
+          <AppsTableFooter footerGroups={footerGroups} />
         </table>
       </TableContainer>
       <AppsTablePagination {...{

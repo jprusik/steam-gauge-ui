@@ -1,6 +1,6 @@
-import {CommaDelimitedUnorderedList} from './CommaDelimitedUnorderedList';
+import {CommaDelimitedUnorderedList} from '../CommaDelimitedUnorderedList';
 
-export const AppPublishers = ({publishers = []}) => (
+export const Publishers = ({value: publishers = []}) => (
   <CommaDelimitedUnorderedList>
     { publishers.map(publisher =>
       <li key={publisher}>

@@ -1,9 +1,9 @@
 import {Fragment} from 'react';
 import styled from '@emotion/styled';
 import Tooltip from '@material-ui/core/Tooltip';
-import {AppBanner} from './AppBanner';
+import {AppBanner} from '../AppBanner';
 
-export const AppName = ({
+export const Name = ({
   app_website,
   appid,
   img_icon_url,

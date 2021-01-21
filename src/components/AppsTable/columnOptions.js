@@ -1,216 +1,413 @@
-import { AppDevelopers } from '../AppDevelopers';
-import { AppGenres } from '../AppGenres';
-import { AppInstallSizes } from '../AppInstallSizes';
-import { AppName } from '../AppName';
-import { AppPublishers } from '../AppPublishers';
-import { AppTimeToBeat } from '../AppTimeToBeat';
+import { useMemo } from 'react';
+import {
+  ControllerSupport,
+  Developers,
+  Genres,
+  InstallSizes,
+  Name,
+  Publishers,
+  TimePlayed,
+  TimeToBeat,
+} from '../AppData';
 import { minutesToHours, pricePerHourRatio } from '../../utils/math';
-import { AppBoolean } from '../AppBoolean';
-import { Checkbox } from '../Checkbox';
+import { Boolean } from '../AppData/Boolean';
+import { Checkbox } from './Checkbox';
+import {
+  booleanCount,
+  countByCategory,
+  numberValueSum,
+  uniqueValueCount,
+} from '../../utils/totals';
+import {appFields} from '../../constants/appFields';
 
 export const columnOptions = () => [
   {
     id: 'selection',
+    disableSortBy: true,
+    // @TODO: add sorting for selection
+    // accessor: (row, index, meta) => !!meta.isSelected,
+    // sortType: ({values}, {values: nextValues}) => (
+    //   values.selection && !nextValues.selection ?
+    //     -1 : 0
+    // ),
+    Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
+    Footer: ({ selectedFlatRows }) => {
+      return `${selectedFlatRows.length} selected`;
+    },
     Header: ({ getToggleAllRowsSelectedProps }) => (
       <Checkbox {...getToggleAllRowsSelectedProps()} />
     ),
-    Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
+    minWidth: 30,
   },
-  { Header: 'Type', accessor: 'app_type', width: 47 },
-  { Header: 'ID', accessor: 'appid', width: 42 },
+  { accessor: appFields.APP_TYPE, Header: 'Type', minWidth: 40 },
+  { accessor: appFields.APPID, Header: 'ID', minWidth: 26 },
   {
+    accessor: appFields.NAME,
+    Cell: ({ row: { original } }) => <Name {...original} />,
     Header: 'Title',
-    accessor: 'name',
-    Cell: ({ row: { original } }) => <AppName {...original} />,
-    width: 73,
+    minWidth: 36,
   },
   {
+    accessor: appFields.PLAYTIME_FOREVER,
+    Cell: ({
+      row: {
+        original: { [appFields.PLAYTIME_FOREVER]: value },
+      },
+    }) => <TimePlayed value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const valueSum = useMemo(
+        () => numberValueSum(selectedFlatRows, appFields.PLAYTIME_FOREVER),
+        [selectedFlatRows]
+      );
+
+      return `Total: ${minutesToHours(valueSum)} hrs`;
+    },
     Header: 'Hours Played',
-    accessor: 'playtime_forever',
+    minWidth: 80,
     type: 'numeric',
-    Cell: ({
-      row: {
-        original: { playtime_forever },
-      },
-    }) => minutesToHours(playtime_forever, 1),
-    width: 88,
   },
   {
+    accessor: ({time_to_beat}) => {
+      // @TODO: `time_to_beat` can be either null or undefined. Update
+      // API to omit field values when no records are found.
+      if (time_to_beat?.hltb_id) {
+        const minutesToBeatValues = [
+          ...(time_to_beat.minutes_to_beat_completionist > 0 ? [time_to_beat.minutes_to_beat_completionist] : []),
+          ...(time_to_beat.minutes_to_beat_extras > 0 ? [time_to_beat.minutes_to_beat_extras] : []),
+          ...(time_to_beat.minutes_to_beat_main_game > 0 ? [time_to_beat.minutes_to_beat_main_game] : [])
+        ];
+
+        const minutesToBeatMin = minutesToHours(Math.min(...minutesToBeatValues), 1);
+        const minutesToBeatMax = minutesToHours(Math.max(...minutesToBeatValues), 1);
+
+        return {
+          minutesToBeatMin,
+          minutesToBeatMax,
+          hltbId: time_to_beat.hltb_id
+        }
+      }
+
+      return {};
+    },
+    Cell: ({value}) => <TimeToBeat value={value} />,
     Header: 'Time to Beat',
-    accessor: 'timeToBeat',
-    Cell: ({ row: { original } }) => <AppTimeToBeat {...original} />,
-    width: 68,
+    id: 'timeToBeat',
+    minWidth: 50,
+    sortType: (value, nextValue) => (
+      (!value?.minutesToBeatMin || 0) >
+      (!nextValue?.minutesToBeatMin || 0) ?
+        -1 : 1
+    ),
   },
   {
-    Header: 'Regular Price (USD)',
-    accessor: 'store_price_default_usd',
-    type: 'currency',
+    accessor: appFields.STORE_PRICE_DEFAULT_USD,
     emptyValue: '',
-    width: 81,
+    Header: 'Regular Price (USD)',
+    minWidth: 73,
+    type: 'currency',
   },
   {
+    accessor: ({
+      [appFields.STORE_PRICE_DEFAULT_USD]: price,
+      [appFields.PLAYTIME_FOREVER]: playtime,
+    }) => (price ? pricePerHourRatio(price, playtime) : null),
     Header: 'Price / Hours Played ratio',
-    accessor: 'priceHoursRatio',
+    minWidth: 92,
     type: 'numeric',
-    Cell: ({
-      row: {
-        values: { store_price_default_usd, playtime_forever },
-      },
-    }) =>
-      store_price_default_usd
-        ? pricePerHourRatio(store_price_default_usd, playtime_forever)
-        : null,
-    width: 56,
   },
   {
+    accessor: appFields.RELEASE_DATE,
     Header: 'Release Date',
-    accessor: 'release_date',
+    minWidth: 52,
     type: 'date',
-    width: 62,
   },
   {
+    accessor: appFields.DEVELOPERS,
+    Cell: ({
+      row: {
+        values: { [appFields.DEVELOPERS]: value },
+      },
+    }) => <Developers value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const itemList = useMemo(
+        () => uniqueValueCount(selectedFlatRows, appFields.DEVELOPERS),
+        [selectedFlatRows]
+      );
+
+      return `${itemList.length} unique developer(s)`;
+    },
     Header: 'Developers',
-    accessor: 'developers',
-    Cell: ({
-      row: {
-        values: { developers },
-      },
-    }) => <AppDevelopers developers={developers} />,
-    width: 77,
+    minWidth: 66,
   },
   {
+    accessor: appFields.PUBLISHERS,
+    Cell: ({
+      row: {
+        values: { [appFields.PUBLISHERS]: value },
+      },
+    }) => <Publishers value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const itemList = useMemo(
+        () => uniqueValueCount(selectedFlatRows, appFields.PUBLISHERS),
+        [selectedFlatRows]
+      );
+
+      return `${itemList.length} unique publisher(s)`;
+    },
     Header: 'Publishers',
-    accessor: 'publishers',
-    Cell: ({
-      row: {
-        values: { publishers },
-      },
-    }) => <AppPublishers publishers={publishers} />,
-    width: 74,
+    minWidth: 64,
   },
   {
-    Header: 'Metascore',
-    accessor: 'metascore',
-    type: 'numeric',
+    accessor: appFields.METASCORE,
     Cell: ({
       row: {
-        values: { metascore, metascore_link },
+        values: {
+          [appFields.METASCORE]: metascore,
+          [appFields.METASCORE_LINK]: metascore_link,
+        },
       },
     }) => <a href={metascore_link}>{metascore}</a>,
-    width: 74,
-  },
-  {
-    Header: 'Windows',
-    accessor: 'os_windows',
-    type: 'boolean',
-    width: 67,
-    Cell: ({
-      row: {
-        values: { os_windows },
-      },
-    }) => <AppBoolean value={os_windows} />,
-  },
-  {
-    Header: 'Mac',
-    accessor: 'os_mac',
-    type: 'boolean',
-    width: 45,
-    Cell: ({
-      row: {
-        values: { os_mac },
-      },
-    }) => <AppBoolean value={os_mac} />,
-  },
-  {
-    Header: 'Linux',
-    accessor: 'os_linux',
-    type: 'boolean',
-    width: 50,
-    Cell: ({
-      row: {
-        values: { os_linux },
-      },
-    }) => <AppBoolean value={os_linux} />,
-  },
-  {
-    Header: 'Install Size',
-    accessor: 'size_mb',
+    Header: 'Metascore',
+    minWidth: 61,
     type: 'numeric',
+  },
+  {
+    accessor: appFields.ACHIEVEMENTS_ENABLED,
     Cell: ({
       row: {
-        values: { size_mb = 0 },
+        values: { [appFields.ACHIEVEMENTS_ENABLED]: value },
       },
-    }) => <AppInstallSizes sizeMB={size_mb} missingDataPlaceholder />,
-    width: 91,
+    }) => <Boolean value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const total = useMemo(
+        () => booleanCount(selectedFlatRows, appFields.ACHIEVEMENTS_ENABLED),
+        [selectedFlatRows]
+      );
+
+      return `${total} game(s) with achievements`;
+    },
+    Header: 'Achievements',
+    minWidth: 80,
+    type: 'boolean',
   },
-  { Header: 'Controller Support', accessor: 'controller_support', width: 71 },
   {
+    accessor: appFields.OS_WINDOWS,
+    Cell: ({
+      row: {
+        values: { [appFields.OS_WINDOWS]: value },
+      },
+    }) => <Boolean value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const total = useMemo(
+        () => booleanCount(selectedFlatRows, appFields.OS_WINDOWS),
+        [selectedFlatRows]
+      );
+
+      return `${total} Windows game(s)`;
+    },
+    Header: 'Windows',
+    minWidth: 56,
+    type: 'boolean',
+  },
+  {
+    accessor: appFields.OS_MAC,
+    Header: 'Mac',
+    Cell: ({
+      row: {
+        values: { [appFields.OS_MAC]: value },
+      },
+    }) => <Boolean value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const total = useMemo(
+        () => booleanCount(selectedFlatRows, appFields.OS_MAC),
+        [selectedFlatRows]
+      );
+
+      return `${total} Mac game(s)`;
+    },
+    minWidth: 36,
+    type: 'boolean',
+  },
+  {
+    accessor: appFields.OS_LINUX,
+    Cell: ({
+      row: {
+        values: { [appFields.OS_LINUX]: value },
+      },
+    }) => <Boolean value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const total = useMemo(
+        () => booleanCount(selectedFlatRows, appFields.OS_LINUX),
+        [selectedFlatRows]
+      );
+
+      return `${total} Linux game(s)`;
+    },
+    Header: 'Linux',
+    minWidth: 44,
+    type: 'boolean',
+  },
+  {
+    accessor: appFields.SIZE_MB,
+    Cell: ({
+      row: {
+        values: { [appFields.SIZE_MB]: value = 0 },
+      },
+    }) => <InstallSizes value={value} missingDataPlaceholder />,
+    Header: 'Install Size',
+    minWidth: 46,
+    type: 'numeric',
+  },
+  {
+    accessor: appFields.CONTROLLER_SUPPORT,
+    Cell: ({
+      row: {
+        values: { [appFields.CONTROLLER_SUPPORT]: value },
+      },
+    }) => <ControllerSupport value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const categories = useMemo(
+        () => countByCategory(selectedFlatRows, appFields.CONTROLLER_SUPPORT),
+        [selectedFlatRows]
+      );
+
+      return Object.keys(categories).map((category) => (
+        <div key={`${category}-count`}>
+          {category}: {categories[category]}
+        </div>
+      ));
+    },
+    Header: 'Controller Support',
+    minWidth: 70,
+  },
+  {
+    accessor: appFields.MULTIPLAYER,
+    Cell: ({
+      row: {
+        values: { [appFields.MULTIPLAYER]: value },
+      },
+    }) => <Boolean value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const total = useMemo(
+        () => booleanCount(selectedFlatRows, appFields.OS_LINUX),
+        [selectedFlatRows]
+      );
+
+      return `${total} multiplayer game(s)`;
+    },
     Header: 'Multiplayer',
-    accessor: 'multiplayer',
-    Cell: ({
-      row: {
-        values: { multiplayer },
-      },
-    }) => <AppBoolean value={multiplayer} />,
-    width: 76,
+    minWidth: 70,
   },
   {
+    accessor: appFields.GENRES,
+    Cell: ({
+      row: {
+        values: { [appFields.GENRES]: value },
+      },
+    }) => <Genres value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const itemList = useMemo(
+        () => uniqueValueCount(selectedFlatRows, appFields.GENRES),
+        [selectedFlatRows]
+      );
+
+      return `${itemList.length} unique genre(s)`;
+    },
     Header: 'Genres',
-    accessor: 'genres',
-    Cell: ({
-      row: {
-        values: { genres },
-      },
-    }) => <AppGenres genres={genres} />,
-    width: 59,
+    minWidth: 50,
   },
   {
+    accessor: appFields.STEAMCLOUD_ENABLED,
+    Cell: ({
+      row: {
+        values: { [appFields.STEAMCLOUD_ENABLED]: value },
+      },
+    }) => <Boolean value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const total = useMemo(
+        () => booleanCount(selectedFlatRows, appFields.STEAMCLOUD_ENABLED),
+        [selectedFlatRows]
+      );
+
+      return `${total} Steam Cloud game(s)`;
+    },
     Header: 'Steam Cloud',
-    accessor: 'steamcloud_enabled',
+    minWidth: 52,
     type: 'boolean',
-    Cell: ({
-      row: {
-        values: { steamcloud_enabled },
-      },
-    }) => <AppBoolean value={steamcloud_enabled} />,
   },
   {
+    accessor: appFields.TRADINGCARDS_ENABLED,
     Header: 'Trading Cards',
-    accessor: 'tradingcards_enabled',
-    type: 'boolean',
     Cell: ({
       row: {
-        values: { tradingcards_enabled },
+        values: { [appFields.TRADINGCARDS_ENABLED]: value },
       },
-    }) => <AppBoolean value={tradingcards_enabled} />,
+    }) => <Boolean value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const total = useMemo(
+        () => booleanCount(selectedFlatRows, appFields.TRADINGCARDS_ENABLED),
+        [selectedFlatRows]
+      );
+
+      return `${total} Trading Card game(s)`;
+    },
+    minWidth: 56,
+    type: 'boolean',
   },
   {
+    accessor: appFields.WORKSHOP_ENABLED,
+    Cell: ({
+      row: {
+        values: { [appFields.WORKSHOP_ENABLED]: value },
+      },
+    }) => <Boolean value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const total = useMemo(
+        () => booleanCount(selectedFlatRows, appFields.WORKSHOP_ENABLED),
+        [selectedFlatRows]
+      );
+
+      return `${total} Steam Workshop game(s)`;
+    },
     Header: 'Steam Workshop',
-    accessor: 'workshop_enabled',
+    minWidth: 66,
     type: 'boolean',
-    Cell: ({
-      row: {
-        values: { workshop_enabled },
-      },
-    }) => <AppBoolean value={workshop_enabled} />,
   },
   {
+    accessor: appFields.STATS_ENABLED,
+    Cell: ({
+      row: {
+        values: { [appFields.STATS_ENABLED]: value },
+      },
+    }) => <Boolean value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const total = useMemo(
+        () => booleanCount(selectedFlatRows, appFields.STATS_ENABLED),
+        [selectedFlatRows]
+      );
+
+      return `${total} stats-enabled game(s)`;
+    },
     Header: 'Stats',
-    accessor: 'stats_enabled',
+    minWidth: 40,
     type: 'boolean',
-    Cell: ({
-      row: {
-        values: { stats_enabled },
-      },
-    }) => <AppBoolean value={stats_enabled} />,
   },
   {
-    Header: 'HDR',
-    accessor: 'hdr',
+    accessor: appFields.HDR,
     Cell: ({
       row: {
-        values: { hdr },
+        values: { [appFields.HDR]: value },
       },
-    }) => <AppBoolean value={hdr} />,
+    }) => <Boolean value={value} />,
+    Footer: ({ selectedFlatRows }) => {
+      const total = useMemo(
+        () => booleanCount(selectedFlatRows, appFields.HDR),
+        [selectedFlatRows]
+      );
+
+      return `${total} HDR-enabled game(s)`;
+    },
+    Header: 'HDR',
+    minWidth: 38,
   },
 ];

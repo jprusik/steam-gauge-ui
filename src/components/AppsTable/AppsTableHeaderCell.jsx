@@ -7,9 +7,10 @@ export const AppsTableHeaderCell = ({
   headerProps,
   isSorted,
   isSortedDesc,
+  minWidth
 }) => (
   <TableHeader isSorted={isSorted} {...headerProps}>
-    <TableHeaderContent>
+    <TableHeaderContent minWidth={minWidth}>
       {children}
       <SortIcon
         order={isSorted ? (isSortedDesc ? 'desc' : 'asc') : null}
@@ -24,7 +25,6 @@ const TableHeader = styled.th`
   padding: 1em 0.5em;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
   font-size: 1em;
-  ${({width}) => width ?  `width: ${width}px;` : ''}
 `;
 
 const TableHeaderContent = styled.div`
@@ -32,4 +32,5 @@ const TableHeaderContent = styled.div`
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
+  ${({minWidth}) => minWidth ?  `min-width: ${minWidth}px;` : ''}
 `;

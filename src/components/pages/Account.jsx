@@ -6,17 +6,24 @@ import {
   fetchAccountDetails,
   fetchAppDetails,
 } from '../../actions';
-import SearchForm from '../SearchForm';
+import {AppsDetails} from '../AppsTable/AppsDetails';
+import {SectionLoader} from '../Loader';
 import AccountDetails from '../AccountDetails';
 import AppsSelectionSummary from '../AppsSelectionSummary';
-import AppsDetails from '../AppsDetails';
-import {SectionLoader} from '../Loader';
+import SearchForm from '../SearchForm';
+
+const controller = new AbortController();
+const signal = controller.signal;
+
+function abortRequests() {
+  controller.abort();
+}
 
 const getAppsWithDetails = apps =>
   Promise.all(apps.map(async app => {
     const {appid} = app || {};
     const {data: appDetails = {}} = appid ?
-      await fetchAppDetails(appid, true) : {};
+      await fetchAppDetails(appid, true, signal) : {};
 
     return {
       ...appDetails,
@@ -83,13 +90,13 @@ const AccountPage = () => {
   }, [searchedUserId]);
 
   function resetPageData() {
+    // async requests need to be cancelled before unmounting components
+    abortRequests();
     setUserAccountDetails(null);
     setAccountApps([]);
     setAccountDetailsError(false);
     setAccountAppsError(false);
   }
-
-  const selectedApps = accountApps.filter(({tableData: {checked} = {}} = {}) => !!checked);
 
   return (
     <React.Fragment>
@@ -116,21 +123,15 @@ const AccountPage = () => {
         { accountDetails && accountApps.length > 0 ? (
           <AppsSelectionSummary
             accountData={accountDetails}
-            appsSelection={selectedApps.length > 0 ?
-              selectedApps : accountApps
-            }
+            appsSelection={accountApps}
           />
         ) : accountAppsError ? (
           <div>There was a problem fetching your library information from Steam. If this problem persists, make sure the "Game details" setting on <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy page</a> is set to "Public".</div>
         ) : (
           <SectionLoader />
         )}
-        { accountApps.length > 0 ? (
-          <AppsDetails
-            accountApps={accountApps}
-            detailsLoading={accountAppsDetailsLoading}
-            setAccountApps={setAccountApps}
-          />
+        { accountApps.length > 0 && !accountAppsDetailsLoading ? (
+          <AppsDetails data={accountApps} />
         ) : accountAppsError ? null : (
           <div className={`jumbotron`} style={{marginTop: '20px'}}>
             <SectionLoader />

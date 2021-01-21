@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { forwardRef, useEffect, useRef } from 'react';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
@@ -13,7 +14,7 @@ export const Checkbox = forwardRef(
     }, [resolvedRef, indeterminate])
 
     return (
-      <label>
+      <CheckboxLabel>
         {indeterminate ?
           <IndeterminateCheckBoxIcon /> :
           rest.checked ?
@@ -21,7 +22,13 @@ export const Checkbox = forwardRef(
             <CheckBoxOutlineBlank />
         }
         <input type="checkbox" ref={resolvedRef} {...rest} hidden />
-      </label>
+      </CheckboxLabel>
     )
   }
 );
+
+const CheckboxLabel = styled.label`
+  display: flex;
+  justify-content: center;
+  margin: 0;
+`;

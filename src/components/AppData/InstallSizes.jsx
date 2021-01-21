@@ -1,9 +1,9 @@
 import React from 'react';
 import Remove from '@material-ui/icons/Remove';
 
-export const AppInstallSizes = ({
+export const InstallSizes = ({
   missingDataPlaceholder = false,
-  sizeMB = 0
+  value: sizeMB = 0
 }) => {
   if (!sizeMB || sizeMB === 0) {
     return missingDataPlaceholder ?
@@ -14,8 +14,11 @@ export const AppInstallSizes = ({
 
   return (
     <div>
-      { sizeMB > 1000 && <div>{sizeGB} GB</div> }
-      { sizeMB < 1000 && <div>{sizeMB} MB</div> }
+      { sizeMB > 1000 ? (
+        <div>{sizeGB} GB</div>
+      ) : (
+        <div>{sizeMB} MB</div>
+      )}
     </div>
   );
 };
