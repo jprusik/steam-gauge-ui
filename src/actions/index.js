@@ -24,13 +24,15 @@ function setRequestCache(response) {
   response
     .clone() // don't consume the original promise resolution
     .json()
-    .then(data =>
-      data.success && // do not cache JSON response if there was a service error
-      localStorage.setItem(requestPath, JSON.stringify({
-        datetime:Date.now(),
-        ...data
-      }))
-    );
+    .then(data => {
+      // do not cache JSON response if there was a service error
+      if (data.meta.success) {
+        localStorage.setItem(requestPath, JSON.stringify({
+          datetime:Date.now(),
+          ...data
+        }));
+      }
+    });
 
   return response;
 }
