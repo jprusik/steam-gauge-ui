@@ -27,7 +27,7 @@ export const PriceHoursRatio = {
       [selectedFlatRows]
     );
 
-    return pricePerHourRatio(priceTotal, playtimeTotal);
+    return `$${pricePerHourRatio(priceTotal, playtimeTotal)} / hr`;
   },
   minWidth: 92,
   type: 'numeric',

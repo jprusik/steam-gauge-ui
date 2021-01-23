@@ -1,8 +1,20 @@
+import styled from '@emotion/styled';
 import { Checkbox } from 'components/AppsTable/Checkbox';
 
 export const Selection = {
   id: 'selection',
   accessor: (row, index, meta) => !!meta.isSelected,
+  Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
+  Footer: ({ selectedFlatRows }) => (
+    <SelectionCellValue>
+      {selectedFlatRows.length} selected
+    </SelectionCellValue>
+  ),
+  footerSpan: 4,
+  Header: ({ getToggleAllRowsSelectedProps }) => (
+    <Checkbox {...getToggleAllRowsSelectedProps()} />
+  ),
+  minWidth: 30,
   sortType: (
     {isSelected}, {isSelected: nextIsSelected}
     // values, nextValues
@@ -10,12 +22,8 @@ export const Selection = {
     isSelected && !nextIsSelected ?
       -1 : 0
   ),
-  Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
-  Footer: ({ selectedFlatRows }) => {
-    return `${selectedFlatRows.length} selected`;
-  },
-  Header: ({ getToggleAllRowsSelectedProps }) => (
-    <Checkbox {...getToggleAllRowsSelectedProps()} />
-  ),
-  minWidth: 30,
 };
+
+const SelectionCellValue = styled.div`
+  font-size: 16px;
+`;

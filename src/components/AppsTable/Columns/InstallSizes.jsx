@@ -25,12 +25,16 @@ export const InstallSizes = {
     return (
       <div>
         <div>{totalText} (total)</div>
-        <br />
-        <div>
-          {average > 1000
-            ? `${mbToGB(average, 1)} GB (average)`
-            : `${average} MB (average)`}
-        </div>
+        {average ? (
+          <div>
+            {average > 1000
+              ? `${mbToGB(average, 1)} GB (average)`
+              : `${average} MB (average)`
+            }
+          </div>
+        ) :
+          null
+        }
       </div>
     );
   },

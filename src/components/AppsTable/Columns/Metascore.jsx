@@ -18,7 +18,7 @@ export const Metascore = {
       [selectedFlatRows]
     );
 
-    return `${valueAverage} (average)`;
+    return valueAverage ? `${valueAverage} (average)` : null;
   },
   Header: 'Metascore',
   minWidth: 61,

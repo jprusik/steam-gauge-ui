@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
-import Remove from '@material-ui/icons/Remove';
 import { appFields } from 'constants/appFields';
 import { minutesToHours } from 'utils/math';
-import { numberValueSum } from 'utils/totals';
+import { numberValueAverage, numberValueSum } from 'utils/totals';
 
 export const TimePlayed = {
   accessor: appFields.PLAYTIME_FOREVER,
@@ -12,12 +11,26 @@ export const TimePlayed = {
     },
   }) => <TimePlayedCellValue value={value} />,
   Footer: ({ selectedFlatRows }) => {
-    const valueSum = useMemo(
-      () => numberValueSum(selectedFlatRows, appFields.PLAYTIME_FOREVER),
+    const { valueAverage, valueSum } = useMemo(
+      () => ({
+        valueAverage:
+          numberValueAverage(selectedFlatRows, appFields.PLAYTIME_FOREVER),
+        valueSum:
+          numberValueSum(selectedFlatRows, appFields.PLAYTIME_FOREVER),
+      }),
       [selectedFlatRows]
     );
 
-    return `Total: ${minutesToHours(valueSum)} hrs`;
+    return (
+      <div>
+        <div>{minutesOrHours(valueSum)} (total)</div>
+        {valueAverage ? (
+          <div>{minutesOrHours(valueAverage)} (average)</div>
+        ) :
+          null
+        }
+      </div>
+    );
   },
   Header: 'Hours Played',
   minWidth: 80,
@@ -25,10 +38,9 @@ export const TimePlayed = {
 };
 
 const TimePlayedCellValue = ({ value }) =>
-  value === 0 ? (
-    'not played'
-  ) : value > 0 ? (
-    `${minutesToHours(value, 1)} hours`
-  ) : (
-    <Remove />
-  );
+  value === 0 ? 'not played' : minutesOrHours(value);
+
+const minutesOrHours = (value) =>
+  value > 60 ?
+    `${minutesToHours(value, 1)} hour(s)` :
+    `${value} minute(s)`;

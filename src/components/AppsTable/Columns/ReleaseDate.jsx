@@ -1,7 +1,20 @@
+import { useMemo } from 'react';
 import { appFields } from 'constants/appFields';
+import { dateRange } from 'utils/totals';
 
 export const ReleaseDate = {
   accessor: appFields.RELEASE_DATE,
+  Footer: ({ selectedFlatRows }) => {
+    const {minDate, maxDate} = useMemo(
+      () => dateRange(selectedFlatRows, appFields.RELEASE_DATE),
+      [selectedFlatRows]
+    );
+
+    return (minDate && maxDate) ? [
+      minDate.format('LL'),
+      maxDate.format('LL')
+    ].join(' - ') : null;
+  },
   Header: 'Release Date',
   minWidth: 52,
   sortType: ({ values: { [appFields.RELEASE_DATE]: value } }, { values: { [appFields.RELEASE_DATE]: nextValue } }) => {

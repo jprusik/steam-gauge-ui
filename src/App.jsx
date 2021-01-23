@@ -16,7 +16,6 @@ const App = (props) => {
   async function maybeCheckLogin() {
     if (!user || !user.session_start) {
       const userData = await checkLoginStatus();
-      console.log('maybeCheckLogin -> userData', userData)
 
       if (!userData) {
         // Either the server is down or the user is having connectivity issues

@@ -1,8 +1,9 @@
-import { appFields } from 'constants/appFields';
-import {
-  minutesToHours
-} from 'utils/math';
+import { useMemo } from 'react';
 import RemoveIcon from '@material-ui/icons/Remove';
+import { appFields } from 'constants/appFields';
+import { numberValueAverage, numberValueSum } from 'utils/totals';
+import { minutesToHours } from 'utils/math';
+import { roundToPlaces } from 'utils/math';
 
 export const TimeToBeat = {
   accessor: ({ [appFields.TIME_TO_BEAT]: timeToBeat }) => {
@@ -28,6 +29,28 @@ export const TimeToBeat = {
     return {};
   },
   Cell: ({ value }) => <TimeToBeatCellValue value={value} />,
+  Footer: ({ selectedFlatRows }) => {
+    const {valueSum, valueAverage} = useMemo(
+      () => {
+        return ({
+          valueSum: numberValueSum(selectedFlatRows, minTimeToBeatSelector),
+          valueAverage: numberValueAverage(selectedFlatRows, minTimeToBeatSelector)
+        });
+      },
+      [selectedFlatRows]
+    );
+
+    return (
+      <div>
+        <div>{roundToPlaces(valueSum, 2)} (total)</div>
+        {valueAverage ? (
+          <div>{valueAverage} (average)</div>
+        ) :
+          null
+        }
+      </div>
+    );
+  },
   Header: 'Time to Beat',
   id: 'timeToBeat',
   minWidth: 50,
@@ -37,6 +60,9 @@ export const TimeToBeat = {
       -1 : 1
   ),
 };
+
+const minTimeToBeatSelector = ({values}) =>
+  values.timeToBeat?.hoursToBeatMin;
 
 const TimeToBeatCellValue = ({
   value: {

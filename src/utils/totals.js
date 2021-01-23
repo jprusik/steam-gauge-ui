@@ -1,4 +1,10 @@
-import {roundToPlaces} from './math';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import minMax from 'dayjs/plugin/minMax';
+import {roundToPlaces} from 'utils/math';
+
+dayjs.extend(localizedFormat);
+dayjs.extend(minMax);
 
 export function uniqueValueCount(rows, fieldName) {
   return rows.reduce((uniqueItems, {values: {[fieldName]: fieldValues = []}}) => {
@@ -33,7 +39,9 @@ export function countByCategory (rows, fieldName) {
 
 export function numberValueSum (rows, fieldName) {
   return rows.reduce((sum, row) => {
-    const fieldValue = row.values[fieldName];
+    // optionally use a passed value selector
+    const fieldValue = typeof fieldName === 'function' ?
+      fieldName(row) : row.values[fieldName];
 
     return fieldValue ? sum + fieldValue : sum;
   }, 0);
@@ -45,10 +53,12 @@ export function numberValueAverage (
   includeImplicitValues = false
 ) {
   const {count, sum} = rows.reduce((countAndSum, row) => {
-    const fieldValue = row.values[fieldName];
+    // optionally use a passed value selector
+    const fieldValue = typeof fieldName === 'function' ?
+      fieldName(row) : row.values[fieldName];
 
     if (
-      (row.values[fieldName] && fieldValue > -1) ||
+      (fieldValue && fieldValue > -1) ||
       includeImplicitValues
     ) {
       return {
@@ -63,5 +73,25 @@ export function numberValueAverage (
     };
   }, {count: 0, sum: 0});
 
-  return roundToPlaces(sum / count, 1)
+  return roundToPlaces(sum / count, 2)
+}
+
+export function dateRange (rows, fieldName) {
+  const dateArray = rows.reduce((dates, row) => {
+    const fieldValue = row.values[fieldName];
+
+    if (fieldValue) {
+      const dateObject = dayjs(fieldValue);
+
+      return dateObject.isValid() ?
+        [...dates, dayjs(fieldValue)] :
+        dates
+    }
+
+    return dates;
+  }, []);
+
+  return dateArray.length > 1 ?
+    {minDate: dayjs.min(dateArray), maxDate: dayjs.max(dateArray)} :
+    {minDate: null, maxDate: null};
 }

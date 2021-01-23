@@ -7,6 +7,7 @@ import {AppBanner} from 'components/AppBanner';
 export const Name = {
   accessor: appFields.NAME,
   Cell: ({ row: { original } }) => <NameCellValue {...original} />,
+  footerSpan: 0,
   Header: 'Title',
   minWidth: 36,
 }
