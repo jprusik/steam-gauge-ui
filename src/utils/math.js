@@ -24,3 +24,6 @@ export const pricePerHourRatio = (price, playedMinutes) => {
 
   return roundToPlaces(price/playedHours, 2);
 };
+
+export const mbToGB = (sizeMB, decimalPlaces = 0) =>
+  roundToPlaces(sizeMB / 1000, decimalPlaces);

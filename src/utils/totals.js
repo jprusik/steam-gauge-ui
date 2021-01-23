@@ -1,3 +1,5 @@
+import {roundToPlaces} from './math';
+
 export function uniqueValueCount(rows, fieldName) {
   return rows.reduce((uniqueItems, {values: {[fieldName]: fieldValues = []}}) => {
     const newItems = fieldValues.filter(item => !uniqueItems.includes(item));
@@ -30,5 +32,36 @@ export function countByCategory (rows, fieldName) {
 }
 
 export function numberValueSum (rows, fieldName) {
-  return rows.reduce((sum, row) => sum + (row.values[fieldName] || 0), 0);
+  return rows.reduce((sum, row) => {
+    const fieldValue = row.values[fieldName];
+
+    return fieldValue ? sum + fieldValue : sum;
+  }, 0);
+}
+
+export function numberValueAverage (
+  rows,
+  fieldName,
+  includeImplicitValues = false
+) {
+  const {count, sum} = rows.reduce((countAndSum, row) => {
+    const fieldValue = row.values[fieldName];
+
+    if (
+      (row.values[fieldName] && fieldValue > -1) ||
+      includeImplicitValues
+    ) {
+      return {
+        count: countAndSum.count + 1,
+        sum: countAndSum.sum + fieldValue
+      };
+    }
+
+    return {
+      count: countAndSum.count,
+      sum: countAndSum.sum
+    };
+  }, {count: 0, sum: 0});
+
+  return roundToPlaces(sum / count, 1)
 }

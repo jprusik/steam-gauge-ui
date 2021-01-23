@@ -9,12 +9,18 @@ import {
   TimePlayed,
   TimeToBeat,
 } from '../AppData';
-import { minutesToHours, pricePerHourRatio } from '../../utils/math';
+import {
+  mbToGB,
+  minutesToHours,
+  pricePerHourRatio,
+  roundToPlaces,
+} from '../../utils/math';
 import { Boolean } from '../AppData/Boolean';
 import { Checkbox } from './Checkbox';
 import {
   booleanCount,
   countByCategory,
+  numberValueAverage,
   numberValueSum,
   uniqueValueCount,
 } from '../../utils/totals';
@@ -112,6 +118,18 @@ export const columnOptions = () => [
       [appFields.PLAYTIME_FOREVER]: playtime,
     }) => (price ? pricePerHourRatio(price, playtime) : null),
     Header: 'Price / Hours Played ratio',
+    Footer: ({ selectedFlatRows }) => {
+      const {playtimeTotal, priceTotal} = useMemo(
+        () => ({
+          // @TODO: total with a single loop
+          playtimeTotal: numberValueSum(selectedFlatRows, appFields.PLAYTIME_FOREVER),
+          priceTotal: numberValueSum(selectedFlatRows, appFields.STORE_PRICE_DEFAULT_USD)
+        }),
+        [selectedFlatRows]
+      );
+
+      return pricePerHourRatio(priceTotal, playtimeTotal);
+    },
     minWidth: 92,
     type: 'numeric',
   },
@@ -167,6 +185,14 @@ export const columnOptions = () => [
         },
       },
     }) => <a href={metascore_link}>{metascore}</a>,
+    Footer: ({ selectedFlatRows }) => {
+      const valueAverage = useMemo(
+        () => numberValueAverage(selectedFlatRows, appFields.METASCORE),
+        [selectedFlatRows]
+      );
+
+      return `${valueAverage} (average)`;
+    },
     Header: 'Metascore',
     minWidth: 61,
     type: 'numeric',
@@ -254,6 +280,33 @@ export const columnOptions = () => [
         values: { [appFields.SIZE_MB]: value = 0 },
       },
     }) => <InstallSizes value={value} missingDataPlaceholder />,
+    Footer: ({ selectedFlatRows }) => {
+      const valueSum = useMemo(
+        () => numberValueSum(selectedFlatRows, appFields.SIZE_MB),
+        [selectedFlatRows]
+      );
+
+      const totalText = valueSum > 1000 ?
+        `${mbToGB(valueSum)} GB` :
+        `${valueSum} MB`;
+
+      const average = roundToPlaces(valueSum / selectedFlatRows.length, 0);
+
+      return (
+        <div>
+          <div>
+            {totalText} (total)
+          </div>
+          <br />
+          <div>
+            {average > 1000 ?
+              `${mbToGB(average, 1)} GB (average)` :
+              `${average} MB (average)`
+            }
+          </div>
+        </div>
+      );
+    },
     Header: 'Install Size',
     minWidth: 46,
     type: 'numeric',
