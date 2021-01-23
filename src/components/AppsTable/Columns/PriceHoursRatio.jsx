@@ -8,6 +8,7 @@ export const PriceHoursRatio = {
     [appFields.STORE_PRICE_DEFAULT_USD]: price,
     [appFields.PLAYTIME_FOREVER]: playtime,
   }) => (price ? pricePerHourRatio(price, playtime) : null),
+  Cell: ({value}) => value ? `$${value} / hr` : null,
   Header: 'Price / Hours Played ratio',
   id: appFields.PRICE_HOURS_RATIO,
   Footer: ({ selectedFlatRows }) => {

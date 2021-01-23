@@ -28,10 +28,7 @@ const TimePlayedCellValue = ({ value }) =>
   value === 0 ? (
     'not played'
   ) : value > 0 ? (
-    [
-      <div key="total-hours">{minutesToHours(value, 1)} hours</div>,
-      <div key="total-minutes">{value} minutes</div>,
-    ]
+    `${minutesToHours(value, 1)} hours`
   ) : (
     <Remove />
   );
