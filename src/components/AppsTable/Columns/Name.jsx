@@ -1,9 +1,17 @@
+import { appFields } from 'constants/appFields';
 import {Fragment} from 'react';
 import styled from '@emotion/styled';
 import Tooltip from '@material-ui/core/Tooltip';
-import {AppBanner} from '../AppBanner';
+import {AppBanner} from 'components/AppBanner';
 
-export const Name = ({
+export const Name = {
+  accessor: appFields.NAME,
+  Cell: ({ row: { original } }) => <NameCellValue {...original} />,
+  Header: 'Title',
+  minWidth: 36,
+}
+
+const NameCellValue = ({
   app_website,
   appid,
   img_icon_url,

@@ -1,13 +1,16 @@
 import { useMemo } from 'react';
 import styled from '@emotion/styled';
-import { columnOptions } from './columnOptions';
-import { AppsTable } from './AppsTable';
+import {columnComponentNames} from 'constants/appFields';
+import { AppsTable } from 'components/AppsTable/AppsTable';
+import * as Columns from 'components/AppsTable/Columns';
 
 export function AppsDetails({ data }) {
   const columns = useMemo(
-    () => columnOptions(),
+    () => Object.keys(columnComponentNames).map(component =>
+      Columns[columnComponentNames[component]]
+    ),
     []
-  )
+  );
 
   return (
     <AppDetailsContainer>

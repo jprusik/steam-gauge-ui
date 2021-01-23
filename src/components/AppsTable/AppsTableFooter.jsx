@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const AppsTableFooter = ({footerGroups}) => {
+export function AppsTableFooter ({footerGroups}) {
   return (
     <TableFooter>
       {footerGroups.map(group => (
