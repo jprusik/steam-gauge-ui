@@ -10,6 +10,7 @@ export const Genres = {
       values: { [appFields.GENRES]: value },
     },
   }) => <GenresCellValue value={value} />,
+  disableSortBy: true,
   Footer: ({ selectedFlatRows }) => {
     const itemList = useMemo(
       () => uniqueValueCount(selectedFlatRows, appFields.GENRES),

@@ -2,13 +2,14 @@ import { Checkbox } from 'components/AppsTable/Checkbox';
 
 export const Selection = {
   id: 'selection',
-  disableSortBy: true,
-  // @TODO: add sorting for selection
-  // accessor: (row, index, meta) => !!meta.isSelected,
-  // sortType: ({values}, {values: nextValues}) => (
-  //   values.selection && !nextValues.selection ?
-  //     -1 : 0
-  // ),
+  accessor: (row, index, meta) => !!meta.isSelected,
+  sortType: (
+    {isSelected}, {isSelected: nextIsSelected}
+    // values, nextValues
+  ) => (
+    isSelected && !nextIsSelected ?
+      -1 : 0
+  ),
   Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
   Footer: ({ selectedFlatRows }) => {
     return `${selectedFlatRows.length} selected`;

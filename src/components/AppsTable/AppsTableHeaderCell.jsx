@@ -3,18 +3,21 @@ import styled from '@emotion/styled';
 import {SortIcon} from '../SortIcon';
 
 export const AppsTableHeaderCell = ({
+  canSort,
   children,
   headerProps,
   isSorted,
   isSortedDesc,
-  minWidth
+  minWidth,
 }) => (
   <TableHeader isSorted={isSorted} {...headerProps}>
     <TableHeaderContent minWidth={minWidth}>
       {children}
-      <SortIcon
-        order={isSorted ? (isSortedDesc ? 'desc' : 'asc') : null}
-      />
+      {canSort &&
+        <SortIcon
+          order={isSorted ? (isSortedDesc ? 'desc' : 'asc') : null}
+        />
+      }
     </TableHeaderContent>
   </TableHeader>
 );

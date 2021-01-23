@@ -10,6 +10,7 @@ export const Publishers = {
       values: { [appFields.PUBLISHERS]: value },
     },
   }) => <PublishersCellValue value={value} />,
+  disableSortBy: true,
   Footer: ({ selectedFlatRows }) => {
     const itemList = useMemo(
       () => uniqueValueCount(selectedFlatRows, appFields.PUBLISHERS),

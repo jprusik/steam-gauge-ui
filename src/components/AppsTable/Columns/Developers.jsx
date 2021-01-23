@@ -10,6 +10,7 @@ export const Developers = {
       values: { [appFields.DEVELOPERS]: value },
     },
   }) => <DevelopersCellValue value={value} />,
+  disableSortBy: true,
   Footer: ({ selectedFlatRows }) => {
     const itemList = useMemo(
       () => uniqueValueCount(selectedFlatRows, appFields.DEVELOPERS),
