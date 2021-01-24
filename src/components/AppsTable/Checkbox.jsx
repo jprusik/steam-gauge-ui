@@ -14,7 +14,7 @@ export const Checkbox = forwardRef(
     }, [resolvedRef, indeterminate])
 
     return (
-      <CheckboxLabel>
+      <CheckboxLabel onClick={rest.onChange}>
         {indeterminate ?
           <IndeterminateCheckBoxIcon /> :
           rest.checked ?
@@ -27,7 +27,7 @@ export const Checkbox = forwardRef(
   }
 );
 
-const CheckboxLabel = styled.label`
+const CheckboxLabel = styled.div`
   display: flex;
   justify-content: center;
   margin: 0;

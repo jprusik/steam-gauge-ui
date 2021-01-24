@@ -6,9 +6,9 @@ export const Selection = {
   accessor: (row, index, meta) => !!meta.isSelected,
   Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
   Footer: ({ selectedFlatRows }) => (
-    <SelectionCellValue>
+    <SelectionFooterCellValue>
       {selectedFlatRows.length} selected
-    </SelectionCellValue>
+    </SelectionFooterCellValue>
   ),
   footerSpan: 4,
   Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -25,6 +25,6 @@ export const Selection = {
   ),
 };
 
-const SelectionCellValue = styled.div`
+const SelectionFooterCellValue = styled.div`
   font-size: 16px;
 `;
