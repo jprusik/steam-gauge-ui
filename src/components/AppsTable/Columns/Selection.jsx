@@ -15,6 +15,7 @@ export const Selection = {
     <Checkbox {...getToggleAllRowsSelectedProps()} />
   ),
   minWidth: 30,
+  hasInteractiveChildren: true,
   sortType: (
     {isSelected}, {isSelected: nextIsSelected}
     // values, nextValues
