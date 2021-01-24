@@ -1,11 +1,10 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/core';
+import styled from '@emotion/styled';
 
-const BugReportingDetails = () => (
+export const BugReportingDetails = () => (
   <div>
-    <p css={css`margin: 0px auto; font-size: 0.75em; font-style: italic;`}>
+    <BugReportingDetailsIntro>
       Notice an issue? Is a value wrong? Send the details along at the appropriate link below.
-    </p>
+    </BugReportingDetailsIntro>
     <hr />
     <p>
       <strong>
@@ -34,4 +33,8 @@ const BugReportingDetails = () => (
   </div>
 );
 
-export default BugReportingDetails;
+const BugReportingDetailsIntro = styled.p`
+  margin: 0px auto;
+  font-size: 0.75em;
+  font-style: italic;
+`;

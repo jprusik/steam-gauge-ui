@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {resolveUsername} from '../actions';
 import {Loader} from './Loader';

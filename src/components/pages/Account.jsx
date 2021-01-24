@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import {Fragment, useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
 import {
   fetchAccountApps,
   fetchAccountDetails,
   fetchAppDetails,
-} from '../../actions';
-import {AppsDetails} from '../AppsTable/AppsDetails';
-import {SectionLoader} from '../Loader';
-import AccountDetails from '../AccountDetails';
-import AppsSelectionSummary from '../AppsSelectionSummary';
-import SearchForm from '../SearchForm';
+} from 'actions';
+import { AppsDetails } from 'components/AppsTable/AppsDetails';
+import { SectionLoader } from 'components/Loader';
+import AccountDetails from 'components/AccountDetails';
+import { LibrarySummary } from 'components/LibrarySummary';
+import SearchForm from 'components/SearchForm';
 
 const controller = new AbortController();
 const signal = controller.signal;
@@ -99,7 +99,7 @@ const AccountPage = () => {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <MetaTags>
         {/* page metatags here */}
       </MetaTags>
@@ -121,7 +121,7 @@ const AccountPage = () => {
           )}
         </div>
         { accountDetails && accountApps.length > 0 ? (
-          <AppsSelectionSummary
+          <LibrarySummary
             accountData={accountDetails}
             appsSelection={accountApps}
           />
@@ -138,7 +138,7 @@ const AccountPage = () => {
           </div>
         )}
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

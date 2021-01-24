@@ -1,4 +1,3 @@
-import React from 'react';
 import {logoutUser} from '../actions';
 
 const LogoutLink = ({setUser}) =>

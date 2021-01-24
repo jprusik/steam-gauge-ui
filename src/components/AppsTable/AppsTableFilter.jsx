@@ -33,7 +33,7 @@ const SearchFilterContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 5px 0;
-  width: 240px;
+  width: 245px;
   color: #EEEEEE;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 `;
@@ -41,7 +41,7 @@ const SearchFilterContainer = styled.div`
 const SearchInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 3px;
+  padding: 3px 6px;
   height: 30px;
   color: #555;
 

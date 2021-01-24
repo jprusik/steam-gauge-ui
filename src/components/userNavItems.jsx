@@ -1,4 +1,4 @@
-import React from 'react';
+import {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {logoutUser} from '../actions';
 
@@ -32,10 +32,10 @@ const LoginButton = () => (
 const UserNavItems = ({user: {account_id: accountId}, setUser}) =>
   !!accountId ?
     (
-      <React.Fragment>
+      <Fragment>
         <AccountLink accountId={accountId} />
         <LogoutButton setUser={setUser} />
-      </React.Fragment>
+      </Fragment>
     ) : (
       <LoginButton />
     );

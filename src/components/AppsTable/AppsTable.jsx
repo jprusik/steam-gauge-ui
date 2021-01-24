@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import styled from '@emotion/styled';
 import {
   useExpanded,
@@ -50,13 +50,12 @@ export function AppsTable({ columns, data }) {
     useExpanded,
     usePagination,
     useRowSelect,
-
   );
 
   const maxPageSize = Math.min(data ? data.length : 50, 50);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <TableToolbar>
         <AppsTableFilter
           globalFilter={globalFilter}
@@ -100,7 +99,7 @@ export function AppsTable({ columns, data }) {
         previousPage,
         setPageSize,
       }} />
-    </React.Fragment>
+    </Fragment>
   )
 }
 

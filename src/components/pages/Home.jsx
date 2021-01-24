@@ -1,49 +1,46 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/core';
+import styled from '@emotion/styled';
 import AccountOptions from '../AccountOptions';
 import SearchForm from '../SearchForm';
-import SpecialNotice from '../SpecialNotice';
+import {SpecialNotice} from '../SpecialNotice';
 import TitleIntro from '../TitleIntro';
 
-const optionDividerStyles = css`
-  clear: both;
+export const Home = ({
+  isFriends = false,
+  setUser,
+  user
+}) => (
+  <PageContent>
+    <TitleIntro isFriends={isFriends} />
+    <SearchForm
+      searchType={isFriends ? 'friends' : 'account'}
+    />
+    <OptionDivider>or</OptionDivider>
+    <AccountOptions isFriends={isFriends} setUser={setUser} user={user} />
+    <Spacer />
+    <SpecialNotice />
+  </PageContent>
+);
+
+const OptionDivider = styled.div`
   display: block;
-  margin: 10px auto;
-  text-align: center;
-  width: 100%;
-`;
-
-const spacerStyles = css`
   clear: both;
-  height: 1em;
+  margin: 10px auto;
   width: 100%;
+  text-align: center;
 `;
 
-const contentContainerStyles = css`
+const Spacer = styled.div`
+  clear: both;
+  width: 100%;
+  height: 1em;
+`;
+
+const PageContent = styled.div`
   margin: 5% auto;
-  max-width: 640px;
   width: 90%;
+  max-width: 640px;
 
   @media (min-width: 1420px) {
     width: 1420px;
   }
 `;
-
-const Home = ({
-  isFriends = false,
-  setUser,
-  user
-}) => (
-  <div css={contentContainerStyles}>
-    <TitleIntro isFriends={isFriends} />
-    <SearchForm
-      searchType={isFriends ? 'friends' : 'account'}
-    />
-    <div css={optionDividerStyles}>or</div>
-    <AccountOptions isFriends={isFriends} setUser={setUser} user={user} />
-    <div css={spacerStyles} />
-    <SpecialNotice />
-  </div>
-);
-
-export default Home;

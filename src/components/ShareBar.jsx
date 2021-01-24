@@ -1,26 +1,33 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/core';
+import styled from '@emotion/styled';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
 
-const shareContainerStyles = css`
-  align-items: center;
-  color: #8f98a0;
+const ShareIconsContainer = styled.div`
   display: flex;
+  flex: 3 1 auto;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 30px
+  text-align: left;
+  color: #8f98a0;
   font-size: 12px;
   font-weight: bold;
-  text-align: left;
-  flex: 3 1 auto;
 `;
 
-const shareLinkStyles = (socialNetwork) => css`
+const ShareLink = styled.a`
+  display: inline-block;
+  margin: 0 5px;
   border: 0px solid #ccc;
-  color: ${
+  text-decoration: none;
+
+  color: ${({socialNetwork}) =>
     socialNetwork === 'facebook' ? '#3b5998' :
     socialNetwork === 'twitter' ? '#0094c2' : '#8bb9e0'
   }!important; // !important bootstrap override
-  display: inline-block;
-  font-size: 2em;
-  margin: 0 0.25em;
-  text-decoration: none;
+
+  > svg {
+    font-size: 2.5rem;
+  }
 `;
 
 const ShareBar = ({message, url}) => {
@@ -28,21 +35,25 @@ const ShareBar = ({message, url}) => {
   const encodedShareUrl = encodeURIComponent(url);
 
   return (
-    <div css={shareContainerStyles}>
+    <ShareIconsContainer>
       Share:
-      <a
-        css={shareLinkStyles('twitter')}
+      <ShareLink
         href={`https://twitter.com/share?url=${encodedShareUrl}&text=${encodedShareMessage}`}
+        rel="noopener noreferrer"
+        socialNetwork="twitter"
+        target="_blank"
       >
-        <i className="fa fa-twitter" />
-      </a>
-      <a
-        css={shareLinkStyles('facebook')}
+        <TwitterIcon />
+      </ShareLink>
+      <ShareLink
         href={`https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`}
+        rel="noopener noreferrer"
+        socialNetwork="facebook"
+        target="_blank"
       >
-        <i className="fa fa-facebook" />
-      </a>
-    </div>
+        <FacebookIcon />
+      </ShareLink>
+    </ShareIconsContainer>
   );
 };
 

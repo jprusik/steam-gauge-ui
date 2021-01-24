@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const AppBanner = ({appid, img_logo_url: bannerImage}) =>
   bannerImage && (
     <img

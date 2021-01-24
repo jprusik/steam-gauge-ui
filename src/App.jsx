@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {Fragment, useState} from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
 import {checkLoginStatus} from './actions';
@@ -42,10 +42,10 @@ const App = (props) => {
           // @TODO clean up these metatags and reference static asset paths
           // these lines prevent the site from being indexed
           process.env.REACT_APP_DISABLE_INDEXING_P &&
-            <React.Fragment>
+            <Fragment>
               <meta name="robots" content="noindex, nofollow" />
               <meta name="googlebot" content="noindex" />
-            </React.Fragment>
+            </Fragment>
           }
         </MetaTags>
         <Header setUser={setUser} user={user} />

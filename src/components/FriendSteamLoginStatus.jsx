@@ -1,4 +1,3 @@
-import React from 'react';
 import {personaStateMap} from '../constants/personaStates';
 import './FriendSteamLoginStatus';
 import './FriendSteamLoginStatus.scss';

@@ -1,4 +1,3 @@
-import React from 'react';
 import './TitleIntro.scss';
 
 const TitleIntro = ({isFriends = false}) => isFriends ?

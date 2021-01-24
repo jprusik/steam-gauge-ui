@@ -1,11 +1,11 @@
-import React from 'react';
+import {Fragment} from 'react';
 import {Switch, Route} from 'react-router-dom';
-import AboutPage from './pages/About';
-import AccountPage from './pages/Account';
-import FriendsPage from './pages/Friends';
-import Home from './pages/Home';
-import PrivacyPage from './pages/Privacy';
-import ReceiptPage from './pages/Receipt';
+import {AboutPage} from 'components/pages/About';
+import AccountPage from 'components/pages/Account';
+import FriendsPage from 'components/pages/Friends';
+import {Home} from 'components/pages/Home';
+import {PrivacyPage} from 'components/pages/Privacy';
+import ReceiptPage from 'components/pages/Receipt';
 import './Body.scss';
 
 const urlRedirect = (url) => {
@@ -21,7 +21,7 @@ const loginUrl = process.env.REACT_APP_OPEN_ID_URL;
 
 // Note: order of the routes matters!
 const Body = ({checkLoginError = false, setUser, user}) => (
-  <React.Fragment>
+  <Fragment>
     <div className="container" role="main">
       { checkLoginError && (
         <div className="alert alert-danger" style={{maxWidth: '66vw', margin: '0 auto 20px auto'}} role="alert">Are you connected to the internet? There was an issue connecting to the Steam Gauge server. Some features may not operate correctly.</div>
@@ -37,7 +37,7 @@ const Body = ({checkLoginError = false, setUser, user}) => (
         <Route path="/login" render={() => urlRedirect(loginUrl)}/>
       </Switch>
     </div>
-  </React.Fragment>
+  </Fragment>
 );
 
 export default Body;

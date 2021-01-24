@@ -1,4 +1,3 @@
-import React from 'react';
 import FriendRow from '../components/FriendRow';
 
 const FriendRows = ({userId, accounts = [], multiplayerApps = []}) => {

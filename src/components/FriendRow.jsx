@@ -1,4 +1,4 @@
-import React from 'react';
+import {Fragment} from 'react';
 import {minutesToHours} from '../utils/math';
 import {getCommonMultiplayerGames} from '../utils/friends';
 import FriendSteamLoginStatus from './FriendSteamLoginStatus';
@@ -38,7 +38,7 @@ const FriendRow = ({
     <div key="content-body" className="row featurette friend-entry">
       <div className="col-xs-10 col-md-3">
         { friendImage &&
-          <React.Fragment>
+          <Fragment>
             <a href={friendUrl} target="_blank" rel="noopener noreferrer">
               <img
                 className="friend-avatar"
@@ -49,13 +49,13 @@ const FriendRow = ({
               />
             </a>
             <br/>
-          </React.Fragment>
+          </Fragment>
         }
         { friendUsername &&
-          <React.Fragment>
+          <Fragment>
             <a className="friend-persona" href={friendUrl} target="_blank" rel="noopener noreferrer">{friendUsername}</a>
             <br/>
-          </React.Fragment>
+          </Fragment>
         }
         <a className="friend-id" href={friendUrl} target="_blank" rel="noopener noreferrer">{friendId}</a>
         <br/>
@@ -63,14 +63,14 @@ const FriendRow = ({
         <FriendSteamLoginStatus user={friendData} />
         <br/>
         { mostTimePlayedCommonApp &&
-          <React.Fragment>
+          <Fragment>
             <div className="friend-most-played">
               <span className="most-common-description">Most played common game:</span>
               <br/>
               <span className="app-title">{mostTimePlayedCommonApp.name}</span> ({minutesToHours(mostTimePlayedCommonApp.playtime_forever)} hours)
             </div>
             <br/>
-          </React.Fragment>
+          </Fragment>
         }
         <a className="friend-message" href={`steam://friends/message/${friendId}`}>
           <i className="fa fa-comment"></i>Send a message to this friend

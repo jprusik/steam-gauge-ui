@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {Fragment, useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
 import {
@@ -7,7 +7,7 @@ import {
   fetchFriendsList,
   fetchMultiplayerApps
 } from '../../actions';
-import Home from './Home';
+import {Home} from './Home';
 import FriendRows from '../FriendRows';
 import FriendsSummary from '../FriendsSummary';
 import SearchForm from '../SearchForm';
@@ -103,7 +103,7 @@ const FriendsPage = ({user, setUser}) => {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <MetaTags key="content-meta">
         {/* page metatags here */}
       </MetaTags>
@@ -111,7 +111,7 @@ const FriendsPage = ({user, setUser}) => {
       { !searchedUserId ? (
           <Home {...{isFriends: true, setUser, user}} />
         ) : (
-          <React.Fragment>
+          <Fragment>
             <SearchForm {...{
               searchType:'friends',
               onSearchSuccess: resetPageData,
@@ -119,10 +119,10 @@ const FriendsPage = ({user, setUser}) => {
             }} />
             <br />
             { userFriends ? (
-              <React.Fragment>
+              <Fragment>
                 <FriendsSummary {...{userId: searchedUserId, ...userFriends}} />
                 <FriendRows {...{userId: searchedUserId, ...userFriends}} />
-              </React.Fragment>
+              </Fragment>
             ) : friendsListError ? (
               <div>There was a problem fetching your list of friends from Steam. If this problem persists, make sure the "Friends List" setting on <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy page</a> is set to "Public".</div>
             ) : multiplayerAppsError ? (
@@ -130,10 +130,10 @@ const FriendsPage = ({user, setUser}) => {
             ) : (
               <SectionLoader />
             )}
-          </React.Fragment>
+          </Fragment>
         )
       }
-    </React.Fragment>
+    </Fragment>
   );
 }
 

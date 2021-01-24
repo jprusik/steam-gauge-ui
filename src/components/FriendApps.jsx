@@ -1,4 +1,3 @@
-import React from 'react';
 import {minutesToHours} from '../utils/math'
 
 const FriendAppRows = ({

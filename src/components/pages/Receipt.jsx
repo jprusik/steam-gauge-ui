@@ -1,4 +1,3 @@
-import React from 'react';
 import MetaTags from 'react-meta-tags';
 
 const ReceiptPage = () => (
