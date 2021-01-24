@@ -14,20 +14,27 @@ export const Checkbox = forwardRef(
     }, [resolvedRef, indeterminate])
 
     return (
-      <CheckboxLabel onClick={rest.onChange}>
+      <CheckboxContainer onClick={rest.onChange}>
         {indeterminate ?
           <IndeterminateCheckBoxIcon /> :
           rest.checked ?
             <CheckBox /> :
             <CheckBoxOutlineBlank />
         }
-        <input type="checkbox" ref={resolvedRef} {...rest} hidden />
-      </CheckboxLabel>
+        <input
+          aria-checked={rest.checked}
+          aria-label="row-selection"
+          hidden={true}
+          ref={resolvedRef}
+          type="checkbox"
+          {...rest}
+        />
+      </CheckboxContainer>
     )
   }
 );
 
-const CheckboxLabel = styled.div`
+const CheckboxContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: 0;
