@@ -11,10 +11,11 @@ import {
   useTable,
 } from 'react-table';
 import { AppsTableFilter } from './AppsTableFilter';
-import { AppsTableFooter } from './AppsTableFooter';
+import { DataExport } from './DataExport';
 import { AppsTableHeaderRow } from './AppsTableHeaderRow';
-import { AppsTablePagination } from './AppsTablePagination';
 import { AppsTableRow } from './AppsTableRow';
+import { AppsTableFooter } from './AppsTableFooter';
+import { AppsTablePagination } from './AppsTablePagination';
 
 export function AppsTable({ columns, data }) {
   const {
@@ -56,11 +57,14 @@ export function AppsTable({ columns, data }) {
 
   return (
     <React.Fragment>
-      <AppsTableFilter
-        globalFilter={globalFilter}
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        setGlobalFilter={setGlobalFilter}
-      />
+      <TableToolbar>
+        <AppsTableFilter
+          globalFilter={globalFilter}
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          setGlobalFilter={setGlobalFilter}
+        />
+        <DataExport data={data} />
+      </TableToolbar>
       <TableContainer>
         <table {...getTableProps()}>
           <thead>
@@ -123,4 +127,10 @@ const TableContainer = styled.div`
     border-radius: 9px;
     background-color: ${scrollbarThumbColor};
   }
+`;
+
+const TableToolbar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
