@@ -60,31 +60,44 @@ const TablePaginationContainer = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 200px;
+  justify-content: space-between;
+  width: 180px;
 `;
 
 const Button = styled.button`
-  background-color: transparent;
-  background-image: none;
-  border-color: #9d9d9d;
-  border-style: solid;
+  display: flex;
+  align-items: center;
   border-width: 1px;
-  color: #9d9d9d;
-  padding: 5px 10px;
-  line-height: 1.5;
+  border-style: solid;
   border-radius: 3px;
+  border-color: #555555;
+  background-color: #9d9d9d;
+  padding: 5px 10px;
+  color: #555555;
 
   :hover {
-    border-color: #ffffff;
-    color: #ffffff;
+    :not(:disabled) {
+      border-color: #dddddd;
+      color: #dddddd;
+    }
   }
 
-  > svg {
-    font-size: 28px;
+  :disabled {
+    border-color: #888888;
+    background-color: transparent;
+    cursor: not-allowed;
+    color: #888888;
   }
 `;
 
 const Selection = styled.select`
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 3px;
+  border-color: #555555;
+  background-color: #9d9d9d;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #555555;
 `;
