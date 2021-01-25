@@ -1,30 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import {Fragment} from 'react';
 import {css} from '@emotion/core';
-import {personaStateMap} from '../constants/personaStates';
-import {accountCreationDate, timeSince} from '../utils/dates';
+import {accountCreationDate, timeSince} from 'utils/dates';
+import {PersonaState} from 'components/PersonaState';
 
 const userAvatarStyles = css`
   @media only screen and (max-width:640px) {
     width:100%;
     max-width:184px;
     min-width:80px;
-  }
-`;
-
-const personaStateStyles = (personastate) => css`
-  font-size:0.7em;
-
-  :before {
-    -webkit-font-smoothing:antialiased;
-    color: ${personaStateMap[personastate].color};
-    content: "${personaStateMap[personastate].iconCharacter}";
-    display: inline-block;
-    font-family: FontAwesome;
-    margin: 0px 0.25em 0px 0.75em;
-    min-width: 1em;
-    speak: none;
-    text-decoration: inherit;
   }
 `;
 
@@ -38,7 +22,7 @@ const profileNameStyles = css`
   text-shadow: #3d3d3d 2px 2px 1px;
 `;
 
-const AccountDetails = ({
+export const AccountDetails = ({
   accountData: {
     avatar,
     avatarfull,
@@ -84,13 +68,8 @@ const AccountDetails = ({
             <h4>Steam ID: <a css={css`color: #8bb9e0;`} href={`https://steamcommunity.com/profiles/${steamid}`} target="_blank" rel="noopener noreferrer">{steamid}</a></h4>
           }
           <div>
-            <Fragment>
-              <span css={css`font-weight: bold; font-size: 0.75em;`}>This user's status is: </span>
-              <span css={personaStateStyles(personastate)}>
-                { personaStateMap[personastate].name }
-              </span>
-            </Fragment>
-
+            <span css={css`font-weight: bold; font-size: 0.75em;`}>This user's status is:</span>
+            <PersonaState state={personastate} />
             <div css={css`color: #eeeeee; font-weight: bold; padding: 0px; font-size: 0.75em;`}>
               { timecreated && timecreated !== 0 && (
                 <Fragment>
@@ -121,5 +100,3 @@ const AccountDetails = ({
     </tbody>
   </table>
 );
-
-export default AccountDetails;

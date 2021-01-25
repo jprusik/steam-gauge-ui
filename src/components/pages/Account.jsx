@@ -8,7 +8,7 @@ import {
 } from 'actions';
 import { AppsDetails } from 'components/AppsTable/AppsDetails';
 import { SectionLoader } from 'components/Loader';
-import AccountDetails from 'components/AccountDetails';
+import { AccountDetails } from 'components/AccountDetails';
 import { LibrarySummary } from 'components/LibrarySummary';
 import SearchForm from 'components/SearchForm';
 

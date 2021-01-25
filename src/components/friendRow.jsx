@@ -1,7 +1,7 @@
 import {Fragment} from 'react';
 import {minutesToHours} from '../utils/math';
 import {getCommonMultiplayerGames} from '../utils/friends';
-import FriendSteamLoginStatus from './FriendSteamLoginStatus';
+import {FriendSteamLoginStatus} from './FriendSteamLoginStatus';
 import FriendApps from './FriendApps';
 import './FriendRow.scss';
 
