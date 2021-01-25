@@ -123,7 +123,8 @@ const AccountPage = () => {
         { accountDetails && accountApps.length > 0 ? (
           <LibrarySummary
             accountData={accountDetails}
-            appsSelection={accountApps}
+            detailsLoading={accountAppsDetailsLoading}
+            libraryApps={accountApps}
           />
         ) : accountAppsError ? (
           <div>There was a problem fetching your library information from Steam. If this problem persists, make sure the "Game details" setting on <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy page</a> is set to "Public".</div>
