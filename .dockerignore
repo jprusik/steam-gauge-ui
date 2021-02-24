@@ -1,6 +1,7 @@
 .dockerignore
-.git
+.git/
 .gitignore
+.venv/
 build
 Dockerfile
 Dockerfile.dev
