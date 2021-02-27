@@ -16,7 +16,7 @@ import {SectionLoader} from '../Loader';
 const getAccountsApps = accountsDetails =>
   Promise.all(accountsDetails.map(async account => {
     const {steamid: accountId} = account || {};
-    const {data: {games: accountAppsData} = {}} = await fetchAccountApps(accountId) || {};
+    const {data: accountAppsData = []} = await fetchAccountApps(accountId) || {};
 
     return {
       ...account,

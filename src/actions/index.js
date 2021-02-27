@@ -133,16 +133,18 @@ export const fetchMultiplayerApps = () =>
 export const fetchAccountDetails = (accountId) =>
   get({requestApi: `accounts/${accountId}`, useCache: true});
 
-export const fetchAccountApps = (accountId) =>
-  get({requestApi: `accounts/${accountId}/apps`, useCache: true});
+export const fetchAccountApps = (accountId, includeExtendedData = false) => {
+  let requestApi = `accounts/${accountId}/apps`;
+
+  if (includeExtendedData) {
+    requestApi += '?fields=developers,publishers,genres,time_to_beat'
+  }
+
+  return get({
+    requestApi,
+    useCache: true
+  });
+}
 
 export const fetchFriendsList = (accountId) =>
   get({requestApi: `accounts/${accountId}/friends`, useCache: true, returnErrorResponse: true});
-
-export const fetchAppDetails = (appId, extendedData = false, signal) =>
-  extendedData ?
-    get({requestApi: `apps/${appId}?fields=developers,publishers,genres,time_to_beat`, useCache: true, returnErrorResponse: true, signal: signal}) :
-    get({requestApi: `apps/${appId}`, useCache: true, returnErrorResponse: true, signal});
-
-export const fetchAppDevelopers = (appId) =>
-  get({requestApi: `apps/${appId}/developers`, useCache: true});

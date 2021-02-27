@@ -19,17 +19,25 @@ function abortRequests() {
   controller.abort();
 }
 
-const getAppsWithDetails = apps =>
-  Promise.all(apps.map(async app => {
-    const {appid} = app || {};
-    const {data: appDetails = {}} = appid ?
-      await fetchAppDetails(appid, true, signal) : {};
+const getAppsWithDetails = async (apps, searchedUserId) => {
+  const {
+    data: extraDataApps = [],
+    meta: {
+      success: appsDataSuccess,
+      error_key: appsDataErrorKey,
+      code: appsDataErrorCode
+    } = {}
+  } = await fetchAccountApps(searchedUserId, true) || {};
+
+  return appsDataSuccess ? apps.map(app => {
+    const appExtraData = extraDataApps.find(({app_id}) => app_id === `${app.appid}`);
 
     return {
-      ...appDetails,
-      ...app
-    };
-  }));
+      ...app,
+      ...appExtraData
+    }
+  }) : apps;
+};
 
 const AccountPage = () => {
   const {id: searchedUserId} = useParams();
@@ -59,9 +67,7 @@ const AccountPage = () => {
       }
 
       const {
-        data: {
-          games: accountApps
-        } = {},
+        data: accountApps = [],
         meta: {
           success: appsDataSuccess,
           error_key: appsDataErrorKey,
@@ -75,7 +81,7 @@ const AccountPage = () => {
         setAccountAppsDetailsLoading(true);
 
         // Get apps extended details
-        const appsWithDetails = await getAppsWithDetails(accountApps);
+        const appsWithDetails = await getAppsWithDetails(accountApps, searchedUserId);
         setAccountApps(appsWithDetails);
 
         setAccountAppsDetailsLoading(false);
