@@ -1,7 +1,7 @@
 import { appFields } from 'constants/appFields';
 import {Fragment} from 'react';
 import styled from '@emotion/styled';
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 import {AppBanner} from 'components/AppBanner';
 
 export const Name = {
@@ -10,7 +10,7 @@ export const Name = {
   footerSpan: 0,
   Header: 'Title',
   minWidth: 36,
-}
+};
 
 const NameCellValue = ({
   app_website,

@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useAsyncDebounce } from 'react-table';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 export function AppsTableFilter({
   globalFilter,
   setGlobalFilter,
 }) {
-  const [value, setValue] = useState(globalFilter)
+  const [value, setValue] = useState(globalFilter);
   const onChange = useAsyncDebounce(value => {
-    setGlobalFilter(value || undefined)
-  }, 200)
+    setGlobalFilter(value || undefined);
+  }, 200);
 
   return (
     <SearchFilterContainer>
       <FilterListIcon />
       Filter
       <SearchInput
-        value={value || ""}
+        value={value || ''}
         onChange={({ target }) => {
           setValue(target.value);
           onChange(target.value);
@@ -25,7 +25,7 @@ export function AppsTableFilter({
         placeholder="e.g. Team Fortress"
       />
     </SearchFilterContainer>
-  )
+  );
 }
 
 const SearchFilterContainer = styled.div`

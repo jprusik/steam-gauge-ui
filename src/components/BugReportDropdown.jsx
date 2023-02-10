@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import BugReportIcon from '@material-ui/icons/BugReport';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import BugReportIcon from '@mui/icons-material/BugReport';
 
 const BugReportTextContainer = styled.div`
   display: flex;

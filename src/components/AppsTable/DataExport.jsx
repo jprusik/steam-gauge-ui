@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import GetAppIcon from '@mui/icons-material/GetApp';
 import { CSVLink } from 'react-csv';
-import { dataExportHeaders } from 'constants/dataExportHeaders'
+import { dataExportHeaders } from 'constants/dataExportHeaders';
 
 export function DataExport({ data }) {
   // workaround for react-csv not supporting nested selectors when a
@@ -16,7 +16,7 @@ export function DataExport({ data }) {
     <LinkContainer className="btn-group">
       <CSVLink
         className="btn btn-primary btn-sm navbar-btn"
-        filename={"MySteamLibraryData.csv"}
+        filename={'MySteamLibraryData.csv'}
         data={formattedData}
         target="_blank"
         headers={dataExportHeaders}

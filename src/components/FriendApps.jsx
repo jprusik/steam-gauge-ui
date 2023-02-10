@@ -1,4 +1,4 @@
-import {minutesToHours} from '../utils/math'
+import {minutesToHours} from '../utils/math';
 
 const FriendAppRows = ({
   apps,
@@ -16,10 +16,10 @@ const FriendAppRows = ({
       ({name}, {name: nextName}) => name.localeCompare(nextName)
     )
     .map(app => (
-        <li key={app.appid} className="friend-gamerow">
-          {app.name} <small>({minutesToHours(app.playtime_forever)} hours)</small>
-        </li>
-      ))
+      <li key={app.appid} className="friend-gamerow">
+        {app.name} <small>({minutesToHours(app.playtime_forever)} hours)</small>
+      </li>
+    ))
   : (
     <li>
       <strong>{friendName}</strong> has no multiplayer games in common with <strong>{userName}</strong>

@@ -16,7 +16,7 @@ export function AppsDetails({ data }) {
     <AppDetailsContainer>
       <AppsTable columns={columns} data={data} />
     </AppDetailsContainer>
-  )
+  );
 }
 
 const AppDetailsContainer = styled.div`

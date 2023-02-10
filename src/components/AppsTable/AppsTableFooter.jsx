@@ -5,14 +5,14 @@ export function AppsTableFooter ({footerGroups}) {
   return (
     <TableFooter>
       {footerGroups.map(group => (
-          <TableFooterRow {...group.getFooterGroupProps()}>
-            {group.headers.map(column => (
-              <AppsTableFooterCell {...column.getFooterProps()} colSpan={isNumber(column.footerSpan) ? column.footerSpan : 1}>
-                {column.render('Footer')}
-              </AppsTableFooterCell>
-            ))}
-          </TableFooterRow>
-        ))}
+        <TableFooterRow {...group.getFooterGroupProps()}>
+          {group.headers.map(column => (
+            <AppsTableFooterCell {...column.getFooterProps()} colSpan={isNumber(column.footerSpan) ? column.footerSpan : 1}>
+              {column.render('Footer')}
+            </AppsTableFooterCell>
+          ))}
+        </TableFooterRow>
+      ))}
     </TableFooter>
   );
 }

@@ -16,6 +16,6 @@ const FriendRows = ({userId, accounts = [], multiplayerApps = []}) => {
       multiplayerApps={multiplayerApps}
     />
   );
-}
+};
 
 export default FriendRows;

@@ -28,6 +28,16 @@ export const pricePerHourRatio = (price, playedMinutes) => {
 export const mbToGB = (sizeMB, decimalPlaces = 0) =>
   roundToPlaces(sizeMB / 1000, decimalPlaces);
 
+export function enforceNumberValue(value) {
+  if (!isNumber(value)) {
+    const numberValue = parseFloat(value);
+
+    return isNumber(numberValue) ? numberValue : 0;
+  }
+
+  return value;
+}
+
 export function isNumber(value) {
   return typeof value === 'number' && isFinite(value);
 }

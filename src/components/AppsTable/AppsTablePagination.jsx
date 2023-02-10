@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 export const AppsTablePagination = ({
   canNextPage,
@@ -35,7 +35,7 @@ export const AppsTablePagination = ({
       <Selection
         value={pageSize}
         onChange={e => {
-          setPageSize(Number(e.target.value))
+          setPageSize(Number(e.target.value));
         }}
       >
         {[10, 20, maxPageSize].map(pageSize => (
@@ -46,7 +46,7 @@ export const AppsTablePagination = ({
       </Selection>
     </TablePaginationContainer>
   );
-}
+};
 
 const TablePaginationContainer = styled.div`
   display: flex;

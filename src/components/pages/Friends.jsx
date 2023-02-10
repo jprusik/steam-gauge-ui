@@ -1,6 +1,5 @@
 import {Fragment, useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import MetaTags from 'react-meta-tags';
 import {
   fetchAccountApps,
   fetchAccountDetails,
@@ -74,7 +73,7 @@ const FriendsPage = ({user, setUser}) => {
 
       // assemble comma-separated ids of all friends
       const userFriendsIds = userFriendsList
-        .reduce((csvUsers, {steamid}) => steamid && `${csvUsers},${steamid}`, '')
+        .reduce((csvUsers, {steamid}) => steamid && `${csvUsers},${steamid}`, '');
 
       // add `searchedUserId` so we can get all accounts with one request
       const userAndFriendIds = `${searchedUserId},${userFriendsIds}`;
@@ -99,42 +98,33 @@ const FriendsPage = ({user, setUser}) => {
   }, [searchedUserId]);
 
   function resetPageData() {
-    setUserFriends(null)
+    setUserFriends(null);
   }
 
-  return (
+  return !searchedUserId ? (
+    <Home {...{isFriends: true, setUser, user}} />
+  ) : (
     <Fragment>
-      <MetaTags key="content-meta">
-        {/* page metatags here */}
-      </MetaTags>
-
-      { !searchedUserId ? (
-          <Home {...{isFriends: true, setUser, user}} />
-        ) : (
-          <Fragment>
-            <SearchForm {...{
-              searchType:'friends',
-              onSearchSuccess: resetPageData,
-              ...(!!searchedUserId && {hideLabel: true})
-            }} />
-            <br />
-            { userFriends ? (
-              <Fragment>
-                <FriendsSummary {...{userId: searchedUserId, ...userFriends}} />
-                <FriendRows {...{userId: searchedUserId, ...userFriends}} />
-              </Fragment>
-            ) : friendsListError ? (
-              <div>There was a problem fetching your list of friends from Steam. If this problem persists, make sure the "Friends List" setting on <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy page</a> is set to "Public".</div>
-            ) : multiplayerAppsError ? (
-              <div>There was a problem fetching the multiplayer list.</div>
-            ) : (
-              <SectionLoader />
-            )}
-          </Fragment>
-        )
-      }
+      <SearchForm {...{
+        searchType:'friends',
+        onSearchSuccess: resetPageData,
+        ...(!!searchedUserId && {hideLabel: true})
+      }} />
+      <br />
+      { userFriends ? (
+        <Fragment>
+          <FriendsSummary {...{userId: searchedUserId, ...userFriends}} />
+          <FriendRows {...{userId: searchedUserId, ...userFriends}} />
+        </Fragment>
+      ) : friendsListError ? (
+        <div>There was a problem fetching your list of friends from Steam. If this problem persists, make sure the "Friends List" setting on <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy page</a> is set to "Public".</div>
+      ) : multiplayerAppsError ? (
+        <div>There was a problem fetching the multiplayer list.</div>
+      ) : (
+        <SectionLoader />
+      )}
     </Fragment>
   );
-}
+};
 
 export default FriendsPage;

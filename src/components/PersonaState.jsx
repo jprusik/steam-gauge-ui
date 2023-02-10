@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import BlockIcon from '@material-ui/icons/Block';
-import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import BlockIcon from '@mui/icons-material/Block';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const colors = {
   GREEN: '#61892b',
@@ -22,8 +22,8 @@ export function PersonaState ({
     case 0:
       return (
         <PersonaStateContainer>
-        { showIcon && <AccountCircleIcon style={{color}} /> }
-        { showText && <PersonaStateText color={color}>Offline</PersonaStateText> }
+          { showIcon && <AccountCircleIcon style={{color}} /> }
+          { showText && <PersonaStateText color={color}>Offline</PersonaStateText> }
         </PersonaStateContainer>
       );
     case 1:
@@ -31,8 +31,8 @@ export function PersonaState ({
 
       return (
         <PersonaStateContainer>
-        { showIcon && <AccountCircleIcon style={{color}} /> }
-        { showText && <PersonaStateText color={color}>Online</PersonaStateText> }
+          { showIcon && <AccountCircleIcon style={{color}} /> }
+          { showText && <PersonaStateText color={color}>Online</PersonaStateText> }
         </PersonaStateContainer>
       );
     case 2:
@@ -40,8 +40,8 @@ export function PersonaState ({
 
       return (
         <PersonaStateContainer>
-        { showIcon && <BlockIcon style={{color}} /> }
-        { showText && <PersonaStateText color={color}>Busy</PersonaStateText> }
+          { showIcon && <BlockIcon style={{color}} /> }
+          { showText && <PersonaStateText color={color}>Busy</PersonaStateText> }
         </PersonaStateContainer>
       );
     case 3:
@@ -49,8 +49,8 @@ export function PersonaState ({
 
       return (
         <PersonaStateContainer>
-        { showIcon && <RemoveCircleIcon style={{color}} /> }
-        { showText && <PersonaStateText color={color}>Away</PersonaStateText> }
+          { showIcon && <RemoveCircleIcon style={{color}} /> }
+          { showText && <PersonaStateText color={color}>Away</PersonaStateText> }
         </PersonaStateContainer>
       );
     case 4:
@@ -58,8 +58,8 @@ export function PersonaState ({
 
       return (
         <PersonaStateContainer>
-        { showIcon && <RemoveCircleIcon style={{color}} /> }
-        { showText && <PersonaStateText color={color}>On Snooze</PersonaStateText> }
+          { showIcon && <RemoveCircleIcon style={{color}} /> }
+          { showText && <PersonaStateText color={color}>On Snooze</PersonaStateText> }
         </PersonaStateContainer>
       );
     case 5:
@@ -67,8 +67,8 @@ export function PersonaState ({
 
       return (
         <PersonaStateContainer>
-        { showIcon && <SupervisedUserCircleIcon style={{color}} /> }
-        { showText && <PersonaStateText color={color}>Looking to Trade</PersonaStateText> }
+          { showIcon && <SupervisedUserCircleIcon style={{color}} /> }
+          { showText && <PersonaStateText color={color}>Looking to Trade</PersonaStateText> }
         </PersonaStateContainer>
       );
     case 6:
@@ -76,8 +76,8 @@ export function PersonaState ({
 
       return (
         <PersonaStateContainer>
-        { showIcon && <SupervisedUserCircleIcon style={{color}} /> }
-        { showText && <PersonaStateText color={color}>Looking to Play</PersonaStateText> }
+          { showIcon && <SupervisedUserCircleIcon style={{color}} /> }
+          { showText && <PersonaStateText color={color}>Looking to Play</PersonaStateText> }
         </PersonaStateContainer>
       );
     default:

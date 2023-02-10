@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import Remove from '@material-ui/icons/Remove';
+import Remove from '@mui/icons-material/Remove';
 import { appFields } from 'constants/appFields';
 import { countByCategory } from 'utils/totals';
 

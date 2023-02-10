@@ -1,6 +1,5 @@
 import {Fragment, useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import MetaTags from 'react-meta-tags';
 import {
   fetchAccountApps,
   fetchAccountDetails,
@@ -35,7 +34,7 @@ const getAppsWithDetails = async (apps, searchedUserId) => {
     return {
       ...app,
       ...appExtraData
-    }
+    };
   }) : apps;
 };
 
@@ -63,7 +62,7 @@ const AccountPage = () => {
       if (accountDataSuccess) {
         setUserAccountDetails(accountData);
       } else {
-        setAccountDetailsError(accountDataErrorKey || `${accountDataErrorCode}`)
+        setAccountDetailsError(accountDataErrorKey || `${accountDataErrorCode}`);
       }
 
       const {
@@ -86,7 +85,7 @@ const AccountPage = () => {
 
         setAccountAppsDetailsLoading(false);
       } else {
-        setAccountAppsError(appsDataErrorKey || `${appsDataErrorCode}`)
+        setAccountAppsError(appsDataErrorKey || `${appsDataErrorCode}`);
       }
     }
 
@@ -106,10 +105,6 @@ const AccountPage = () => {
 
   return (
     <Fragment>
-      <MetaTags>
-        {/* page metatags here */}
-      </MetaTags>
-
       <div className="container">
         <SearchForm {...{
           searchType: 'account',
@@ -140,7 +135,7 @@ const AccountPage = () => {
         { accountApps.length > 0 && !accountAppsDetailsLoading ? (
           <AppsDetails data={accountApps} />
         ) : accountAppsError ? null : (
-          <div className={`jumbotron`} style={{marginTop: '20px'}}>
+          <div className="jumbotron" style={{marginTop: '20px'}}>
             <SectionLoader />
           </div>
         )}

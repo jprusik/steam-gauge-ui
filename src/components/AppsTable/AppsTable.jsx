@@ -100,7 +100,7 @@ export function AppsTable({ columns, data }) {
         setPageSize,
       }} />
     </Fragment>
-  )
+  );
 }
 
 const scrollbarThumbColor = '#333333';

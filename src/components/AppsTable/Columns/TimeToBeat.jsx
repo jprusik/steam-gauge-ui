@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import RemoveIcon from '@material-ui/icons/Remove';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { appFields } from 'constants/appFields';
 import { numberValueAverage, numberValueSum } from 'utils/totals';
 import { minutesToHours } from 'utils/math';
@@ -23,7 +23,7 @@ export const TimeToBeat = {
         hoursToBeatMin,
         hoursToBeatMax,
         hltbId: timeToBeat.hltb_id
-      }
+      };
     }
 
     return {};

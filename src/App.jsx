@@ -1,12 +1,11 @@
-import {Fragment, useState} from 'react';
+import {useState} from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
-import MetaTags from 'react-meta-tags';
 import {checkLoginStatus} from './actions';
 import Body from './components/Body';
 import Footer from './components/Footer';
 import Header from './components/Header';
 
-const App = (props) => {
+export const App = () => {
   // empty object (instead of `null`) default for easier downstream destructuring
   const [user, setUser] = useState({});
   const [loginStateChecked, setLoginStateChecked] = useState(false);
@@ -19,14 +18,14 @@ const App = (props) => {
 
       if (!userData) {
         // Either the server is down or the user is having connectivity issues
-        setCheckLoginError(true)
+        setCheckLoginError(true);
       } else {
         if (userData.session_start) {
-          setUser(userData)
+          setUser(userData);
         }
       }
 
-      setLoginStateChecked(true)
+      setLoginStateChecked(true);
     }
   }
 
@@ -36,18 +35,6 @@ const App = (props) => {
   return (
     <Router>
       <div>
-        <MetaTags>
-          {
-          // global meta tags here
-          // @TODO clean up these metatags and reference static asset paths
-          // these lines prevent the site from being indexed
-          process.env.REACT_APP_DISABLE_INDEXING_P &&
-            <Fragment>
-              <meta name="robots" content="noindex, nofollow" />
-              <meta name="googlebot" content="noindex" />
-            </Fragment>
-          }
-        </MetaTags>
         <Header setUser={setUser} user={user} />
         <Body checkLoginError={checkLoginError} setUser={setUser} user={user} />
         {/* @TODO App & Search Loader  */}
@@ -55,6 +42,4 @@ const App = (props) => {
       </div>
     </Router>
   );
-}
-
-export default App;
+};

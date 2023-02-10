@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import UserNavItems from './UserNavItems'
+import UserNavItems from './UserNavItems';
 import './Header.scss';
 
 const Header = ({user, setUser}) => (

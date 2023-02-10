@@ -1,5 +1,5 @@
-import CheckBox from '@material-ui/icons/CheckBox';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBox from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
 export const Selection = ({ appid, selectedApps }) =>
   selectedApps.includes(appid) ?

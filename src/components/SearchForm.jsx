@@ -10,7 +10,7 @@ const SearchForm = ({
   searchType = 'account',
   hideLabel = false,
   hideInputAddon = false,
-  onSearchSuccess = () => {}
+  onSearchSuccess = () => {/* no-op */}
 }) => {
   let history = useHistory();
 
@@ -21,11 +21,11 @@ const SearchForm = ({
   function loadNextPage(steamAccountId) {
     switch (searchType) {
       case 'account':
-        return history.push(`/account/${steamAccountId}`)
+        return history.push(`/account/${steamAccountId}`);
       case 'friends':
-        return history.push(`/friends/${steamAccountId}`)
+        return history.push(`/friends/${steamAccountId}`);
       default:
-        return history.push('/')
+        return history.push('/');
     }
   }
 
@@ -119,6 +119,6 @@ const SearchForm = ({
       }
     </form>
   );
-}
+};
 
 export default SearchForm;

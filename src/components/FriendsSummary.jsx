@@ -34,8 +34,8 @@ const FriendsSummary = ({userId, accounts = [], multiplayerApps = []}) => {
   const mostOwnedCommonAppId = totalOwnedAppsCountsIds
     .reduce((mostOwnedId, appId) =>
       totalOwnedAppsCounts[appId] > totalOwnedAppsCounts[mostOwnedId]
-      ? appId
-      : mostOwnedId
+        ? appId
+        : mostOwnedId
     , totalOwnedAppsCountsIds[0]);
 
   const mostOwnedCommonApp = userApps.find(({appid}) => `${appid}` === mostOwnedCommonAppId);
@@ -43,8 +43,8 @@ const FriendsSummary = ({userId, accounts = [], multiplayerApps = []}) => {
   const leastOwnedCommonAppId = totalOwnedAppsCountsIds
     .reduce((mostOwnedId, appId) =>
       totalOwnedAppsCounts[appId] < totalOwnedAppsCounts[mostOwnedId]
-      ? appId
-      : mostOwnedId
+        ? appId
+        : mostOwnedId
     , totalOwnedAppsCountsIds[0]);
 
   const leastOwnedCommonApp = userApps.find(({appid}) => `${appid}` === leastOwnedCommonAppId);
@@ -61,8 +61,8 @@ const FriendsSummary = ({userId, accounts = [], multiplayerApps = []}) => {
   const highestAveragePlaytimeCommonAppId = totalOwnedAppsPlaytimeIds
     .reduce((mostPlayedOnAverageId, appId) =>
       (totalOwnedAppsPlaytime[appId]/userFriendsCount) > (totalOwnedAppsPlaytime[mostPlayedOnAverageId]/userFriendsCount)
-      ? appId
-      : mostPlayedOnAverageId
+        ? appId
+        : mostPlayedOnAverageId
     , totalOwnedAppsPlaytimeIds[0]);
 
   const highestAveragePlaytimeCommonApp = userApps.find(({appid}) => `${appid}` === highestAveragePlaytimeCommonAppId);

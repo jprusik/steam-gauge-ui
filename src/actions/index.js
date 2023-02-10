@@ -67,9 +67,9 @@ function get({
   const baseFetchOptions = {
     accept: 'application/json',
     credentials: 'same-origin'
-  }
+  };
 
-  const apiPath = `/api/1.0/${requestApi}`
+  const apiPath = `/api/1.0/${requestApi}`;
 
   if (useCache) {
     const cachedResponse = checkRequestCache(apiPath);
@@ -86,10 +86,9 @@ function get({
     .catch(error => handleError(error, returnErrorResponse));
 }
 
-// @TODO give user feedback on error
-// @TODO push error to health-monitoring service
 const handleError = (error, returnResponse = false) => {
-  console.error('Something went horribly wrong: ' + error.status);
+  // @TODO give user feedback on error
+  // @TODO push error to health-monitoring service
 
   // @TODO there's probably a better way to do this
   if (returnResponse) {
@@ -102,13 +101,13 @@ export const checkLoginStatus = () => {
     accept: 'application/json',
     cache: 'no-store',
     credentials: 'same-origin'
-  }
+  };
 
   return fetch('/current_user', fetchOptions)
     .then(checkResponseStatus)
     .then(response => response.json())
     .catch(handleError);
-}
+};
 
 export const logoutUser = () => {
   const fetchOptions = {
@@ -116,13 +115,13 @@ export const logoutUser = () => {
     cache: 'no-store',
     credentials: 'same-origin',
     method: 'PUT'
-  }
+  };
 
   return fetch('/logout', fetchOptions)
     .then(checkResponseStatus)
     .then(response => response.json())
     .catch(handleError);
-}
+};
 
 export const resolveUsername = (username) =>
   get({requestApi: `username/${username}`, useCache: true});
@@ -137,14 +136,14 @@ export const fetchAccountApps = (accountId, includeExtendedData = false) => {
   let requestApi = `accounts/${accountId}/apps`;
 
   if (includeExtendedData) {
-    requestApi += '?fields=developers,publishers,genres,time_to_beat'
+    requestApi += '?fields=developers,publishers,genres,time_to_beat';
   }
 
   return get({
     requestApi,
     useCache: true
   });
-}
+};
 
 export const fetchFriendsList = (accountId) =>
   get({requestApi: `accounts/${accountId}/friends`, useCache: true, returnErrorResponse: true});

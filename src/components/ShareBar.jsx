@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
 
 const ShareIconsContainer = styled.div`
   display: flex;
@@ -22,8 +22,8 @@ const ShareLink = styled.a`
 
   color: ${({socialNetwork}) =>
     socialNetwork === 'facebook' ? '#3b5998' :
-    socialNetwork === 'twitter' ? '#0094c2' : '#8bb9e0'
-  }!important; // !important bootstrap override
+      socialNetwork === 'twitter' ? '#0094c2' : '#8bb9e0'
+}!important; // !important bootstrap override
 
   > svg {
     font-size: 2.5rem;

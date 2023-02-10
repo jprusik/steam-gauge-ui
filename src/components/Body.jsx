@@ -9,9 +9,9 @@ import ReceiptPage from 'components/pages/Receipt';
 import './Body.scss';
 
 const urlRedirect = (url) => {
-    window.location = url;
-    return null;
-}
+  window.location = url;
+  return null;
+};
 
 const RouteWithComponentProps = ({component: Component, componentProps, ...routeProps}) => (
   <Route {...routeProps} render={() => <Component {...{...routeProps, ...componentProps}} />} />

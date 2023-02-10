@@ -1,11 +1,7 @@
 import styled from '@emotion/styled';
-import MetaTags from 'react-meta-tags';
 
 export const AboutPage = () => (
   <PageContent>
-    <MetaTags>
-      {/* page metatags here */}
-    </MetaTags>
     <ContentContainer>
       <h2>About the App</h2>
       <p>

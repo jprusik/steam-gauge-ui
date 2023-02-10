@@ -30,14 +30,13 @@ const LoginButton = () => (
 );
 
 const UserNavItems = ({user: {account_id: accountId}, setUser}) =>
-  !!accountId ?
-    (
-      <Fragment>
-        <AccountLink accountId={accountId} />
-        <LogoutButton setUser={setUser} />
-      </Fragment>
-    ) : (
-      <LoginButton />
-    );
+  !accountId ? (
+    <LoginButton />
+  ) : (
+    <Fragment>
+      <AccountLink accountId={accountId} />
+      <LogoutButton setUser={setUser} />
+    </Fragment>
+  );
 
 export default UserNavItems;

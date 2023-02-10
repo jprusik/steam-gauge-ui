@@ -73,7 +73,7 @@ export function numberValueAverage (
     };
   }, {count: 0, sum: 0});
 
-  return roundToPlaces(sum / count, 2)
+  return roundToPlaces(sum / count, 2);
 }
 
 export function dateRange (rows, fieldName) {
@@ -85,7 +85,7 @@ export function dateRange (rows, fieldName) {
 
       return dateObject.isValid() ?
         [...dates, dayjs(fieldValue)] :
-        dates
+        dates;
     }
 
     return dates;

@@ -29,8 +29,8 @@ const FriendRow = ({
   const mostTimePlayedCommonApp = friendCommonMultiplayerApps
     .reduce((mostPlayedApp, app) =>
       app.playtime_forever > mostPlayedApp.playtime_forever
-      ? app
-      : mostPlayedApp
+        ? app
+        : mostPlayedApp
     , friendCommonMultiplayerApps[0]);
 
   // TODO: display other multiplayer games not owned by the user

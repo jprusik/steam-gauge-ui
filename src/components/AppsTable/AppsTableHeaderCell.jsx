@@ -17,13 +17,13 @@ export const AppsTableHeaderCell = ({
     isSorted={isSorted}
     // separate the click handler from the header in cases where the
     // header contains interactive elements (like a selection box)
-    {...{...otherHeaderProps, onClick: hasInteractiveChildren ? () => {} : onClick}}
+    {...{...otherHeaderProps, onClick: hasInteractiveChildren ? () => {/* noop */} : onClick}}
   >
     <TableHeaderContent minWidth={minWidth}>
       {children}
       {canSort &&
         <div
-          onClick={hasInteractiveChildren ? onClick : () => {}}
+          onClick={hasInteractiveChildren ? onClick : () => {/* noop */}}
         >
           <SortIcon
             order={isSorted ? (isSortedDesc ? 'desc' : 'asc') : null}

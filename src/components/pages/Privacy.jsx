@@ -1,12 +1,7 @@
 import styled from '@emotion/styled';
-import MetaTags from 'react-meta-tags';
 
 export const PrivacyPage = () => (
   <PageContent>
-    <MetaTags>
-      {/* page metatags here */}
-    </MetaTags>
-
     <PageTitle>Privacy Policy</PageTitle>
     <p>
       { process.env.REACT_APP_NAME } does not collect information on any of its visitors except in the following circumstances:

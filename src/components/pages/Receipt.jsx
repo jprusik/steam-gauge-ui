@@ -1,11 +1,5 @@
-import MetaTags from 'react-meta-tags';
-
 const ReceiptPage = () => (
   <div className="content-main">
-    <MetaTags>
-      {/* page metatags here */}
-    </MetaTags>
-
     <div className="jumbotron">
       <h3>
         <em>The Steam Gauge value of my account is waaaaaay more than I actually paid for my games!</em>
