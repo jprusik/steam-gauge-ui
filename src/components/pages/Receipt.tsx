@@ -1,4 +1,4 @@
-const ReceiptPage = () => (
+const ReceiptPage = (): JSX.Element => (
   <div className="content-main">
     <div className="jumbotron">
       <h3>

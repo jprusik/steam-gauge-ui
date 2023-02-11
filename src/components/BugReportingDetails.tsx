@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const BugReportingDetails = () => (
+export const BugReportingDetails = (): JSX.Element => (
   <div>
     <BugReportingDetailsIntro>
       Notice an issue? Is a value wrong? Send the details along at the appropriate link below.

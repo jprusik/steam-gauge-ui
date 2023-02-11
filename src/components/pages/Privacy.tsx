@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const PrivacyPage = () => (
+export const PrivacyPage = (): JSX.Element => (
   <PageContent>
     <PageTitle>Privacy Policy</PageTitle>
     <p>

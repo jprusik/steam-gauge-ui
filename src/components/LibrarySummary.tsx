@@ -1,11 +1,18 @@
 import {Fragment, useState} from 'react';
 import styled from '@emotion/styled';
+import {Account, App as AccountApp} from 'types';
 import {timeSince} from 'utils/dates';
-import ShareBar from 'components/ShareBar';
-import { BugReportDropdown } from 'components/BugReportDropdown';
-import { BugReportingDetails } from 'components/BugReportingDetails';
-import { mbToGB, roundToPlaces } from 'utils/math';
-import { numberValueSum } from 'utils/totals';
+import {BugReportDropdown} from 'components/BugReportDropdown';
+import {BugReportingDetails} from 'components/BugReportingDetails';
+import {ShareBar} from 'components/ShareBar';
+import {mbToGB, roundToPlaces} from 'utils/math';
+import {numberValueSum} from 'utils/totals';
+
+type LibrarySummaryProps = {
+  accountData: Account;
+  detailsLoading: boolean;
+  libraryApps: AccountApp[];
+}
 
 export const LibrarySummary = ({
   accountData: {
@@ -14,7 +21,7 @@ export const LibrarySummary = ({
   },
   detailsLoading,
   libraryApps = []
-}) => {
+}: LibrarySummaryProps): JSX.Element => {
   const [displayBugDetails, setDisplayBugDetails] = useState(false);
   const accountAge = timeSince(timecreated * 1000);
 
@@ -55,15 +62,28 @@ export const LibrarySummary = ({
   );
 };
 
-function summaryData (libraryApps) {
-  const minutesPlayed = numberValueSum(libraryApps, ({playtime_forever}) => playtime_forever);
+type SummaryData = {
+  installSize: string;
+  selectionCount: number;
+  timePlayed: string;
+  usdSum: number;
+}
+
+function summaryData (libraryApps: AccountApp[]): SummaryData {
+  const minutesPlayed = numberValueSum(
+    libraryApps,
+    ({playtime_forever}: {playtime_forever: number}) => playtime_forever);
   const hoursPlayed = roundToPlaces(minutesPlayed / 60);
   const selectionCount = libraryApps.length;
   const usdSum = roundToPlaces(
-    numberValueSum(libraryApps, ({store_price_default_usd}) => store_price_default_usd),
+    numberValueSum(
+      libraryApps,
+      ({store_price_default_usd}: {store_price_default_usd: number}) => store_price_default_usd),
     2
   );
-  const mbSum = numberValueSum(libraryApps, ({size_mb}) => size_mb);
+  const mbSum = numberValueSum(
+    libraryApps,
+    ({size_mb}: {size_mb: number}) => size_mb);
   const gbSum = mbToGB(mbSum, 1);
 
   return {

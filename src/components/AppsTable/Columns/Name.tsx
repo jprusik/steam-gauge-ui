@@ -4,9 +4,23 @@ import styled from '@emotion/styled';
 import Tooltip from '@mui/material/Tooltip';
 import {AppBanner} from 'components/AppBanner';
 
+type NameCellValueProps = {
+  app_website: string;
+  appid: string;
+  img_icon_url: string;
+  img_logo_url: string;
+  name: string;
+}
+
 export const Name = {
   accessor: appFields.NAME,
-  Cell: ({ row: { original } }) => <NameCellValue {...original} />,
+  Cell: ({
+    row: {
+      original
+    }
+  }: {row: {original: NameCellValueProps}}) => (
+    <NameCellValue {...original} />
+  ),
   footerSpan: 0,
   Header: 'Title',
   minWidth: 36,
@@ -18,10 +32,13 @@ const NameCellValue = ({
   img_icon_url,
   img_logo_url,
   name,
-}) => (
+}: NameCellValueProps): JSX.Element => (
   <AppNameContainer>
     { img_icon_url &&
-      <Tooltip title={<AppBanner {...{appid, img_logo_url}} />} arrow>
+      <Tooltip
+        title={img_logo_url ? <AppBanner {...{appid, img_logo_url}} /> : ''}
+        arrow
+      >
         <TooltipImage
           alt={`${name || appid} icon`}
           loading="lazy"

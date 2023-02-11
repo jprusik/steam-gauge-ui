@@ -1,13 +1,14 @@
 import {useState} from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
-import {checkLoginStatus} from './actions';
-import Body from './components/Body';
-import Footer from './components/Footer';
-import Header from './components/Header';
+import {User} from 'types';
+import {checkLoginStatus} from 'actions';
+import Body from 'components/Body';
+import {Footer} from 'components/Footer';
+import Header from 'components/Header';
 
-export const App = () => {
+export function App (): JSX.Element {
   // empty object (instead of `null`) default for easier downstream destructuring
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<User | Record<string, never>>({});
   const [loginStateChecked, setLoginStateChecked] = useState(false);
   const [checkLoginError, setCheckLoginError] = useState(false);
 
@@ -42,4 +43,4 @@ export const App = () => {
       </div>
     </Router>
   );
-};
+}

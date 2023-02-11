@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const AboutPage = () => (
+export const AboutPage = (): JSX.Element => (
   <PageContent>
     <ContentContainer>
       <h2>About the App</h2>

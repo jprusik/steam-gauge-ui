@@ -2,10 +2,19 @@ import styled from '@emotion/styled';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
-export const SortIcon = ({order}) => (
+enum orderType {
+  ASCENDING = 'asc',
+  DESCENDING = 'desc'
+}
+
+export const SortIcon = ({order}: {order: orderType}): JSX.Element => (
   <SortIconsContainer>
-    <ArrowDropUpIcon htmlColor={order === 'asc' ? '#8bb9e0' : '#FFFFFF'} />
-    <ArrowDropDownIcon htmlColor={order === 'desc' ? '#8bb9e0' : '#FFFFFF'} />
+    <ArrowDropUpIcon
+      htmlColor={order === orderType.ASCENDING ? '#8bb9e0' : '#FFFFFF'}
+    />
+    <ArrowDropDownIcon
+      htmlColor={order === orderType.DESCENDING ? '#8bb9e0' : '#FFFFFF'}
+    />
   </SortIconsContainer>
 );
 

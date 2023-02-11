@@ -1,6 +1,6 @@
 import './TitleIntro.scss';
 
-const TitleIntro = ({isFriends = false}) => isFriends ?
+const TitleIntro = ({isFriends = false}: {isFriends: boolean}): JSX.Element => isFriends ?
   (
     <div className="friends-home-header-wrapper">
       <h1><i className="fa fa-group"></i>&nbsp;Steam Friends</h1>

@@ -18,6 +18,11 @@ This repository represents development of a dedicated React front-end app which 
 - `yarn start` or `npm start` to run the react server
 - `yarn build` or `npm run build` to build the app for production
 
+## Deployment
+
+- build the app
+- run `deploy-staging.sh` or `deploy-production.sh`
+
 ### Docker
 
 If you have Docker installed, you can build and run a container to access the api

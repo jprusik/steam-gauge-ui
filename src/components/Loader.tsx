@@ -12,16 +12,18 @@ const spin = keyframes`
 `;
 
 const loaderIconStyles = css`
+  width: auto !important;
+  height: 100% !important;
   animation-name: ${spin};
   animation-duration: 3000ms;
-  animation-iteration-count: infinite;
   animation-timing-function: linear;
+  animation-iteration-count: infinite;
   color: #EEEEEE;
-  height: 100% !important;
-  width: auto !important;
 `;
 
-export const Loader = ({loaderStyles = ''}) => (
+export const Loader = (
+  {loaderStyles = ''}: {loaderStyles: string}
+): JSX.Element => (
   <div css={css`${loaderStyles}`}>
     <SettingsIcon css={loaderIconStyles} />
   </div>
@@ -30,9 +32,9 @@ export const Loader = ({loaderStyles = ''}) => (
 export const SectionLoader = () => (
   <Loader loaderStyles="
       display: block;
-      height: 20vh;
       margin: 20px auto 0 auto;
       width: 20vh;
+      height: 20vh;
     "
   />
 );

@@ -1,8 +1,9 @@
 import {Link} from 'react-router-dom';
+import {UserState} from 'types';
 import UserNavItems from './UserNavItems';
 import './Header.scss';
 
-const Header = ({user, setUser}) => (
+const Header = ({user, setUser}: UserState) => (
   <nav className="navbar navbar-inverse navbar-fixed-top">
     <div className="container">
       <div className="navbar-header">

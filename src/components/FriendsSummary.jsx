@@ -2,7 +2,7 @@ import {
   groupMultiplayerAppsByAccountsOwnedByCount,
   groupMultiplayerAppsByAccountsPlaytime
 } from '../utils/friends';
-import ShareBar from './ShareBar';
+import {ShareBar} from 'components/ShareBar';
 import './FriendsSummary.scss';
 
 const FriendsSummary = ({userId, accounts = [], multiplayerApps = []}) => {
