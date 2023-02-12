@@ -58,23 +58,31 @@ export type App = {
 }
 
 export type Account = {
+  // Public Data
   avatar: string;
   avatarfull: string;
   avatarhash: string;
   avatarmedium: string;
+  cityid: string; // @TODO `cityid` is deprecated by SteamAPI
+  commentpermission: number;
   communityvisibilitystate: number;
   lastlogoff: number;
-  loccityid: number;
-  loccountrycode: string;
-  locstatecode: string;
   personaname: string;
   personastate: number;
   personastateflags: number;
-  primaryclanid: string;
   profilestate: number;
   profileurl: string;
-  realname: string;
   steamid: string;
+
+  // Private Data
+  gameextrainfo?: string;
+  // gameid: any; // @TODO verify type
+  gameserverip?: string;
+  loccityid: number;
+  loccountrycode: string;
+  locstatecode: string;
+  primaryclanid: string;
+  realname: string;
   timecreated: number;
 }
 

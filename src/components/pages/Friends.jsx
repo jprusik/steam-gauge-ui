@@ -5,12 +5,12 @@ import {
   fetchAccountDetails,
   fetchFriendsList,
   fetchMultiplayerApps
-} from '../../actions';
-import {Home} from './Home';
-import FriendRows from '../FriendRows';
-import FriendsSummary from '../FriendsSummary';
-import SearchForm from '../SearchForm';
-import {SectionLoader} from '../Loader';
+} from 'actions';
+import {Home} from 'components/pages/Home';
+import {FriendRows} from 'components/FriendRows';
+import FriendsSummary from 'components/FriendsSummary';
+import SearchForm from 'components/SearchForm';
+import {SectionLoader} from 'components/Loader';
 
 const getAccountsApps = accountsDetails =>
   Promise.all(accountsDetails.map(async account => {
@@ -76,6 +76,7 @@ const FriendsPage = ({user, setUser}) => {
         .reduce((csvUsers, {steamid}) => steamid && `${csvUsers},${steamid}`, '');
 
       // add `searchedUserId` so we can get all accounts with one request
+      // @TODO The api is currently limited to 100 ids
       const userAndFriendIds = `${searchedUserId},${userFriendsIds}`;
 
       const {data: accountsDetailsData} = await fetchAccountDetails(userAndFriendIds) || {};

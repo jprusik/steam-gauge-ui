@@ -30,5 +30,5 @@ export const dataExportHeaders = [
   { label: 'Has Trading Cards', key: 'tradingcards_enabled' },
   { label: 'Has Steam Workshop', key: 'workshop_enabled' },
   { label: 'Has Stats', key: 'stats_enabled' },
-  { label: 'Has HDR', key: 'hdr' },
+  { label: 'Has HDR', key: 'hdr' }
 ];

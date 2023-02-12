@@ -1,50 +1,29 @@
 /** @jsxImportSource @emotion/react */
 import {Fragment} from 'react';
 import {css} from '@emotion/core';
+import {Account} from 'types';
 import {accountCreationDate, timeSince} from 'utils/dates';
 import {PersonaState} from 'components/PersonaState';
 
-const userAvatarStyles = css`
-  @media only screen and (max-width:640px) {
-    width:100%;
-    max-width:184px;
-    min-width:80px;
-  }
-`;
-
-const profileNameStyles = css`
-  font-family: ImpactEmb, Impact, Helvetica, Arial, sans-serif;
-  font-size: 2em;
-  font-weight: normal;
-  letter-spacing: 1px;
-  line-height: 1em;
-  margin: 0px;
-  text-shadow: #3d3d3d 2px 2px 1px;
-`;
+type AccountDetailsProps = {
+  accountData: Account;
+}
 
 export const AccountDetails = ({
   accountData: {
-    avatar,
     avatarfull,
-    avatarmedium,
-    cityid,
-    communityvisibilitystate,
+    cityid, // @TODO `cityid` is deprecated by SteamAPI
     gameextrainfo,
     lastlogoff,
-    loccityid,
     loccountrycode,
     locstatecode,
     personaname,
     personastate,
-    personastateflags,
-    primaryclanid,
-    profilestate,
-    profileurl,
     realname,
     steamid,
     timecreated
   }
-}) => (
+}: AccountDetailsProps): JSX.Element => (
   <table>
     <tbody>
       <tr>
@@ -68,13 +47,15 @@ export const AccountDetails = ({
             <h4>Steam ID: <a css={css`color: #8bb9e0;`} href={`https://steamcommunity.com/profiles/${steamid}`} target="_blank" rel="noopener noreferrer">{steamid}</a></h4>
           }
           <div>
-            <span css={css`font-weight: bold; font-size: 0.75em;`}>This user's status is:</span>
-            <PersonaState state={personastate} />
+            {Number.isInteger(personastate) && (
+              <Fragment>
+                <span css={css`font-weight: bold; font-size: 0.75em;`}>This user's status is:</span>
+                <PersonaState state={personastate} />
+              </Fragment>
+            )}
             <div css={css`color: #eeeeee; font-weight: bold; padding: 0px; font-size: 0.75em;`}>
               { timecreated && timecreated !== 0 && (
-                <Fragment>
-                  Steam user since { accountCreationDate(timecreated) }
-                </Fragment>
+                `Steam user since ${ accountCreationDate(timecreated) }`
               )}
               <br />
               { realname && <span id="user_realname">{realname} | </span> }
@@ -100,3 +81,21 @@ export const AccountDetails = ({
     </tbody>
   </table>
 );
+
+const userAvatarStyles = css`
+  @media only screen and (max-width:640px) {
+    width:100%;
+    max-width:184px;
+    min-width:80px;
+  }
+`;
+
+const profileNameStyles = css`
+  font-family: ImpactEmb, Impact, Helvetica, Arial, sans-serif;
+  font-size: 2em;
+  font-weight: normal;
+  letter-spacing: 1px;
+  line-height: 1em;
+  margin: 0px;
+  text-shadow: #3d3d3d 2px 2px 1px;
+`;

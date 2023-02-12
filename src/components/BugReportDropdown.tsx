@@ -1,7 +1,28 @@
+import {Dispatch} from 'react';
 import styled from '@emotion/styled';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import BugReportIcon from '@mui/icons-material/BugReport';
+
+type BugReportDropdownProps = {
+  displayDetails: boolean;
+  toggleDetails: Dispatch<boolean>;
+}
+
+export const BugReportDropdown = ({
+  displayDetails,
+  toggleDetails
+}: BugReportDropdownProps): JSX.Element => (
+  <BugReportTextContainer onClick={() => toggleDetails(!displayDetails)}>
+    <BugReportIcon />
+    <div>Something off? Report bugs!</div>
+    {displayDetails ? (
+      <ArrowDropUpIcon />
+    ) : (
+      <ArrowDropDownIcon />
+    )}
+  </BugReportTextContainer>
+);
 
 const BugReportTextContainer = styled.div`
   display: flex;
@@ -23,15 +44,3 @@ const BugReportTextContainer = styled.div`
     font-size: 2rem;
   }
 `;
-
-export const BugReportDropdown = ({displayDetails, toggleDetails}) => (
-  <BugReportTextContainer onClick={() => toggleDetails(!displayDetails)}>
-    <BugReportIcon />
-    <div>Something off? Report bugs!</div>
-    {displayDetails ? (
-      <ArrowDropUpIcon />
-    ) : (
-      <ArrowDropDownIcon />
-    )}
-  </BugReportTextContainer>
-);
