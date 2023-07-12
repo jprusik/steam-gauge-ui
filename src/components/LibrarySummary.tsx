@@ -1,4 +1,5 @@
 import {Fragment, useState} from 'react';
+import {Link} from 'react-router-dom';
 import styled from '@emotion/styled';
 import {Account, App as AccountApp} from 'types';
 import {timeSince} from 'utils/dates';
@@ -46,9 +47,8 @@ export const LibrarySummary = ({
           url={`${process.env.REACT_APP_DOMAIN_URL}/accounts/${steamid}`}
         />
         <SteamReceiptLink
+          to="/receipt"
           className="bookmarklet-link"
-          href="{{ url_for('receipt') }}"
-          target="_blank"
         >
           Want to know how much you've <em>spent</em> on Steam?
         </SteamReceiptLink>
@@ -111,7 +111,7 @@ const SecondaryItems = styled.div`
   margin-bottom: 10px;
 `;
 
-const SteamReceiptLink = styled.a`
+const SteamReceiptLink = styled(Link)`
   flex: 3 1 auto;
   text-align: center;
   color: #8bb9e0;
