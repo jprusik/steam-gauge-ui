@@ -1,4 +1,6 @@
 import { useMemo } from 'react';
+import { Row } from 'react-table';
+import { TimeToBeat as TimeToBeatRecord } from 'types';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { appFields } from 'constants/appFields';
 import { numberValueAverage, numberValueSum } from 'utils/totals';
@@ -6,7 +8,9 @@ import { minutesToHours } from 'utils/math';
 import { roundToPlaces } from 'utils/math';
 
 export const TimeToBeat = {
-  accessor: ({ [appFields.TIME_TO_BEAT]: timeToBeat }) => {
+  accessor: ({
+    [appFields.TIME_TO_BEAT]: timeToBeat
+  }: {[appFields.TIME_TO_BEAT]: TimeToBeatRecord}) => {
     // @TODO: `time_to_beat` can be either null or undefined. Update
     // API to omit field values when no records are found.
     if (timeToBeat?.hltb_id) {
@@ -28,8 +32,10 @@ export const TimeToBeat = {
 
     return {};
   },
-  Cell: ({ value }) => <TimeToBeatCellValue value={value} />,
-  Footer: ({ selectedFlatRows }) => {
+  Cell: ({value}: TimeToBeatCellValueProps) => (
+    <TimeToBeatCellValue value={value} />
+  ),
+  Footer: ({selectedFlatRows}: {selectedFlatRows: Row[]}) => {
     const {valueSum, valueAverage} = useMemo(
       () => {
         return ({
@@ -54,15 +60,32 @@ export const TimeToBeat = {
   Header: 'Time to Beat',
   id: 'timeToBeat',
   minWidth: 50,
-  sortType: ({ values: { timeToBeat } }, { values: { timeToBeat: nextTimeToBeat } }) => (
+  sortType: (
+    {values: {timeToBeat}}:
+      {values: {timeToBeat: TimeToBeatAccessorData}},
+    {values: {timeToBeat: nextTimeToBeat}}:
+      {values: {timeToBeat: TimeToBeatAccessorData}}
+  ) => (
     (timeToBeat?.hoursToBeatMin || 0) >
       (nextTimeToBeat?.hoursToBeatMin || 0) ?
       -1 : 1
   ),
 };
 
-const minTimeToBeatSelector = ({values}) =>
+const minTimeToBeatSelector = ({
+  values
+}: {values: {timeToBeat: TimeToBeatAccessorData}}) =>
   values.timeToBeat?.hoursToBeatMin;
+
+type TimeToBeatAccessorData = {
+  hltbId: string;
+  hoursToBeatMax: number;
+  hoursToBeatMin: number;
+}
+
+type TimeToBeatCellValueProps = {
+  value: TimeToBeatAccessorData
+}
 
 const TimeToBeatCellValue = ({
   value: {
@@ -70,7 +93,7 @@ const TimeToBeatCellValue = ({
     hoursToBeatMax,
     hoursToBeatMin,
   }
-}) => {
+}: TimeToBeatCellValueProps) => {
   if (!hltbId) {
     return <RemoveIcon />;
   }

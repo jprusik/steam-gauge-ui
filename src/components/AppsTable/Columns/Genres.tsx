@@ -1,17 +1,16 @@
 import { useMemo } from 'react';
+import { Row } from 'react-table';
 import { appFields } from 'constants/appFields';
 import { uniqueValueCount } from 'utils/totals';
 import { CommaDelimitedUnorderedList } from 'components/CommaDelimitedUnorderedList';
 
 export const Genres = {
   accessor: appFields.GENRES,
-  Cell: ({
-    row: {
-      values: { [appFields.GENRES]: value },
-    },
-  }) => <GenresCellValue value={value} />,
+  Cell: ({row}: {row: Row}) => (
+    <GenresCellValue value={row.values[appFields.GENRES]} />
+  ),
   disableSortBy: true,
-  Footer: ({ selectedFlatRows }) => {
+  Footer: ({selectedFlatRows}: {selectedFlatRows: Row[]}) => {
     const itemList = useMemo(
       () => uniqueValueCount(selectedFlatRows, appFields.GENRES),
       [selectedFlatRows]

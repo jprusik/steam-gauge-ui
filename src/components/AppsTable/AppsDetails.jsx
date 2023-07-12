@@ -4,7 +4,7 @@ import {columnComponentNames} from 'constants/appFields';
 import { AppsTable } from 'components/AppsTable/AppsTable';
 import * as Columns from 'components/AppsTable/Columns';
 
-export function AppsDetails({ data }) {
+export function AppsDetails({ apps }) {
   const columns = useMemo(
     () => Object.keys(columnComponentNames).map(component =>
       Columns[columnComponentNames[component]]
@@ -14,7 +14,7 @@ export function AppsDetails({ data }) {
 
   return (
     <AppDetailsContainer>
-      <AppsTable columns={columns} data={data} />
+      <AppsTable columns={columns} data={apps} />
     </AppDetailsContainer>
   );
 }

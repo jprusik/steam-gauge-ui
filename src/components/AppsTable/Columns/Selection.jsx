@@ -4,14 +4,16 @@ import { Checkbox } from 'components/AppsTable/Checkbox';
 export const Selection = {
   id: 'selection',
   accessor: (row, index, meta) => !!meta.isSelected,
-  Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
-  Footer: ({ selectedFlatRows }) => (
+  Cell: ({row}) => (
+    <Checkbox {...row.getToggleRowSelectedProps()} />
+  ),
+  Footer: ({selectedFlatRows}) => (
     <SelectionFooterCellValue>
       {selectedFlatRows.length} selected
     </SelectionFooterCellValue>
   ),
   footerSpan: 4,
-  Header: ({ getToggleAllRowsSelectedProps }) => (
+  Header: ({getToggleAllRowsSelectedProps}) => (
     <Checkbox {...getToggleAllRowsSelectedProps()} />
   ),
   minWidth: 30,

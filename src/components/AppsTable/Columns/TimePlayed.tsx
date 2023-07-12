@@ -1,16 +1,15 @@
 import { useMemo } from 'react';
+import { Row } from 'react-table';
 import { appFields } from 'constants/appFields';
 import { minutesToHours } from 'utils/math';
 import { numberValueAverage, numberValueSum } from 'utils/totals';
 
 export const TimePlayed = {
   accessor: appFields.PLAYTIME_FOREVER,
-  Cell: ({
-    row: {
-      original: { [appFields.PLAYTIME_FOREVER]: value },
-    },
-  }) => <TimePlayedCellValue value={value} />,
-  Footer: ({ selectedFlatRows }) => {
+  Cell: ({row}: {row: Row & {original: any}}) => (
+    getTimePlayedCellValue(row.original[appFields.PLAYTIME_FOREVER])
+  ),
+  Footer: ({selectedFlatRows}: {selectedFlatRows: Row[]}) => {
     const { valueAverage, valueSum } = useMemo(
       () => ({
         valueAverage:
@@ -23,9 +22,9 @@ export const TimePlayed = {
 
     return (
       <div>
-        <div>{minutesOrHours(valueSum)} (total)</div>
+        <div>{getMinutesOrHours(valueSum)} (total)</div>
         {valueAverage ? (
-          <div>{minutesOrHours(valueAverage)} (average)</div>
+          <div>{getMinutesOrHours(valueAverage)} (average)</div>
         ) :
           null
         }
@@ -37,10 +36,10 @@ export const TimePlayed = {
   type: 'numeric',
 };
 
-const TimePlayedCellValue = ({ value }) =>
-  value === 0 ? 'not played' : minutesOrHours(value);
+const getTimePlayedCellValue = (value: number) =>
+  value === 0 ? 'not played' : getMinutesOrHours(value);
 
-const minutesOrHours = (value) =>
+const getMinutesOrHours = (value: number) =>
   value > 60 ?
     `${minutesToHours(value, 1)} hour(s)` :
     `${value} minute(s)`;

@@ -1,16 +1,15 @@
 import { useMemo } from 'react';
+import { Row } from 'react-table';
 import { appFields } from 'constants/appFields';
 import { booleanCount } from 'utils/totals';
 import { Boolean } from 'components/Boolean';
 
 export const OsLinux = {
   accessor: appFields.OS_LINUX,
-  Cell: ({
-    row: {
-      values: { [appFields.OS_LINUX]: value },
-    },
-  }) => <Boolean value={value} />,
-  Footer: ({ selectedFlatRows }) => {
+  Cell: ({row}: {row: Row}) => (
+    <Boolean value={row.values[appFields.OS_LINUX]} />
+  ),
+  Footer: ({selectedFlatRows}: {selectedFlatRows: Row[]}) => {
     const total = useMemo(
       () => booleanCount(selectedFlatRows, appFields.OS_LINUX),
       [selectedFlatRows]

@@ -133,7 +133,7 @@ const AccountPage = () => {
           <SectionLoader />
         )}
         { accountApps.length > 0 && !accountAppsDetailsLoading ? (
-          <AppsDetails data={accountApps} />
+          <AppsDetails apps={accountApps} />
         ) : accountAppsError ? null : (
           <div className="jumbotron" style={{marginTop: '20px'}}>
             <SectionLoader />

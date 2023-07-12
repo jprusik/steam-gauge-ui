@@ -1,17 +1,16 @@
 import { useMemo } from 'react';
+import { Row } from 'react-table';
 import { appFields } from 'constants/appFields';
 import { uniqueValueCount } from 'utils/totals';
 import { CommaDelimitedUnorderedList } from 'components/CommaDelimitedUnorderedList';
 
 export const Publishers = {
   accessor: appFields.PUBLISHERS,
-  Cell: ({
-    row: {
-      values: { [appFields.PUBLISHERS]: value },
-    },
-  }) => <PublishersCellValue value={value} />,
+  Cell: ({row}: {row: Row}) => (
+    <PublishersCellValue value={row.values[appFields.PUBLISHERS]} />
+  ),
   disableSortBy: true,
-  Footer: ({ selectedFlatRows }) => {
+  Footer: ({selectedFlatRows}: {selectedFlatRows: Row[]}) => {
     const itemList = useMemo(
       () => uniqueValueCount(selectedFlatRows, appFields.PUBLISHERS),
       [selectedFlatRows]

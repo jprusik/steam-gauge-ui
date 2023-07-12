@@ -1,17 +1,18 @@
 import { useMemo } from 'react';
+import { Row } from 'react-table';
 import { appFields } from 'constants/appFields';
 import { uniqueValueCount } from 'utils/totals';
 import { CommaDelimitedUnorderedList } from 'components/CommaDelimitedUnorderedList';
 
 export const Developers = {
   accessor: appFields.DEVELOPERS,
-  Cell: ({
-    row: {
-      values: { [appFields.DEVELOPERS]: value },
-    },
-  }) => <DevelopersCellValue value={value} />,
+  Cell: ({row}: {row: Row}) => (
+    <DevelopersCellValue
+      value={row.values[appFields.DEVELOPERS]}
+    />
+  ),
   disableSortBy: true,
-  Footer: ({ selectedFlatRows }) => {
+  Footer: ({selectedFlatRows}: {selectedFlatRows: Row[]}) => {
     const itemList = useMemo(
       () => uniqueValueCount(selectedFlatRows, appFields.DEVELOPERS),
       [selectedFlatRows]

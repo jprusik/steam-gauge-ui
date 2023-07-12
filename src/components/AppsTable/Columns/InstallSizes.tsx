@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { Row } from 'react-table';
 import Remove from '@mui/icons-material/Remove';
 import { appFields } from 'constants/appFields';
 import { mbToGB, roundToPlaces } from 'utils/math';
@@ -6,12 +7,13 @@ import { numberValueSum } from 'utils/totals';
 
 export const InstallSizes = {
   accessor: appFields.SIZE_MB,
-  Cell: ({
-    row: {
-      values: { [appFields.SIZE_MB]: value = 0 },
-    },
-  }) => <InstallSizesCellValue value={value} missingDataPlaceholder />,
-  Footer: ({ selectedFlatRows }) => {
+  Cell: ({row}: {row: Row}) => (
+    <InstallSizesCellValue
+      value={row.values[appFields.SIZE_MB] || 0}
+      missingDataPlaceholder
+    />
+  ),
+  Footer: ({selectedFlatRows}: {selectedFlatRows: Row[]}) => {
     const valueSum = useMemo(
       () => numberValueSum(selectedFlatRows, appFields.SIZE_MB),
       [selectedFlatRows]

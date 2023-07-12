@@ -76,7 +76,7 @@ export function AppsTable({ columns, data }) {
             })}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
+            {page.map((row) => {
               prepareRow(row);
               const { key, ...otherRowProps } = row.getRowProps();
 

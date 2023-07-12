@@ -1,6 +1,6 @@
 import {Dispatch} from 'react';
 
-type TimeToBeat = {
+export type TimeToBeat = {
   data_imputed_completionist: boolean;
   data_imputed_extras: boolean;
   data_imputed_main_game: boolean;
@@ -68,7 +68,7 @@ export type Account = {
   communityvisibilitystate: number;
   lastlogoff: number;
   personaname: string;
-  personastate: number;
+  personastate: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   personastateflags: number;
   profilestate: number;
   profileurl: string;
@@ -91,11 +91,6 @@ export type User = {
   admin: boolean;
   last_action: string | null;
   session_start: string | null;
-}
-
-export enum LinkType {
-  ACCOUNT = 'account',
-  FRIENDS = 'friends'
 }
 
 export type UserState = {
