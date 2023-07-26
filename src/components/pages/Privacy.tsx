@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import {PageContent} from 'components/PageContent';
 
 export const PrivacyPage = (): JSX.Element => (
   <PageContent>
@@ -35,21 +36,6 @@ export const PrivacyPage = (): JSX.Element => (
     </LastUpdatedText>
   </PageContent>
 );
-
-const PageContent = styled.div`
-  margin: 0px auto 20px auto;
-  width: 100%;
-  max-width: 640px;
-  line-height: 1.5em;
-
-  li {
-    margin: 1em 0px;
-  }
-
-  p {
-    color: #b0aeac;
-  }
-`;
 
 const PageTitle = styled.h2`
   text-shadow: #3d3d3d 1px 1px 1px;
