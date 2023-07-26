@@ -1,0 +1,30 @@
+{
+  "action_prompt": {
+    "about_link": "About",
+    "close": "Close",
+    "code_link": "Code",
+    "home_link": "Home",
+    "privacy_link": "Privacy",
+    "support_link": "Support"
+  },
+  "error": {
+  },
+  "input": {
+  },
+  "state": {
+    "data_loading": "Data is loading...",
+    "untranslated_api_override": "{{untranslatedPassthrough}}"
+  },
+  "content": {
+    "support_section_author": {
+      "title": "Like my work?",
+      "sponsors": "You can become a supporter via <0>Patreon</0> or <1>GitHub Sponsors</1>.",
+      "one_off_links": "I'm also happy to accept <0>PayPal</0> tips, or even just a friendly <1>email</1>."
+    },
+    "support_section_others": {
+      "title": "Other causes",
+      "eff": "Alternatively, please <0>consider donating to Electronic Frontier Foundation</0> and supporting all the good work they do for the Internet and its users."
+    },
+    "support_title": "Support"
+  }
+}

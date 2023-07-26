@@ -30,11 +30,16 @@
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
-    "@mui/icons-material": "^5.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.1",
+    "@mui/material": "^5.14.1",
     "dayjs": "^1.11.7",
+    "i18next": "^23.2.11",
+    "i18next-browser-languagedetector": "^7.1.0",
     "react": "^18.2.0",
     "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
+    "react-i18next": "^13.0.2",
     "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
     "react-table": "^7.8.0",
@@ -42,8 +47,9 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@emotion/core": "^10.1.1",
-    "@emotion/react": "^11.1.5",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@emotion/core": "^10.3.1",
+    "@emotion/react": "^11.11.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -54,7 +60,8 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/react-table": "^7.7.14",
     "eslint": "^8.32.0",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "sass": "^1.64.0"
   },
   "scripts": {
     "start": ". .env && react-scripts start",
