@@ -1,18 +1,31 @@
 import styled from '@emotion/styled';
-import {isNumber} from 'utils/math';
+import { isNumber } from 'utils/math';
 
-export function AppsTableFooter ({footerGroups}) {
+export function AppsTableFooter({ footerGroups }) {
   return (
     <TableFooter>
-      {footerGroups.map(group => (
-        <TableFooterRow {...group.getFooterGroupProps()}>
-          {group.headers.map(column => (
-            <AppsTableFooterCell {...column.getFooterProps()} colSpan={isNumber(column.footerSpan) ? column.footerSpan : 1}>
-              {column.render('Footer')}
-            </AppsTableFooterCell>
-          ))}
-        </TableFooterRow>
-      ))}
+      {footerGroups.map((group) => {
+        const { key: footerGroupKey, ...otherFooterGroupProps } =
+          group.getFooterGroupProps();
+
+        return (
+          <TableFooterRow key={footerGroupKey} {...otherFooterGroupProps}>
+            {group.headers.map((column) => {
+              const { key: footerColumnKey, ...otherFooterColumnProps } =
+                column.getFooterProps();
+
+              return (
+                <AppsTableFooterCell
+                  key={footerColumnKey}
+                  {...otherFooterColumnProps}
+                  colSpan={isNumber(column.footerSpan) ? column.footerSpan : 1}>
+                  {column.render('Footer')}
+                </AppsTableFooterCell>
+              );
+            })}
+          </TableFooterRow>
+        );
+      })}
     </TableFooter>
   );
 }
@@ -24,18 +37,18 @@ const TableFooter = styled.tfoot`
 const TableFooterRow = styled.tr`
   display: table-row;
   outline: 0;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 const AppsTableFooterCell = styled.td`
-  display: ${({colSpan}) => colSpan === 0 ? 'none' : 'table-cell'};
+  display: ${({ colSpan }) => (colSpan === 0 ? 'none' : 'table-cell')};
   border-bottom: 1px solid rgba(81, 81, 81, 1);
   background-color: #74706f;
   padding: 8px;
   vertical-align: top;
   line-height: 1.43;
   letter-spacing: 0.01071em;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-size: 10px;
   font-weight: bold;
 
