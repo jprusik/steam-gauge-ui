@@ -1,16 +1,18 @@
-import {useState} from 'react';
-import {useHistory} from 'react-router-dom';
-import {resolveUsername} from '../actions';
-import {Loader} from './Loader';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { resolveUsername } from '../actions';
+import { Loader } from './Loader';
 import './SearchForm.scss';
 
 const isValidSteamIdFormat = (steamId) => !!steamId.match(/^\d+$/g);
 
-const SearchForm = ({
+export const SearchForm = ({
   searchType = 'account',
   hideLabel = false,
   hideInputAddon = false,
-  onSearchSuccess = () => {/* no-op */}
+  onSearchSuccess = () => {
+    /* no-op */
+  },
 }) => {
   let history = useHistory();
 
@@ -39,20 +41,21 @@ const SearchForm = ({
       // The value entered appears to already be a resolved steamid
       return searchInput;
     } else {
-      const {
-        data: {steamid: returnedId} = {},
-        success: steamGaugeSuccess
-      } = await resolveUsername(searchInput) || {};
+      const { data: { steamid: returnedId } = {}, success: steamGaugeSuccess } =
+        (await resolveUsername(searchInput)) || {};
 
-      !returnedId && setFormErrors([
-        (!steamGaugeSuccess ? 'Steam Gauge encountered problems attempting this search.' : 'Steam did not return any matches for the search value you entered. (ProTip: The username you use to log in to Steam is NOT the same as your public username/id)')
-      ]);
+      !returnedId &&
+        setFormErrors([
+          !steamGaugeSuccess
+            ? 'Steam Gauge encountered problems attempting this search.'
+            : 'Steam did not return any matches for the search value you entered. (ProTip: The username you use to log in to Steam is NOT the same as your public username/id)',
+        ]);
 
       return returnedId;
     }
   }
 
-  function handleChange({target:{value}}) {
+  function handleChange({ target: { value } }) {
     setFormErrors([]);
     setSearchInput(value);
     // TODO: `getSteamId` onChange + debounce
@@ -78,15 +81,14 @@ const SearchForm = ({
     <form
       className="account-search-form"
       onSubmit={handleSubmit}
-      title={`${searchType} search`}
-    >
-      { !hideLabel &&
-        <label htmlFor="basic-url">Your Steam profile URL:</label>
-      }
+      title={`${searchType} search`}>
+      {!hideLabel && <label htmlFor="basic-url">Your Steam profile URL:</label>}
       <div className="input-group">
-        { !hideInputAddon &&
-          <span className="input-group-addon steam-profile-url">https://steamcommunity.com/id/</span>
-        }
+        {!hideInputAddon && (
+          <span className="input-group-addon steam-profile-url">
+            https://steamcommunity.com/id/
+          </span>
+        )}
         <input
           className="form-control url-text"
           disabled={searchIsActive}
@@ -94,31 +96,34 @@ const SearchForm = ({
           name="username"
           onChange={handleChange}
           placeholder="username or id"
-          type="text"
+          type="search"
           value={searchInput}
         />
         <span className="input-group-btn">
           <button
             className="btn btn-default search-submit"
             disabled={!searchInput || searchIsActive}
-            type="submit"
-          >
-            { searchIsActive ?
-              <Loader loaderStyles="height: 20px;" /> :
+            type="submit">
+            {searchIsActive ? (
+              <Loader loaderStyles="height: 20px;" />
+            ) : (
               <i className="fa fa-search fa-fw"></i>
-            }
+            )}
           </button>
         </span>
       </div>
-      { formErrors.length > 0 &&
-        <div style={{marginTop: '1em'}} className="alert alert-danger small" role="alert">
-          { formErrors.map(error =>
-            <span className="small" key={error}>{error}</span>
-          ) }
+      {formErrors.length > 0 && (
+        <div
+          style={{ marginTop: '1em' }}
+          className="alert alert-danger small"
+          role="alert">
+          {formErrors.map((error) => (
+            <span className="small" key={error}>
+              {error}
+            </span>
+          ))}
         </div>
-      }
+      )}
     </form>
   );
 };
-
-export default SearchForm;

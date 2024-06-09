@@ -1,12 +1,12 @@
-import {useState} from 'react';
-import {BrowserRouter as Router} from 'react-router-dom';
-import {User} from 'types';
-import {checkLoginStatus} from 'actions';
-import Body from 'components/Body';
-import {Footer} from 'components/Footer';
-import Header from 'components/Header';
+import { useState } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { User } from 'types';
+import { checkLoginStatus } from 'actions';
+import { Body } from 'components/Body';
+import { Footer } from 'components/Footer';
+import { Header } from 'components/Header';
 
-export function App (): JSX.Element {
+export function App(): JSX.Element {
   // empty object (instead of `null`) default for easier downstream destructuring
   const [user, setUser] = useState<User | Record<string, never>>({});
   const [loginStateChecked, setLoginStateChecked] = useState(false);
