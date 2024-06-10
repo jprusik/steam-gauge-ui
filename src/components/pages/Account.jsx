@@ -1,5 +1,5 @@
-import {Fragment, useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import { Fragment, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   fetchAccountApps,
   fetchAccountDetails,
@@ -9,7 +9,8 @@ import { AppsDetails } from 'components/AppsTable/AppsDetails';
 import { SectionLoader } from 'components/Loader';
 import { AccountDetails } from 'components/AccountDetails';
 import { LibrarySummary } from 'components/LibrarySummary';
-import SearchForm from 'components/SearchForm';
+import { SearchForm } from 'components/SearchForm';
+import { errorMessage } from 'constants/messages';
 
 const controller = new AbortController();
 const signal = controller.signal;
@@ -21,58 +22,60 @@ function abortRequests() {
 const getAppsWithDetails = async (apps, searchedUserId) => {
   const {
     data: extraDataApps = [],
-    meta: {
-      success: appsDataSuccess,
-      error_key: appsDataErrorKey,
-      code: appsDataErrorCode
-    } = {}
-  } = await fetchAccountApps(searchedUserId, true) || {};
+    meta: { success: appsDataSuccess, message_key: appsDataMessageKey } = {},
+  } = (await fetchAccountApps(searchedUserId, true)) || {};
 
-  return appsDataSuccess ? apps.map(app => {
-    const appExtraData = extraDataApps.find(({app_id}) => app_id === `${app.appid}`);
+  if (appsDataSuccess) {
+    apps.map((app) => {
+      const appExtraData = extraDataApps.find(
+        // map Steam passthrough records <appid: number> to stored DB records <app_id: string>
+        ({ app_id }) => app_id === `${app.appid}`
+      );
 
-    return {
-      ...app,
-      ...appExtraData
-    };
-  }) : apps;
+      return {
+        ...app,
+        ...appExtraData,
+      };
+    });
+  }
+
+  return apps;
 };
 
 const AccountPage = () => {
-  const {id: searchedUserId} = useParams();
+  const { id: searchedUserId } = useParams();
   const [accountDetails, setUserAccountDetails] = useState();
   const [accountApps, setAccountApps] = useState([]);
   const [accountDetailsError, setAccountDetailsError] = useState(false);
-  const [accountAppsError, setAccountAppsError] = useState(false);
-  const [accountAppsDetailsLoading, setAccountAppsDetailsLoading] = useState(false);
+  const [accountAppsErrors, setAccountAppsErrors] = useState([]);
+  const [accountAppsDetailsLoading, setAccountAppsDetailsLoading] =
+    useState(false);
 
   useEffect(() => {
     async function getAccountData() {
       const {
-        data: {
-          players: [accountData] = []
-        } = {},
+        data: [accountData] = [],
         meta: {
           success: accountDataSuccess,
-          error_key: accountDataErrorKey,
-          code: accountDataErrorCode
-        }
-      } = await fetchAccountDetails(searchedUserId) || {data: {}};
+          message_key: accountDataMessageKey,
+        },
+      } = (await fetchAccountDetails(searchedUserId)) || { data: [] };
 
       if (accountDataSuccess) {
         setUserAccountDetails(accountData);
       } else {
-        setAccountDetailsError(accountDataErrorKey || `${accountDataErrorCode}`);
+        setAccountDetailsError(
+          accountDataMessageKey || 'FETCH_ACCOUNT_DETAILS_FAILED'
+        );
       }
 
       const {
         data: accountApps = [],
         meta: {
           success: appsDataSuccess,
-          error_key: appsDataErrorKey,
-          code: appsDataErrorCode
-        } = {}
-      } = await fetchAccountApps(searchedUserId) || {};
+          message_key: appsDataMessageKey,
+        } = {},
+      } = (await fetchAccountApps(searchedUserId)) || {};
 
       if (appsDataSuccess) {
         setAccountApps(accountApps);
@@ -80,12 +83,17 @@ const AccountPage = () => {
         setAccountAppsDetailsLoading(true);
 
         // Get apps extended details
-        const appsWithDetails = await getAppsWithDetails(accountApps, searchedUserId);
+        const appsWithDetails = await getAppsWithDetails(
+          accountApps,
+          searchedUserId
+        );
         setAccountApps(appsWithDetails);
 
         setAccountAppsDetailsLoading(false);
       } else {
-        setAccountAppsError(appsDataErrorKey || `${appsDataErrorCode}`);
+        setAccountAppsErrors([
+          appsDataMessageKey || 'FETCH_ACCOUNT_APPS_FAILED',
+        ]);
       }
     }
 
@@ -100,42 +108,68 @@ const AccountPage = () => {
     setUserAccountDetails(null);
     setAccountApps([]);
     setAccountDetailsError(false);
-    setAccountAppsError(false);
+    setAccountAppsErrors([]);
   }
 
   return (
     <Fragment>
       <div className="container">
-        <SearchForm {...{
-          searchType: 'account',
-          onSearchSuccess: resetPageData,
-          ...(!!searchedUserId && {hideLabel: true})
-        }} />
+        <SearchForm
+          {...{
+            searchType: 'account',
+            onSearchSuccess: resetPageData,
+            ...(!!searchedUserId && { hideLabel: true }),
+          }}
+        />
         <br />
         <div className="jumbotron">
-          { accountDetails ? (
+          {accountDetails ? (
             <AccountDetails accountData={accountDetails} />
           ) : accountDetailsError ? (
-            <div>There was a problem fetching your account information from Steam. If this problem persists, check <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy settings</a> and ensure the "My profile" setting is set to "Public".</div>
+            <div>
+              There was a problem fetching your account information from Steam.
+              If this problem persists, check{' '}
+              <a
+                href="https://steamcommunity.com/my/edit/settings"
+                rel="noopener noreferrer">
+                your Steam privacy settings
+              </a>{' '}
+              and ensure the "My profile" setting is set to "Public".
+            </div>
           ) : (
             <SectionLoader />
           )}
         </div>
-        { accountDetails && accountApps.length > 0 ? (
+        {accountDetails && accountApps.length > 0 ? (
           <LibrarySummary
             accountData={accountDetails}
             detailsLoading={accountAppsDetailsLoading}
             libraryApps={accountApps}
           />
-        ) : accountAppsError ? (
-          <div>There was a problem fetching your library information from Steam. If this problem persists, make sure the "Game details" setting on <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy page</a> is set to "Public".</div>
+        ) : accountAppsErrors.length ? (
+          <Fragment>
+            {accountAppsErrors.map((errorKey) => (
+              <div key={errorKey}>
+                <strong>{errorMessage[errorKey]}</strong>
+              </div>
+            ))}
+            <div>
+              If this problem persists, make sure the "Game details" setting on{' '}
+              <a
+                href="https://steamcommunity.com/my/edit/settings"
+                rel="noopener noreferrer">
+                the Steam account's privacy page
+              </a>{' '}
+              is set to "Public".
+            </div>
+          </Fragment>
         ) : (
           <SectionLoader />
         )}
-        { accountApps.length > 0 && !accountAppsDetailsLoading ? (
+        {accountApps.length > 0 && !accountAppsDetailsLoading ? (
           <AppsDetails apps={accountApps} />
-        ) : accountAppsError ? null : (
-          <div className="jumbotron" style={{marginTop: '20px'}}>
+        ) : accountAppsErrors.length ? null : (
+          <div className="jumbotron" style={{ marginTop: '20px' }}>
             <SectionLoader />
           </div>
         )}

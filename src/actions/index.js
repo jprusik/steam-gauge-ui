@@ -1,6 +1,7 @@
 function checkResponseStatus(response) {
   const contentTypeHeader = response.headers.get('Content-Type');
-  const isJSON = contentTypeHeader && contentTypeHeader.match(/application\/json/i);
+  const isJSON =
+    contentTypeHeader && contentTypeHeader.match(/application\/json/i);
 
   if (response.ok && isJSON) {
     return response;
@@ -19,18 +20,29 @@ function throwError(response) {
 
 function setRequestCache(response) {
   const requestDomain = window.location.origin;
-  const requestPath = response.url.replace(requestDomain,'');
+  const requestPath = response.url.replace(requestDomain, '');
 
   response
     .clone() // don't consume the original promise resolution
     .json()
-    .then(data => {
+    .then((data) => {
       // do not cache JSON response if there was a service error
       if (data.meta.success) {
-        localStorage.setItem(requestPath, JSON.stringify({
-          datetime:Date.now(),
-          ...data
-        }));
+        try {
+          localStorage.setItem(
+            requestPath,
+            JSON.stringify({
+              datetime: Date.now(),
+              ...data,
+            })
+          );
+        } catch (exception) {
+          // (e.g. localstorage cache hits it's limit)
+          if (exception.DOMException) {
+            // eslint-disable-next-line
+            return response;
+          }
+        }
       }
     });
 
@@ -38,7 +50,7 @@ function setRequestCache(response) {
 }
 
 function cacheHoursExpiry(hours) {
-  return (hours * 1000 * 60 * 60);
+  return hours * 1000 * 60 * 60;
 }
 
 function checkRequestCache(requestURL) {
@@ -62,11 +74,11 @@ function get({
   fetchOptions,
   requestApi,
   returnErrorResponse = true,
-  useCache = false
-}){
+  useCache = false,
+}) {
   const baseFetchOptions = {
     accept: 'application/json',
-    credentials: 'same-origin'
+    credentials: 'same-origin',
   };
 
   const apiPath = `/api/1.0/${requestApi}`;
@@ -79,11 +91,11 @@ function get({
     }
   }
 
-  return fetch(apiPath, {...baseFetchOptions, fetchOptions})
+  return fetch(apiPath, { ...baseFetchOptions, fetchOptions })
     .then(checkResponseStatus)
     .then(setRequestCache)
-    .then(response => response.json())
-    .catch(error => handleError(error, returnErrorResponse));
+    .then((response) => response.json())
+    .catch((error) => handleError(error, returnErrorResponse));
 }
 
 const handleError = (error, returnResponse = false) => {
@@ -92,7 +104,7 @@ const handleError = (error, returnResponse = false) => {
 
   // @TODO there's probably a better way to do this
   if (returnResponse) {
-    return Promise.resolve(error.response.json());
+    return Promise.resolve(error?.response.json());
   }
 };
 
@@ -100,12 +112,12 @@ export const checkLoginStatus = () => {
   const fetchOptions = {
     accept: 'application/json',
     cache: 'no-store',
-    credentials: 'same-origin'
+    credentials: 'same-origin',
   };
 
   return fetch('/current_user', fetchOptions)
     .then(checkResponseStatus)
-    .then(response => response.json())
+    .then((response) => response.json())
     .catch(handleError);
 };
 
@@ -114,23 +126,27 @@ export const logoutUser = () => {
     accept: 'application/json',
     cache: 'no-store',
     credentials: 'same-origin',
-    method: 'PUT'
+    method: 'PUT',
   };
 
   return fetch('/logout', fetchOptions)
     .then(checkResponseStatus)
-    .then(response => response.json())
+    .then((response) => response.json())
     .catch(handleError);
 };
 
 export const resolveUsername = (username) =>
-  get({requestApi: `username/${username}`, useCache: true});
+  get({ requestApi: `username/${username}`, useCache: true });
 
 export const fetchMultiplayerApps = () =>
-  get({requestApi: 'apps?filter_multiplayer=true', useCache: true, returnErrorResponse: true});
+  get({
+    requestApi: 'apps?filter_multiplayer=true',
+    useCache: true,
+    returnErrorResponse: true,
+  });
 
 export const fetchAccountDetails = (accountId) =>
-  get({requestApi: `accounts/${accountId}`, useCache: true});
+  get({ requestApi: `accounts/${accountId}`, useCache: true });
 
 export const fetchAccountApps = (accountId, includeExtendedData = false) => {
   let requestApi = `accounts/${accountId}/apps`;
@@ -141,9 +157,13 @@ export const fetchAccountApps = (accountId, includeExtendedData = false) => {
 
   return get({
     requestApi,
-    useCache: true
+    useCache: true,
   });
 };
 
 export const fetchFriendsList = (accountId) =>
-  get({requestApi: `accounts/${accountId}/friends`, useCache: true, returnErrorResponse: true});
+  get({
+    requestApi: `accounts/${accountId}/friends`,
+    useCache: true,
+    returnErrorResponse: true,
+  });

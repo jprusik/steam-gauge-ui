@@ -1,30 +1,47 @@
-import {Fragment, useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import { Fragment, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   fetchAccountApps,
   fetchAccountDetails,
   fetchFriendsList,
-  fetchMultiplayerApps
+  fetchMultiplayerApps,
 } from 'actions';
-import {Home} from 'components/pages/Home';
-import {FriendRows} from 'components/FriendRows';
+import { Home } from 'components/pages/Home';
+import { FriendRows } from 'components/FriendRows';
 import FriendsSummary from 'components/FriendsSummary';
-import SearchForm from 'components/SearchForm';
-import {SectionLoader} from 'components/Loader';
+import { SearchForm } from 'components/SearchForm';
+import { SectionLoader } from 'components/Loader';
 
-const getAccountsApps = accountsDetails =>
-  Promise.all(accountsDetails.map(async account => {
-    const {steamid: accountId} = account || {};
-    const {data: accountAppsData = []} = await fetchAccountApps(accountId) || {};
+const controller = new AbortController();
+const signal = controller.signal;
 
-    return {
-      ...account,
-      apps: accountAppsData
-    };
-  }));
+function abortRequests() {
+  controller.abort();
+}
 
-const FriendsPage = ({user, setUser}) => {
-  const {id: searchedUserId} = useParams();
+const getAccountsApps = (accountsDetails) =>
+  Promise.all(
+    accountsDetails.map(async (account) => {
+      const { steamid: accountId } = account || {};
+      const {
+        meta: { success, message_key },
+        data: accountAppsData = [],
+      } = (await fetchAccountApps(accountId)) || { data: [] };
+      const errorMessageKeys = [
+        ...(account?.errorMessageKeys || []),
+        ...(!success && message_key ? [message_key] : []),
+      ];
+
+      return {
+        ...account,
+        errorMessageKeys,
+        apps: accountAppsData || [],
+      };
+    })
+  );
+
+const FriendsPage = ({ user, setUser }) => {
+  const { id: searchedUserId } = useParams();
   const [userFriends, setUserFriends] = useState();
   const [multiplayerAppsError, setMultiplayerAppsError] = useState(false);
   const [friendsListError, setFriendsListError] = useState(false);
@@ -33,63 +50,69 @@ const FriendsPage = ({user, setUser}) => {
     async function getUserFriendsData() {
       // Get list of multiplayer apps
       const {
-        data: {
-          applist: {
-            apps: multiplayerApps = []
-          } = {}
-        } = {},
+        data: multiplayerApps = [],
         meta: {
           success: multiplayerAppsSuccess,
-          error_key: multiplayerAppsErrorKey,
-          code: multiplayerAppsErrorCode
-        } = {}
-      } = await fetchMultiplayerApps() || {};
+          message_key: multiplayerAppsMessageKey,
+        } = {},
+      } = (await fetchMultiplayerApps()) || {};
 
       if (!multiplayerAppsSuccess) {
-        setMultiplayerAppsError(multiplayerAppsErrorKey || `${multiplayerAppsErrorCode}`);
+        setMultiplayerAppsError(
+          multiplayerAppsMessageKey ||
+            errorMessage.FETCH_MULTIPLAYER_APPS_FAILED
+        );
 
         return;
       }
 
       // Get list of friends
       const {
-        data: {
-          friendslist: {
-            friends: userFriendsList = []
-          } = {}
-        } = {},
+        data: userFriendsList = [],
         meta: {
           success: friendsListSuccess,
-          error_key: friendsListErrorKey,
-          code: friendsListErrorCode
-        }
-      } = await fetchFriendsList(searchedUserId) || {data: {}};
+          message_key: friendsListMessageKey,
+        },
+      } = (await fetchFriendsList(searchedUserId)) || { data: [] };
 
       if (!friendsListSuccess) {
-        setFriendsListError(friendsListErrorKey || `${friendsListErrorCode}`);
+        setFriendsListError(
+          friendsListMessageKey ||
+            errorMessage.FETCH_ACCOUNT_FRIENDS_LIST_FAILED
+        );
 
         return;
       }
 
       // assemble comma-separated ids of all friends
-      const userFriendsIds = userFriendsList
-        .reduce((csvUsers, {steamid}) => steamid && `${csvUsers},${steamid}`, '');
+      const userFriendsIds = userFriendsList.reduce(
+        (userIdList, { steamid }) => {
+          if (steamid) {
+            return [...userIdList, steamid];
+          }
 
+          return userIdList;
+        },
+        []
+      );
       // add `searchedUserId` so we can get all accounts with one request
       // @TODO The api is currently limited to 100 ids
-      const userAndFriendIds = `${searchedUserId},${userFriendsIds}`;
+      const userAndFriendIds = [searchedUserId, ...userFriendsIds].join(',');
 
-      const {data: accountsDetailsData} = await fetchAccountDetails(userAndFriendIds) || {};
-      const {players: accountsDetails} = accountsDetailsData || {};
+      const { data: accountsDetailsData } =
+        (await fetchAccountDetails(userAndFriendIds)) || {};
+      const accountsDetails = accountsDetailsData || [];
 
       // TODO: if the user account has no apps, skip making any other calls and
       // render some useful user feedback.
       const accounts = await getAccountsApps(accountsDetails);
 
+      // This multiplayer apps array is over 200k records long; mapping is expensive (especially given later iterations)
+      const filteredMultiplayerApps = multiplayerApps.map(({ appid }) => appid);
+
       setUserFriends({
         accounts,
-        multiplayerApps: multiplayerApps
-          .reduce((list, {appid}) => [...list, appid], [])
+        multiplayerApps: filteredMultiplayerApps,
       });
     }
 
@@ -99,26 +122,38 @@ const FriendsPage = ({user, setUser}) => {
   }, [searchedUserId]);
 
   function resetPageData() {
+    abortRequests();
     setUserFriends(null);
   }
 
   return !searchedUserId ? (
-    <Home {...{isFriends: true, setUser, user}} />
+    <Home {...{ isFriends: true, setUser, user }} />
   ) : (
     <Fragment>
-      <SearchForm {...{
-        searchType:'friends',
-        onSearchSuccess: resetPageData,
-        ...(!!searchedUserId && {hideLabel: true})
-      }} />
+      <SearchForm
+        {...{
+          searchType: 'friends',
+          onSearchSuccess: resetPageData,
+          ...(!!searchedUserId && { hideLabel: true }),
+        }}
+      />
       <br />
-      { userFriends ? (
+      {userFriends ? (
         <Fragment>
-          <FriendsSummary {...{userId: searchedUserId, ...userFriends}} />
-          <FriendRows {...{userId: searchedUserId, ...userFriends}} />
+          <FriendsSummary {...{ userId: searchedUserId, ...userFriends }} />
+          <FriendRows {...{ userId: searchedUserId, ...userFriends }} />
         </Fragment>
       ) : friendsListError ? (
-        <div>There was a problem fetching your list of friends from Steam. If this problem persists, make sure the "Friends List" setting on <a href="https://steamcommunity.com/my/edit/settings" rel="noopener noreferrer">your Steam privacy page</a> is set to "Public".</div>
+        <div>
+          There was a problem fetching your list of friends from Steam. If this
+          problem persists, make sure the "Friends List" setting on{' '}
+          <a
+            href="https://steamcommunity.com/my/edit/settings"
+            rel="noopener noreferrer">
+            your Steam privacy page
+          </a>{' '}
+          is set to "Public".
+        </div>
       ) : multiplayerAppsError ? (
         <div>There was a problem fetching the multiplayer list.</div>
       ) : (

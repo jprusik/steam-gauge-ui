@@ -1,21 +1,23 @@
-import {Fragment} from 'react';
+import { Fragment } from 'react';
 import styled from '@emotion/styled';
-import {Account, App} from 'types';
-import {minutesToHours} from 'utils/math';
-import {getCommonMultiplayerGames} from 'utils/friends';
-import {FriendSteamLoginStatus} from 'components/FriendSteamLoginStatus';
-import {FriendApps} from 'components/FriendApps';
+import { Account, App, ErrorMessageKey } from 'types';
+import { minutesToHours } from 'utils/math';
+import { getCommonMultiplayerGames } from 'utils/friends';
+import { FriendSteamLoginStatus } from 'components/FriendSteamLoginStatus';
+import { FriendApps } from 'components/FriendApps';
 
 type FriendRowProps = {
-  friendData: Account & {apps: App[]};
-  searchUserData: Account & {apps: App[]};
+  friendData: Account & { errorMessageKeys?: ErrorMessageKey[] } & {
+    apps: App[];
+  };
+  searchUserData: Account & { apps: App[] };
   multiplayerApps: App[];
-}
+};
 
 export const FriendRow = ({
   friendData,
   searchUserData,
-  multiplayerApps = []
+  multiplayerApps = [],
 }: FriendRowProps): JSX.Element => {
   const {
     apps: friendApps = [],
@@ -23,6 +25,7 @@ export const FriendRow = ({
     personaname: friendUsername,
     profileurl: friendUrl,
     steamid: friendId,
+    errorMessageKeys,
   } = friendData || {};
 
   const userApps = searchUserData.apps || [];
@@ -33,63 +36,82 @@ export const FriendRow = ({
     userApps,
   });
 
-  const mostTimePlayedCommonApp = friendCommonMultiplayerApps
-    .reduce((mostPlayedApp, app) =>
-      app.playtime_forever > mostPlayedApp.playtime_forever
+  const mostTimePlayedCommonApp = friendCommonMultiplayerApps.reduce(
+    (mostPlayedApp, app) => {
+      return app.playtime_forever > mostPlayedApp.playtime_forever
         ? app
-        : mostPlayedApp
-    , friendCommonMultiplayerApps[0]);
+        : mostPlayedApp;
+    },
+    friendCommonMultiplayerApps[0]
+  );
 
   // TODO: display other multiplayer games not owned by the user
   return (
     <FriendEntry className="row featurette">
       <div className="col-xs-10 col-md-3">
-        { friendImage &&
+        {friendImage && (
           <Fragment>
             <a href={friendUrl} target="_blank" rel="noopener noreferrer">
               <img
                 className="friend-avatar"
-                style={{'border': '0'}}
+                style={{ border: '0' }}
                 src={friendImage}
                 alt={`avatar of ${friendUsername}`}
               />
             </a>
-            <br/>
+            <br />
           </Fragment>
-        }
-        { friendUsername &&
+        )}
+        {friendUsername && (
           <Fragment>
-            <FriendPersona href={friendUrl} target="_blank" rel="noopener noreferrer">{friendUsername}</FriendPersona>
-            <br/>
+            <FriendPersona
+              href={friendUrl}
+              target="_blank"
+              rel="noopener noreferrer">
+              {friendUsername}
+            </FriendPersona>
+            <br />
           </Fragment>
-        }
-        <a className="friend-id" href={friendUrl} target="_blank" rel="noopener noreferrer">{friendId}</a>
-        <br/>
-        <br/>
+        )}
+        <a
+          className="friend-id"
+          href={friendUrl}
+          target="_blank"
+          rel="noopener noreferrer">
+          {friendId}
+        </a>
+        <br />
+        <br />
         {Number.isInteger(friendData?.personastate) && (
           <Fragment>
             <FriendSteamLoginStatus personaState={friendData.personastate} />
-            <br/>
+            <br />
           </Fragment>
         )}
-        {mostTimePlayedCommonApp &&
+        {mostTimePlayedCommonApp && (
           <Fragment>
             <div>
-              <MostCommonAppHeader>Most played common game:</MostCommonAppHeader>
-              <br/>
-              <MostCommonAppName>{mostTimePlayedCommonApp.name}</MostCommonAppName> ({minutesToHours(mostTimePlayedCommonApp.playtime_forever)} hours)
+              <MostCommonAppHeader>
+                Most played common game:
+              </MostCommonAppHeader>
+              <br />
+              <MostCommonAppName>
+                {mostTimePlayedCommonApp.name}
+              </MostCommonAppName>{' '}
+              ({minutesToHours(mostTimePlayedCommonApp.playtime_forever)} hours)
             </div>
-            <br/>
+            <br />
           </Fragment>
-        }
+        )}
         <SendFriendMessageLink href={`steam://friends/message/${friendId}`}>
           <i className="fa fa-comment"></i>Send a message to this friend
         </SendFriendMessageLink>
       </div>
       <FriendApps
         apps={friendCommonMultiplayerApps}
+        errorMessageKeys={errorMessageKeys}
         searchedUserName={searchUserData?.personaname}
-        searchedUserFriendName={searchUserData?.personaname}
+        searchedUserFriendName={friendUsername}
       />
     </FriendEntry>
   );
