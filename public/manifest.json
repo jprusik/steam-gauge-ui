@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Steam Gauge",
+  "name": "Steam Gauge | Get the value and size of your Steam account",
   "icons": [
     {
       "src": "favicon.ico",
