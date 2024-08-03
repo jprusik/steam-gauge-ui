@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 function checkResponseStatus(response) {
   const contentTypeHeader = response.headers.get('Content-Type');
   const isJSON =
@@ -109,30 +111,13 @@ const handleError = (error, returnResponse = false) => {
 };
 
 export const checkLoginStatus = () => {
-  const fetchOptions = {
-    accept: 'application/json',
-    cache: 'no-store',
-    credentials: 'same-origin',
-  };
+  const cachedCurrentUser = Cookies.get('currentUser');
 
-  return fetch('/current_user', fetchOptions)
-    .then(checkResponseStatus)
-    .then((response) => response.json())
-    .catch(handleError);
+  return cachedCurrentUser || null;
 };
 
 export const logoutUser = () => {
-  const fetchOptions = {
-    accept: 'application/json',
-    cache: 'no-store',
-    credentials: 'same-origin',
-    method: 'PUT',
-  };
-
-  return fetch('/logout', fetchOptions)
-    .then(checkResponseStatus)
-    .then((response) => response.json())
-    .catch(handleError);
+  Cookies.remove('currentUser');
 };
 
 export const resolveUsername = (username) =>

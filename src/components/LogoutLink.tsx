@@ -1,12 +1,11 @@
-import {Dispatch} from 'react';
 import {logoutUser} from 'actions';
-import {User} from 'types';
+import {UserState} from 'types';
 
 export const LogoutLink = (
-  {setUser}: {setUser: Dispatch<User>}
+  {setUser}: {setUser: UserState['setUser']}
 ): JSX.Element => (
   <button
-    onClick={() => logoutUser().then(response => setUser(response))}
+    onClick={() => {logoutUser(); setUser(null);}}
     className="btn btn-primary btn-sm navbar-btn"
   >
     Log out

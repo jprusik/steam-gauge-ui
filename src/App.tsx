@@ -1,29 +1,25 @@
 import { useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { User } from 'types';
+import { User, UserState } from 'types';
 import { checkLoginStatus } from 'actions';
 import { Body } from 'components/Body';
 import { Footer } from 'components/Footer';
 import { Header } from 'components/Header';
 
 export function App(): JSX.Element {
-  // empty object (instead of `null`) default for easier downstream destructuring
-  const [user, setUser] = useState<User | Record<string, never>>({});
+  const [user, setUser] = useState<User | null>(null);
   const [loginStateChecked, setLoginStateChecked] = useState(false);
-  const [checkLoginError, setCheckLoginError] = useState(false);
+  // @TODO Give user feedback on server health
+  // const [checkLoginError, setCheckLoginError] = useState(false);
 
-  // @TODO When/How often do we want to check login status?
   async function maybeCheckLogin() {
     if (!user || !user.session_start) {
-      const userData = await checkLoginStatus();
+      const userAccountId = await checkLoginStatus();
 
-      if (!userData) {
-        // Either the server is down or the user is having connectivity issues
-        setCheckLoginError(true);
-      } else {
-        if (userData.session_start) {
-          setUser(userData);
-        }
+      if (userAccountId) {
+        setUser({
+          account_id: userAccountId
+        });
       }
 
       setLoginStateChecked(true);
@@ -37,7 +33,7 @@ export function App(): JSX.Element {
     <Router>
       <div>
         <Header setUser={setUser} user={user} />
-        <Body checkLoginError={checkLoginError} setUser={setUser} user={user} />
+        <Body checkLoginError={false} setUser={setUser} user={user} />
         {/* @TODO App & Search Loader  */}
         <Footer />
       </div>

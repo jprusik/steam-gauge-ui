@@ -3,17 +3,17 @@ import {Link} from 'react-router-dom';
 import {User, UserState} from 'types';
 import {logoutUser} from '../actions';
 
-const AccountLink = ({accountId}: {accountId: string}) => (
+const AccountLink = ({accountId}: {accountId: string;}) => (
   <li key="account" className="steam-account">
-    <Link to={`/account/${accountId}`} className="open-modal"><i className="fa fa-user fa-fw"></i> Your account</Link>
+    <Link to={`/account/${accountId}`} className="open-modal"><i className="fa fa-user fa-fw"></i> Account</Link>
   </li>
 );
 
-const LogoutButton = ({setUser}: {setUser: Dispatch<User>}) => (
+const LogoutButton = ({setUser}: {setUser: Dispatch<User | null>;}) => (
   <li key="logout" className="steam-logout">
     <div className="btn-group">
       <button
-        onClick={() => logoutUser().then(response => setUser(response))}
+        onClick={() => {logoutUser(); setUser(null);}}
         className="btn btn-primary btn-sm navbar-btn"
       >
         Log out
@@ -30,8 +30,10 @@ const LoginButton = () => (
   </li>
 );
 
-const UserNavItems = ({user: {account_id: accountId}, setUser}: UserState) =>
-  !accountId ? (
+const UserNavItems = ({user, setUser}: UserState) => {
+  const accountId = user?.account_id || null;
+
+  return !accountId ? (
     <LoginButton />
   ) : (
     <Fragment>
@@ -39,5 +41,6 @@ const UserNavItems = ({user: {account_id: accountId}, setUser}: UserState) =>
       <LogoutButton setUser={setUser} />
     </Fragment>
   );
+};
 
 export default UserNavItems;

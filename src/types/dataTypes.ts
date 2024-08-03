@@ -88,12 +88,12 @@ export type Account = {
 
 export type User = {
   account_id: string | null;
-  admin: boolean;
-  last_action: string | null;
-  session_start: string | null;
+  admin?: boolean;
+  last_action?: string | null;
+  session_start?: string | null;
 }
 
 export type UserState = {
-  user: User | Record<string, never>;
-  setUser: Dispatch<User>;
+  user: User | null;
+  setUser: Dispatch<User | null>;
 }
