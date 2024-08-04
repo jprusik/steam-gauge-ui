@@ -3,6 +3,7 @@ import styled from "@emotion/styled/macro";
 import { AboutPage } from "components/pages/About";
 import AccountPage from "components/pages/Account";
 import FriendsPage from "components/pages/Friends";
+import { LoadingRedirectPage } from "components/pages/LoadingRedirect";
 import { Home } from "components/pages/Home";
 import { PrivacyPage } from "components/pages/Privacy";
 import { ReceiptPage } from "components/pages/Receipt";
@@ -10,7 +11,8 @@ import "./Body.scss";
 
 const urlRedirect = (url) => {
   window.location = url;
-  return null;
+
+  return <LoadingRedirectPage />;
 };
 
 const RouteWithComponentProps = ({
