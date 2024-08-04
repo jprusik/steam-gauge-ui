@@ -1,9 +1,9 @@
-import styled from '@emotion/styled';
-import { UserState } from 'types';
-import { AccountOptions } from 'components/AccountOptions';
-import { SearchForm } from 'components/SearchForm';
-import { SpecialNotice } from 'components/SpecialNotice';
-import TitleIntro from 'components/TitleIntro';
+import styled from "@emotion/styled";
+import { UserState } from "types";
+import { AccountOptions } from "components/AccountOptions";
+import { SearchForm } from "components/SearchForm";
+import { SpecialNotice } from "components/SpecialNotice";
+import TitleIntro from "components/TitleIntro";
 
 type HomeProps = UserState & {
   isFriends: boolean;
@@ -16,7 +16,7 @@ export const Home = ({
 }: HomeProps): JSX.Element => (
   <PageContent>
     <TitleIntro isFriends={isFriends} />
-    <SearchForm searchType={isFriends ? 'friends' : 'account'} />
+    <SearchForm searchType={isFriends ? "friends" : "account"} />
     <OptionDivider>or</OptionDivider>
     <AccountOptions isFriends={isFriends} setUser={setUser} user={user} />
     <Spacer />

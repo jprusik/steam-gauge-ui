@@ -1,10 +1,10 @@
-import { Fragment } from 'react';
-import styled from '@emotion/styled';
-import { Account, App, ErrorMessageKey } from 'types';
-import { minutesToHours } from 'utils/math';
-import { getCommonMultiplayerGames } from 'utils/friends';
-import { FriendSteamLoginStatus } from 'components/FriendSteamLoginStatus';
-import { FriendApps } from 'components/FriendApps';
+import { Fragment } from "react";
+import styled from "@emotion/styled";
+import { Account, App, ErrorMessageKey } from "types";
+import { minutesToHours } from "utils/math";
+import { getCommonMultiplayerGames } from "utils/friends";
+import { FriendSteamLoginStatus } from "components/FriendSteamLoginStatus";
+import { FriendApps } from "components/FriendApps";
 
 type FriendRowProps = {
   friendData: Account & { errorMessageKeys?: ErrorMessageKey[] } & {
@@ -42,7 +42,7 @@ export const FriendRow = ({
         ? app
         : mostPlayedApp;
     },
-    friendCommonMultiplayerApps[0]
+    friendCommonMultiplayerApps[0],
   );
 
   // TODO: display other multiplayer games not owned by the user
@@ -54,7 +54,7 @@ export const FriendRow = ({
             <a href={friendUrl} target="_blank" rel="noopener noreferrer">
               <img
                 className="friend-avatar"
-                style={{ border: '0' }}
+                style={{ border: "0" }}
                 src={friendImage}
                 alt={`avatar of ${friendUsername}`}
               />
@@ -67,7 +67,8 @@ export const FriendRow = ({
             <FriendPersona
               href={friendUrl}
               target="_blank"
-              rel="noopener noreferrer">
+              rel="noopener noreferrer"
+            >
               {friendUsername}
             </FriendPersona>
             <br />
@@ -77,7 +78,8 @@ export const FriendRow = ({
           className="friend-id"
           href={friendUrl}
           target="_blank"
-          rel="noopener noreferrer">
+          rel="noopener noreferrer"
+        >
           {friendId}
         </a>
         <br />
@@ -97,7 +99,7 @@ export const FriendRow = ({
               <br />
               <MostCommonAppName>
                 {mostTimePlayedCommonApp.name}
-              </MostCommonAppName>{' '}
+              </MostCommonAppName>{" "}
               ({minutesToHours(mostTimePlayedCommonApp.playtime_forever)} hours)
             </div>
             <br />

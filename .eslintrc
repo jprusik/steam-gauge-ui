@@ -18,9 +18,7 @@
     "sourceType": "module"
   },
   "rules": {
-    "indent": ["error", 2, {"SwitchCase": 1}],
     "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "no-console": "error",
     "no-undef": "off" // TypeScript takes care of this

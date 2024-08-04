@@ -1,24 +1,24 @@
-import { useMemo } from 'react';
-import { Row } from 'react-table';
-import { appFields } from 'constants/appFields';
-import { numberValueAverage } from 'utils/totals';
+import { useMemo } from "react";
+import { Row } from "react-table";
+import { appFields } from "constants/appFields";
+import { numberValueAverage } from "utils/totals";
 
 export const Metascore = {
   accessor: appFields.METASCORE,
-  Cell: ({row}: {row: Row}) => (
+  Cell: ({ row }: { row: Row }) => (
     <a href={row.values[appFields.METASCORE_LINK]}>
       {row.values[appFields.METASCORE]}
     </a>
   ),
-  Footer: ({selectedFlatRows}: {selectedFlatRows: Row[]}) => {
+  Footer: ({ selectedFlatRows }: { selectedFlatRows: Row[] }) => {
     const valueAverage = useMemo(
       () => numberValueAverage(selectedFlatRows, appFields.METASCORE),
-      [selectedFlatRows]
+      [selectedFlatRows],
     );
 
     return valueAverage ? `${valueAverage} (average)` : null;
   },
-  Header: 'Metascore',
+  Header: "Metascore",
   minWidth: 61,
-  type: 'numeric',
+  type: "numeric",
 };

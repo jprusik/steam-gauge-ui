@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import {css, keyframes} from '@emotion/core';
-import SettingsIcon from '@mui/icons-material/Settings';
+import { css, keyframes } from "@emotion/core";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const spin = keyframes`
   from {
@@ -18,19 +18,26 @@ const loaderIconStyles = css`
   animation-duration: 3000ms;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  color: #EEEEEE;
+  color: #eeeeee;
 `;
 
-export const Loader = (
-  {loaderStyles = ''}: {loaderStyles: string}
-): JSX.Element => (
-  <div css={css`${loaderStyles}`}>
+export const Loader = ({
+  loaderStyles = "",
+}: {
+  loaderStyles: string;
+}): JSX.Element => (
+  <div
+    css={css`
+      ${loaderStyles}
+    `}
+  >
     <SettingsIcon css={loaderIconStyles} />
   </div>
 );
 
 export const SectionLoader = () => (
-  <Loader loaderStyles="
+  <Loader
+    loaderStyles="
       display: block;
       margin: 20px auto 0 auto;
       width: 20vh;

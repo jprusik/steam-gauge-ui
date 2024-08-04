@@ -1,15 +1,14 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const BugReportingDetails = (): JSX.Element => (
   <div>
     <BugReportingDetailsIntro>
-      Notice an issue? Is a value wrong? Send the details along at the appropriate link below.
+      Notice an issue? Is a value wrong? Send the details along at the
+      appropriate link below.
     </BugReportingDetailsIntro>
     <hr />
     <p>
-      <strong>
-        Database issues (wrong values, missing information, etc):
-      </strong>
+      <strong>Database issues (wrong values, missing information, etc):</strong>
       <br />
       <a
         href={process.env.REACT_APP_ISSUE_TRACKER_DB}

@@ -1,27 +1,27 @@
-import styled from '@emotion/styled';
-import {useTranslation} from 'react-i18next';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import {useTheme} from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+import styled from "@emotion/styled";
+import { useTranslation } from "react-i18next";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
 export function BaseDialog({
   children,
   dialogTitleKey,
   handleDismiss,
-  isOpen
+  isOpen,
 }: {
   children: JSX.Element;
   dialogTitleKey?: string;
   handleDismiss: () => void;
   isOpen: boolean;
 }): JSX.Element {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <StyledDialog
@@ -31,19 +31,15 @@ export function BaseDialog({
       onClose={handleDismiss}
       open={isOpen}
       scroll="paper"
-      sx={{textAlign: 'left'}}
+      sx={{ textAlign: "left" }}
     >
       {dialogTitleKey && (
-        <Title id="responsive-dialog-title">
-          {t(dialogTitleKey)}
-        </Title>
+        <Title id="responsive-dialog-title">{t(dialogTitleKey)}</Title>
       )}
-      <DialogContent dividers={true}>
-        {children}
-      </DialogContent>
+      <DialogContent dividers={true}>{children}</DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleDismiss}>
-          {t('action_prompt.close')}
+          {t("action_prompt.close")}
         </Button>
       </DialogActions>
     </StyledDialog>
@@ -69,7 +65,7 @@ const StyledDialog = styled(Dialog)`
     :active,
     :focus-visible {
       background: none;
-      color: #A0CBF5;
+      color: #a0cbf5;
     }
   }
 

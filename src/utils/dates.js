@@ -1,9 +1,9 @@
 export const accountCreationDate = (timestamp) =>
-  (new Date(timestamp * 1000))
-    .toLocaleDateString(
-      undefined,
-      {year: 'numeric', month: 'long', day: 'numeric'}
-    );
+  new Date(timestamp * 1000).toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
 export const timeSince = (date) => {
   const seconds = Math.floor((new Date() - date) / 1000);

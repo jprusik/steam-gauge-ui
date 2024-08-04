@@ -1,22 +1,22 @@
-import { useMemo } from 'react';
-import { Row } from 'react-table';
-import Remove from '@mui/icons-material/Remove';
-import { appFields } from 'constants/appFields';
-import { mbToGB, roundToPlaces } from 'utils/math';
-import { numberValueSum } from 'utils/totals';
+import { useMemo } from "react";
+import { Row } from "react-table";
+import Remove from "@mui/icons-material/Remove";
+import { appFields } from "constants/appFields";
+import { mbToGB, roundToPlaces } from "utils/math";
+import { numberValueSum } from "utils/totals";
 
 export const InstallSizes = {
   accessor: appFields.SIZE_MB,
-  Cell: ({row}: {row: Row}) => (
+  Cell: ({ row }: { row: Row }) => (
     <InstallSizesCellValue
       value={row.values[appFields.SIZE_MB] || 0}
       missingDataPlaceholder
     />
   ),
-  Footer: ({selectedFlatRows}: {selectedFlatRows: Row[]}) => {
+  Footer: ({ selectedFlatRows }: { selectedFlatRows: Row[] }) => {
     const valueSum = useMemo(
       () => numberValueSum(selectedFlatRows, appFields.SIZE_MB),
-      [selectedFlatRows]
+      [selectedFlatRows],
     );
 
     const totalText =
@@ -31,18 +31,15 @@ export const InstallSizes = {
           <div>
             {average > 1000
               ? `${mbToGB(average, 1)} GB (average)`
-              : `${average} MB (average)`
-            }
+              : `${average} MB (average)`}
           </div>
-        ) :
-          null
-        }
+        ) : null}
       </div>
     );
   },
-  Header: 'Install Size',
+  Header: "Install Size",
   minWidth: 46,
-  type: 'numeric',
+  type: "numeric",
 };
 
 const InstallSizesCellValue = ({

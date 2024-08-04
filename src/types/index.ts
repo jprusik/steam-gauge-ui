@@ -1,11 +1,11 @@
-export * from './dataTypes';
-import { errorMessage } from 'constants/messages';
+export * from "./dataTypes";
+import { errorMessage } from "constants/messages";
 
 export type ErrorMessageKey = keyof typeof errorMessage;
 
 export enum LinkType {
-  ACCOUNT = 'account',
-  FRIENDS = 'friends',
+  ACCOUNT = "account",
+  FRIENDS = "friends",
 }
 
 export type TableColumn = {

@@ -1,7 +1,7 @@
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 function checkResponseStatus(response) {
-  const contentTypeHeader = response.headers.get('Content-Type');
+  const contentTypeHeader = response.headers.get("Content-Type");
   const isJSON =
     contentTypeHeader && contentTypeHeader.match(/application\/json/i);
 
@@ -22,7 +22,7 @@ function throwError(response) {
 
 function setRequestCache(response) {
   const requestDomain = window.location.origin;
-  const requestPath = response.url.replace(requestDomain, '');
+  const requestPath = response.url.replace(requestDomain, "");
 
   response
     .clone() // don't consume the original promise resolution
@@ -36,7 +36,7 @@ function setRequestCache(response) {
             JSON.stringify({
               datetime: Date.now(),
               ...data,
-            })
+            }),
           );
         } catch (exception) {
           // (e.g. localstorage cache hits it's limit)
@@ -79,8 +79,8 @@ function get({
   useCache = false,
 }) {
   const baseFetchOptions = {
-    accept: 'application/json',
-    credentials: 'same-origin',
+    accept: "application/json",
+    credentials: "same-origin",
   };
 
   const apiPath = `/api/1.0/${requestApi}`;
@@ -111,13 +111,13 @@ const handleError = (error, returnResponse = false) => {
 };
 
 export const checkLoginStatus = () => {
-  const cachedCurrentUser = Cookies.get('currentUser');
+  const cachedCurrentUser = Cookies.get("currentUser");
 
   return cachedCurrentUser || null;
 };
 
 export const logoutUser = () => {
-  Cookies.remove('currentUser');
+  Cookies.remove("currentUser");
 };
 
 export const resolveUsername = (username) =>
@@ -125,7 +125,7 @@ export const resolveUsername = (username) =>
 
 export const fetchMultiplayerApps = () =>
   get({
-    requestApi: 'apps?filter_multiplayer=true',
+    requestApi: "apps?filter_multiplayer=true",
     useCache: true,
     returnErrorResponse: true,
   });
@@ -137,7 +137,7 @@ export const fetchAccountApps = (accountId, includeExtendedData = false) => {
   let requestApi = `accounts/${accountId}/apps`;
 
   if (includeExtendedData) {
-    requestApi += '?fields=developers,publishers,genres,time_to_beat';
+    requestApi += "?fields=developers,publishers,genres,time_to_beat";
   }
 
   return get({

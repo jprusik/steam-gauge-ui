@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import { UserState } from 'types';
-import UserNavItems from './UserNavItems';
-import './Header.scss';
+import { Link } from "react-router-dom";
+import { UserState } from "types";
+import UserNavItems from "./UserNavItems";
+import "./Header.scss";
 
 export const Header = ({ user, setUser }: UserState) => (
   <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -17,7 +17,8 @@ export const Header = ({ user, setUser }: UserState) => (
           data-toggle="collapse"
           data-target="#navbar"
           aria-expanded="false"
-          aria-controls="navbar">
+          aria-controls="navbar"
+        >
           <span className="sr-only">Toggle navigation</span>
           <span className="icon-bar"></span>
           <span className="icon-bar"></span>
@@ -30,19 +31,20 @@ export const Header = ({ user, setUser }: UserState) => (
             <Link to="/">
               <i
                 className="fa fa-dashboard"
-                style={{ marginRight: '0.5em' }}></i>
+                style={{ marginRight: "0.5em" }}
+              ></i>
               Gauge
             </Link>
           </li>
           <li>
             <Link to="/friends">
-              <i className="fa fa-users" style={{ marginRight: '0.5em' }}></i>
+              <i className="fa fa-users" style={{ marginRight: "0.5em" }}></i>
               Friends
             </Link>
           </li>
           <li>
             <Link to="/receipt">
-              <i className="fa fa-file-o" style={{ marginRight: '0.5em' }}></i>
+              <i className="fa fa-file-o" style={{ marginRight: "0.5em" }}></i>
               Receipt
             </Link>
           </li>

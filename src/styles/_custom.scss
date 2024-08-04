@@ -1,57 +1,70 @@
 /* Boilerplate Additions
 -------------------------------------------------- */
 .bold {
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 .italic {
-  font-style: italic; }
+  font-style: italic;
+}
 
 .underline {
-  text-decoration: underline; }
+  text-decoration: underline;
+}
 
 .clear {
   height: 1em;
   width: 100%;
-  clear: both; }
+  clear: both;
+}
 
 .hidden {
-  display: none; }
+  display: none;
+}
 
 .text-centered {
-  text-align: center; }
+  text-align: center;
+}
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
   position: relative;
-  min-height: 100%; }
+  min-height: 100%;
+}
 
 body {
   /* Margin bottom by footer height */
   margin-bottom: 140px;
-  color: #9d9d9d; }
+  color: #9d9d9d;
+}
 
 .container .text-muted {
-  margin: 20px 0; }
+  margin: 20px 0;
+}
 
 /* Bootstrap overrides
 -------------------------------------------------- */
 
 .modal {
   color: #3d3d3d;
-  padding: 0; }
+  padding: 0;
+}
 
 .jumbotron {
   background: rgba(0, 0, 0, 0.2);
-  color: #8f98a0; }
+  color: #8f98a0;
+}
 
 .jumbotron a {
-  color: #8bb9e0; }
+  color: #8bb9e0;
+}
 
 .theme-dropdown .dropdown-menu {
   position: static;
   display: block;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+}
 
 .table {
   padding: 1em 0.5em;
@@ -68,16 +81,19 @@ body {
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none; }
+  user-select: none;
+}
 
 .table > thead > tr {
   font-weight: bold;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: left;
-  border-bottom: 1px solid #2f2f2f; }
+  border-bottom: 1px solid #2f2f2f;
+}
 
 .table > thead > tr:hover {
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 .table > thead > tr th {
   background-color: #74706f;
@@ -85,41 +101,55 @@ body {
   padding: 1em 20px 1em 5px;
   border-bottom: 1px solid #555555;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 1px 1px rgba(0, 0, 0, 0.2);
   text-align: left;
-  vertical-align: middle; }
+  vertical-align: middle;
+}
 
 .table > thead > tr th i {
   display: none;
-  font-size: 16px; }
+  font-size: 16px;
+}
 
 .table > thead > tr th sup {
-  display: none; }
+  display: none;
+}
 
 .table > tbody > tr {
   background-color: grey;
-  color: #EEEEEE; }
+  color: #eeeeee;
+}
 
 .table > tbody > tr.row-selected {
-  background-color: #3d3d3d; }
+  background-color: #3d3d3d;
+}
 
 .table > tbody > tr.row-selected:hover {
-  background-color: #333333; }
+  background-color: #333333;
+}
 
 .table > tbody > tr > td {
-  padding: 1em 0.5em; }
+  padding: 1em 0.5em;
+}
 
 .table > tbody > tr > td.sorting_1 {
-  background-color: #2f2f2f; }
+  background-color: #2f2f2f;
+}
 
 .table > tbody > tr:hover > td.sorting_1 {
-  background-color: #2a2a2a; }
+  background-color: #2a2a2a;
+}
 
 .table > tbody > tr.row-selected > td.sorting_1 {
-  background-color: #222222; }
+  background-color: #222222;
+}
 
 .table > tbody > tr.row-selected:hover > td.sorting_1 {
-  background-color: #111111; }
+  background-color: #111111;
+}
 
 .table-hover > tbody > tr:hover {
-  background-color: #444444; }
+  background-color: #444444;
+}

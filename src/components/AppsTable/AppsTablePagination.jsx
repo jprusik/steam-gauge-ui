@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import styled from "@emotion/styled";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 export const AppsTablePagination = ({
   canNextPage,
@@ -16,29 +16,23 @@ export const AppsTablePagination = ({
   return (
     <TablePaginationContainer>
       <ButtonContainer>
-        <Button
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}
-        >
+        <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
           <NavigateBeforeIcon />
         </Button>
         <div>
           Page {pageIndex + 1} of {pageOptions.length}
         </div>
-        <Button
-          onClick={() => nextPage()}
-          disabled={!canNextPage}
-        >
+        <Button onClick={() => nextPage()} disabled={!canNextPage}>
           <NavigateNextIcon />
         </Button>
       </ButtonContainer>
       <Selection
         value={pageSize}
-        onChange={e => {
+        onChange={(e) => {
           setPageSize(Number(e.target.value));
         }}
       >
-        {[10, 20, maxPageSize].map(pageSize => (
+        {[10, 20, maxPageSize].map((pageSize) => (
           <option key={pageSize} value={pageSize}>
             Show {pageSize}
           </option>

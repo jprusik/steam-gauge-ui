@@ -1,8 +1,8 @@
-import styled from '@emotion/styled';
-import { App } from 'types';
-import { minutesToHours } from 'utils/math';
-import { errorMessage } from 'constants/messages';
-import { ErrorMessageKey } from 'types';
+import styled from "@emotion/styled";
+import { App } from "types";
+import { minutesToHours } from "utils/math";
+import { errorMessage } from "constants/messages";
+import { ErrorMessageKey } from "types";
 
 type FriendAppsProps = {
   apps: App[];
@@ -17,10 +17,10 @@ export const FriendApps = ({
   searchedUserFriendName,
   searchedUserName,
 }: FriendAppsProps): JSX.Element => {
-  const friendName = searchedUserFriendName || 'This user';
-  const userName = searchedUserName || 'the searched account';
+  const friendName = searchedUserFriendName || "This user";
+  const userName = searchedUserName || "the searched account";
   const sortedApps = apps.sort(({ name }, { name: nextName }) =>
-    name.localeCompare(nextName)
+    name.localeCompare(nextName),
   );
 
   return (
@@ -34,7 +34,7 @@ export const FriendApps = ({
         {sortedApps.length ? (
           sortedApps.map((app) => (
             <li key={app.appid} className="friend-gamerow">
-              {app.name}{' '}
+              {app.name}{" "}
               <small>({minutesToHours(app.playtime_forever)} hours)</small>
             </li>
           ))

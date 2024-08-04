@@ -1,15 +1,16 @@
-import { useMemo } from 'react';
-import styled from '@emotion/styled';
-import {columnComponentNames} from 'constants/appFields';
-import { AppsTable } from 'components/AppsTable/AppsTable';
-import * as Columns from 'components/AppsTable/Columns';
+import { useMemo } from "react";
+import styled from "@emotion/styled";
+import { columnComponentNames } from "constants/appFields";
+import { AppsTable } from "components/AppsTable/AppsTable";
+import * as Columns from "components/AppsTable/Columns";
 
 export function AppsDetails({ apps }) {
   const columns = useMemo(
-    () => Object.keys(columnComponentNames).map(component =>
-      Columns[columnComponentNames[component]]
-    ),
-    []
+    () =>
+      Object.keys(columnComponentNames).map(
+        (component) => Columns[columnComponentNames[component]],
+      ),
+    [],
   );
 
   return (

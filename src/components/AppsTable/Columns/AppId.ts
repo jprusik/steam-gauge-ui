@@ -1,8 +1,8 @@
-import { appFields } from 'constants/appFields';
+import { appFields } from "constants/appFields";
 
 export const AppId = {
   accessor: appFields.APPID,
   footerSpan: 0,
-  Header: 'ID',
+  Header: "ID",
   minWidth: 26,
 };

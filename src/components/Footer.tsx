@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import styled from '@emotion/styled/macro';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import Button from '@mui/material/Button';
-import { SupportDialog } from 'components/modals/SupportDialog';
-import './Footer.scss';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import styled from "@emotion/styled/macro";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Button from "@mui/material/Button";
+import { SupportDialog } from "components/modals/SupportDialog";
+import "./Footer.scss";
 
 export function Footer(): JSX.Element {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ export function Footer(): JSX.Element {
   const today = new Date();
 
   const DIALOG_IDS = {
-    SUPPORT: 'support',
+    SUPPORT: "support",
   };
 
   return (
@@ -22,34 +22,35 @@ export function Footer(): JSX.Element {
         <div className="text-muted">
           <div className="footer-nav"></div>
           <Container>
-            <Link to="/">{t('action_prompt.home_link')}</Link>
-            <Link to="/about">{t('action_prompt.about_link')}</Link>
-            <Link to="/privacy">{t('action_prompt.privacy_link')}</Link>
+            <Link to="/">{t("action_prompt.home_link")}</Link>
+            <Link to="/about">{t("action_prompt.about_link")}</Link>
+            <Link to="/privacy">{t("action_prompt.privacy_link")}</Link>
             <a
               href={process.env.REACT_APP_CODE_URL}
               rel="noopener noreferrer"
-              target="_blank">
-              {t('action_prompt.code_link')}
+              target="_blank"
+            >
+              {t("action_prompt.code_link")}
             </a>
             <TextButton onClick={() => setOpenDialog(DIALOG_IDS.SUPPORT)}>
               <FavoriteBorderIcon className="favoriteIcon" />
-              {t('action_prompt.support_link')}
+              {t("action_prompt.support_link")}
             </TextButton>
           </Container>
           <div className="site-info">
             Database last updated at {process.env.REACT_APP_LAST_DB_UPDATE}
             <br />
             <a href="https://store.steampowered.com">Powered by Steam.</a> Valve
-            and Steam are trademarks of Valve Corporation.{' '}
+            and Steam are trademarks of Valve Corporation.{" "}
             {process.env.REACT_APP_PRETTY_DOMAIN_URL} is not affiliated with
             Valve in any way.
             <br />
             2013-{today.getFullYear()}, {process.env.REACT_APP_NAME} | Developed
-            by{' '}
+            by{" "}
             <a href={`${process.env.REACT_APP_AUTHOR_WEBSITE}`}>
               {process.env.REACT_APP_AUTHOR_NAME}
             </a>
-            . Questions? Notice an issue? Let me know at{' '}
+            . Questions? Notice an issue? Let me know at{" "}
             <a href={`mailto:${process.env.REACT_APP_SUPPORT_EMAIL}`}>
               {process.env.REACT_APP_SUPPORT_EMAIL}
             </a>

@@ -1,8 +1,8 @@
-import { appFields } from 'constants/appFields';
-import {Fragment} from 'react';
-import styled from '@emotion/styled';
-import Tooltip from '@mui/material/Tooltip';
-import {AppBanner} from 'components/AppBanner';
+import { appFields } from "constants/appFields";
+import { Fragment } from "react";
+import styled from "@emotion/styled";
+import Tooltip from "@mui/material/Tooltip";
+import { AppBanner } from "components/AppBanner";
 
 type NameCellValueProps = {
   app_website: string;
@@ -10,19 +10,15 @@ type NameCellValueProps = {
   img_icon_url: string;
   img_logo_url: string;
   name: string;
-}
+};
 
 export const Name = {
   accessor: appFields.NAME,
-  Cell: ({
-    row: {
-      original
-    }
-  }: {row: {original: NameCellValueProps}}) => (
+  Cell: ({ row: { original } }: { row: { original: NameCellValueProps } }) => (
     <NameCellValue {...original} />
   ),
   footerSpan: 0,
-  Header: 'Title',
+  Header: "Title",
   minWidth: 36,
 };
 
@@ -34,9 +30,9 @@ const NameCellValue = ({
   name,
 }: NameCellValueProps): JSX.Element => (
   <AppNameContainer>
-    { img_icon_url &&
+    {img_icon_url && (
       <Tooltip
-        title={img_logo_url ? <AppBanner {...{appid, img_logo_url}} /> : ''}
+        title={img_logo_url ? <AppBanner {...{ appid, img_logo_url }} /> : ""}
         arrow
       >
         <TooltipImage
@@ -45,7 +41,7 @@ const NameCellValue = ({
           src={`https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/${appid}/${img_icon_url}.jpg`}
         />
       </Tooltip>
-    }
+    )}
     <AppNameText>
       <a
         href={`https://store.steampowered.com/app/${appid}`}
@@ -53,17 +49,14 @@ const NameCellValue = ({
       >
         {name || appid}
       </a>
-      { app_website &&
+      {app_website && (
         <Fragment>
-          <br/>
-          <a
-            href={app_website}
-            rel="noopener noreferrer"
-          >
+          <br />
+          <a href={app_website} rel="noopener noreferrer">
             (website)
           </a>
         </Fragment>
-      }
+      )}
     </AppNameText>
   </AppNameContainer>
 );

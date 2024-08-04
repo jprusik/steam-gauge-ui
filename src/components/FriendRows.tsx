@@ -1,5 +1,5 @@
-import { Account, App, ErrorMessageKey } from 'types';
-import { FriendRow } from 'components/FriendRow';
+import { Account, App, ErrorMessageKey } from "types";
+import { FriendRow } from "components/FriendRow";
 
 type FriendRowsProps = {
   userId: string;

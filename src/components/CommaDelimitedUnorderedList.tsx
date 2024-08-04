@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const CommaDelimitedUnorderedList = styled.ul`
   margin: 0;
@@ -10,7 +10,7 @@ export const CommaDelimitedUnorderedList = styled.ul`
 
     :not(:last-of-type):after {
       margin-right: 2px;
-      content: ',';
+      content: ",";
     }
   }
 `;

@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import {Fragment} from 'react';
-import {css} from '@emotion/core';
-import {Account} from 'types';
-import {accountCreationDate, timeSince} from 'utils/dates';
-import {PersonaState} from 'components/PersonaState';
+import { Fragment } from "react";
+import { css } from "@emotion/core";
+import { Account } from "types";
+import { accountCreationDate, timeSince } from "utils/dates";
+import { PersonaState } from "components/PersonaState";
 
 type AccountDetailsProps = {
   accountData: Account;
-}
+};
 
 export const AccountDetails = ({
   accountData: {
@@ -21,21 +21,35 @@ export const AccountDetails = ({
     personastate,
     realname,
     steamid,
-    timecreated
-  }
+    timecreated,
+  },
 }: AccountDetailsProps): JSX.Element => (
   <table>
     <tbody>
       <tr>
-        <td css={css`vertical-align: top; padding: 10px 0px; max-width: 184px;`}>
-          { avatarfull &&
+        <td
+          css={css`
+            vertical-align: top;
+            padding: 10px 0px;
+            max-width: 184px;
+          `}
+        >
+          {avatarfull && (
             <img css={userAvatarStyles} src={avatarfull} alt="user avatar" />
-          }
+          )}
         </td>
-        <td css={css`vertical-align: top; padding: 10px;`}>
+        <td
+          css={css`
+            vertical-align: top;
+            padding: 10px;
+          `}
+        >
           <h2 css={profileNameStyles}>
             <a
-              css={css`color: #eee!important; text-shadow: #2a2a2a 1px 1px 0px;`} // !important bootstrap override
+              css={css`
+                color: #eee !important;
+                text-shadow: #2a2a2a 1px 1px 0px;
+              `} // !important bootstrap override
               href={`https://steamcommunity.com/profiles/${steamid}`}
               rel="noopener noreferrer"
               target="_blank"
@@ -43,37 +57,73 @@ export const AccountDetails = ({
               {personaname || steamid}
             </a>
           </h2>
-          { personaname &&
-            <h4>Steam ID: <a css={css`color: #8bb9e0;`} href={`https://steamcommunity.com/profiles/${steamid}`} target="_blank" rel="noopener noreferrer">{steamid}</a></h4>
-          }
+          {personaname && (
+            <h4>
+              Steam ID:{" "}
+              <a
+                css={css`
+                  color: #8bb9e0;
+                `}
+                href={`https://steamcommunity.com/profiles/${steamid}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {steamid}
+              </a>
+            </h4>
+          )}
           <div>
             {Number.isInteger(personastate) && (
               <Fragment>
-                <span css={css`font-weight: bold; font-size: 0.75em;`}>This user's status is:</span>
+                <span
+                  css={css`
+                    font-weight: bold;
+                    font-size: 0.75em;
+                  `}
+                >
+                  This user's status is:
+                </span>
                 <PersonaState state={personastate} />
               </Fragment>
             )}
-            <div css={css`color: #eeeeee; font-weight: bold; padding: 0px; font-size: 0.75em;`}>
-              { timecreated && timecreated !== 0 && (
-                `Steam user since ${ accountCreationDate(timecreated) }`
+            <div
+              css={css`
+                color: #eeeeee;
+                font-weight: bold;
+                padding: 0px;
+                font-size: 0.75em;
+              `}
+            >
+              {timecreated &&
+                timecreated !== 0 &&
+                `Steam user since ${accountCreationDate(timecreated)}`}
+              <br />
+              {realname && <span id="user_realname">{realname} | </span>}
+              {cityid && <span id="user_cityid">{cityid}, </span>}
+              {locstatecode && <span id="user_state">{locstatecode}, </span>}
+              {loccountrycode && (
+                <span id="user_country">{loccountrycode}</span>
               )}
               <br />
-              { realname && <span id="user_realname">{realname} | </span> }
-              { cityid && <span id="user_cityid">{cityid}, </span> }
-              { locstatecode && <span id="user_state">{locstatecode}, </span> }
-              { loccountrycode && <span id="user_country">{loccountrycode}</span> }
               <br />
-              <br />
-              { lastlogoff &&
+              {lastlogoff && (
                 <Fragment>
-                  Last logoff: <span id="last_logoff_datetime" title={accountCreationDate(timecreated)}>{timeSince(lastlogoff * 1000)} ago</span>
+                  Last logoff:{" "}
+                  <span
+                    id="last_logoff_datetime"
+                    title={accountCreationDate(timecreated)}
+                  >
+                    {timeSince(lastlogoff * 1000)} ago
+                  </span>
                 </Fragment>
-              }
-              { gameextrainfo &&
+              )}
+              {gameextrainfo && (
                 <Fragment>
-                  <br />Currently Playing: <span id="current_app">{gameextrainfo}</span>
+                  <br />
+                  Currently Playing:{" "}
+                  <span id="current_app">{gameextrainfo}</span>
                 </Fragment>
-              }
+              )}
             </div>
           </div>
         </td>
@@ -83,10 +133,10 @@ export const AccountDetails = ({
 );
 
 const userAvatarStyles = css`
-  @media only screen and (max-width:640px) {
-    width:100%;
-    max-width:184px;
-    min-width:80px;
+  @media only screen and (max-width: 640px) {
+    width: 100%;
+    max-width: 184px;
+    min-width: 80px;
   }
 `;
 

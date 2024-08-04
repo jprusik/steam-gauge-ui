@@ -1,14 +1,11 @@
-import { useState } from 'react';
-import styled from '@emotion/styled';
-import { useAsyncDebounce } from 'react-table';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import { useState } from "react";
+import styled from "@emotion/styled";
+import { useAsyncDebounce } from "react-table";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
-export function AppsTableFilter({
-  globalFilter,
-  setGlobalFilter,
-}) {
+export function AppsTableFilter({ globalFilter, setGlobalFilter }) {
   const [value, setValue] = useState(globalFilter);
-  const onChange = useAsyncDebounce(value => {
+  const onChange = useAsyncDebounce((value) => {
     setGlobalFilter(value || undefined);
   }, 200);
 
@@ -17,7 +14,7 @@ export function AppsTableFilter({
       <FilterListIcon />
       Filter
       <SearchInput
-        value={value || ''}
+        value={value || ""}
         onChange={({ target }) => {
           setValue(target.value);
           onChange(target.value);
@@ -34,7 +31,7 @@ const SearchFilterContainer = styled.div`
   justify-content: space-between;
   padding: 5px 0;
   width: 245px;
-  color: #EEEEEE;
+  color: #eeeeee;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 `;
 

@@ -1,9 +1,10 @@
-import {Link} from 'react-router-dom';
-import styled from '@emotion/styled';
-import steamSignInButtonImage from 'assets/steam_sign_in_button.png';
+import { Link } from "react-router-dom";
+import styled from "@emotion/styled";
+import steamSignInButtonImage from "assets/steam_sign_in_button.png";
 
-export const LoginLink = () =>
-  <StyledLink className="steam-login-button" to="/login" />;
+export const LoginLink = () => (
+  <StyledLink className="steam-login-button" to="/login" />
+);
 
 const StyledLink = styled(Link)`
   display: block;

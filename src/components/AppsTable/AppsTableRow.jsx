@@ -1,7 +1,7 @@
-import styled from '@emotion/styled';
-import { AppsTableCell } from './AppsTableCell';
+import styled from "@emotion/styled";
+import { AppsTableCell } from "./AppsTableCell";
 
-function getActiveColumn (cells) {
+function getActiveColumn(cells) {
   return cells.reduce((sortedColumnIndex, cell, index) => {
     if (Number.isInteger(sortedColumnIndex)) {
       return sortedColumnIndex;
@@ -26,12 +26,12 @@ export const AppsTableRow = ({
     onClick={() => toggleRowSelected(!isSelected)}
     {...rowProps}
   >
-    {cells.map(cell => {
-      const {key, ...otherCellProps} = cell.getCellProps();
+    {cells.map((cell) => {
+      const { key, ...otherCellProps } = cell.getCellProps();
 
       return (
         <AppsTableCell key={key} cellProps={otherCellProps}>
-          {cell.render('Cell')}
+          {cell.render("Cell")}
         </AppsTableCell>
       );
     })}
@@ -39,31 +39,39 @@ export const AppsTableRow = ({
 );
 
 const TableRow = styled.tr`
-  ${({activeColumn, isSelected}) => `
+  ${({ activeColumn, isSelected }) => `
     line-height: 1.42857143rem;
     color: #EEEEEE;
     font-size: 10px;
 
     :hover {
       > td {
-        background-color: ${isSelected ? '#333333' : '#444444'};
+        background-color: ${isSelected ? "#333333" : "#444444"};
 
-        ${activeColumn ? `
+        ${
+          activeColumn
+            ? `
           :nth-of-type(${activeColumn}) {
-            background-color: ${isSelected ? '#111111' : '#2a2a2a'};
+            background-color: ${isSelected ? "#111111" : "#2a2a2a"};
           }
-        ` : ''}
+        `
+            : ""
+        }
       }
     }
 
     > td {
-      background-color: ${isSelected ? '#3d3d3d': 'grey'};
+      background-color: ${isSelected ? "#3d3d3d" : "grey"};
 
-      ${activeColumn ? `
+      ${
+        activeColumn
+          ? `
         :nth-of-type(${activeColumn}) {
-          background-color: ${isSelected ? '#222222' : '#2f2f2f'};
+          background-color: ${isSelected ? "#222222" : "#2f2f2f"};
         }
-      ` : ''}
+      `
+          : ""
+      }
     }
   `}
 `;

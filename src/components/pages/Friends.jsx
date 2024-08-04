@@ -1,16 +1,16 @@
-import { Fragment, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Fragment, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   fetchAccountApps,
   fetchAccountDetails,
   fetchFriendsList,
   fetchMultiplayerApps,
-} from 'actions';
-import { Home } from 'components/pages/Home';
-import { FriendRows } from 'components/FriendRows';
-import FriendsSummary from 'components/FriendsSummary';
-import { SearchForm } from 'components/SearchForm';
-import { SectionLoader } from 'components/Loader';
+} from "actions";
+import { Home } from "components/pages/Home";
+import { FriendRows } from "components/FriendRows";
+import FriendsSummary from "components/FriendsSummary";
+import { SearchForm } from "components/SearchForm";
+import { SectionLoader } from "components/Loader";
 
 const controller = new AbortController();
 const signal = controller.signal;
@@ -37,7 +37,7 @@ const getAccountsApps = (accountsDetails) =>
         errorMessageKeys,
         apps: accountAppsData || [],
       };
-    })
+    }),
   );
 
 const FriendsPage = ({ user, setUser }) => {
@@ -60,7 +60,7 @@ const FriendsPage = ({ user, setUser }) => {
       if (!multiplayerAppsSuccess) {
         setMultiplayerAppsError(
           multiplayerAppsMessageKey ||
-            errorMessage.FETCH_MULTIPLAYER_APPS_FAILED
+            errorMessage.FETCH_MULTIPLAYER_APPS_FAILED,
         );
 
         return;
@@ -78,7 +78,7 @@ const FriendsPage = ({ user, setUser }) => {
       if (!friendsListSuccess) {
         setFriendsListError(
           friendsListMessageKey ||
-            errorMessage.FETCH_ACCOUNT_FRIENDS_LIST_FAILED
+            errorMessage.FETCH_ACCOUNT_FRIENDS_LIST_FAILED,
         );
 
         return;
@@ -93,11 +93,11 @@ const FriendsPage = ({ user, setUser }) => {
 
           return userIdList;
         },
-        []
+        [],
       );
       // add `searchedUserId` so we can get all accounts with one request
       // @TODO The api is currently limited to 100 ids
-      const userAndFriendIds = [searchedUserId, ...userFriendsIds].join(',');
+      const userAndFriendIds = [searchedUserId, ...userFriendsIds].join(",");
 
       const { data: accountsDetailsData } =
         (await fetchAccountDetails(userAndFriendIds)) || {};
@@ -132,7 +132,7 @@ const FriendsPage = ({ user, setUser }) => {
     <Fragment>
       <SearchForm
         {...{
-          searchType: 'friends',
+          searchType: "friends",
           onSearchSuccess: resetPageData,
           ...(!!searchedUserId && { hideLabel: true }),
         }}
@@ -146,12 +146,13 @@ const FriendsPage = ({ user, setUser }) => {
       ) : friendsListError ? (
         <div>
           There was a problem fetching your list of friends from Steam. If this
-          problem persists, make sure the "Friends List" setting on{' '}
+          problem persists, make sure the "Friends List" setting on{" "}
           <a
             href="https://steamcommunity.com/my/edit/settings"
-            rel="noopener noreferrer">
+            rel="noopener noreferrer"
+          >
             your Steam privacy page
-          </a>{' '}
+          </a>{" "}
           is set to "Public".
         </div>
       ) : multiplayerAppsError ? (

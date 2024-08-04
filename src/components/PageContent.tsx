@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const PageContent = styled.div`
   margin: 0px auto 20px auto;

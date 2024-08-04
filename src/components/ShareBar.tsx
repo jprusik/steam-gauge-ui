@@ -1,21 +1,18 @@
-import styled from '@emotion/styled';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import styled from "@emotion/styled";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
 
 type ShareBarProps = {
   message: string;
   url: string;
-}
+};
 
 enum SocialNetwork {
-  TWITTER = 'twitter',
-  FACEBOOK = 'facebook'
+  TWITTER = "twitter",
+  FACEBOOK = "facebook",
 }
 
-export function ShareBar ({
-  message,
-  url
-}: ShareBarProps): JSX.Element {
+export function ShareBar({ message, url }: ShareBarProps): JSX.Element {
   const encodedShareMessage = encodeURIComponent(message);
   const encodedShareUrl = encodeURIComponent(url);
 
@@ -54,16 +51,18 @@ const ShareIconsContainer = styled.div`
   font-weight: bold;
 `;
 
-const ShareLink = styled.a<{socialNetwork: SocialNetwork}>`
+const ShareLink = styled.a<{ socialNetwork: SocialNetwork }>`
   display: inline-block;
   margin: 0 5px;
   border: 0px solid #ccc;
   text-decoration: none;
 
-  color: ${({socialNetwork}) =>
-    socialNetwork === SocialNetwork.FACEBOOK ? '#3b5998' :
-      socialNetwork === SocialNetwork.TWITTER ? '#0094c2' : '#8bb9e0'
-}!important; // !important bootstrap override
+  color: ${({ socialNetwork }) =>
+    socialNetwork === SocialNetwork.FACEBOOK
+      ? "#3b5998"
+      : socialNetwork === SocialNetwork.TWITTER
+        ? "#0094c2"
+        : "#8bb9e0"}!important; // !important bootstrap override
 
   > svg {
     font-size: 2.5rem;

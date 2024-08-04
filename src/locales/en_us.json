@@ -7,10 +7,8 @@
     "privacy_link": "Privacy",
     "support_link": "Support"
   },
-  "error": {
-  },
-  "input": {
-  },
+  "error": {},
+  "input": {},
   "state": {
     "data_loading": "Data is loading...",
     "untranslated_api_override": "{{untranslatedPassthrough}}"

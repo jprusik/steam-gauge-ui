@@ -1,4 +1,4 @@
-import {Dispatch} from 'react';
+import { Dispatch } from "react";
 
 export type TimeToBeat = {
   data_imputed_completionist: boolean;
@@ -8,7 +8,7 @@ export type TimeToBeat = {
   minutes_to_beat_completionist: number;
   minutes_to_beat_extras: number;
   minutes_to_beat_main_game: number;
-}
+};
 
 export type App = {
   achievements_enabled?: boolean | null;
@@ -55,7 +55,7 @@ export type App = {
   tradingcards_enabled?: boolean | null;
   VAC_enabled?: boolean | null;
   workshop_enabled?: boolean | null;
-}
+};
 
 export type Account = {
   // Public Data
@@ -84,16 +84,16 @@ export type Account = {
   primaryclanid: string;
   realname: string;
   timecreated: number;
-}
+};
 
 export type User = {
   account_id: string | null;
   admin?: boolean;
   last_action?: string | null;
   session_start?: string | null;
-}
+};
 
 export type UserState = {
   user: User | null;
   setUser: Dispatch<User | null>;
-}
+};

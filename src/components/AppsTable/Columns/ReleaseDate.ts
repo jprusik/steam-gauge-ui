@@ -1,36 +1,31 @@
-import { useMemo } from 'react';
-import { Row } from 'react-table';
-import { appFields } from 'constants/appFields';
-import { dateRange } from 'utils/totals';
+import { useMemo } from "react";
+import { Row } from "react-table";
+import { appFields } from "constants/appFields";
+import { dateRange } from "utils/totals";
 
 export const ReleaseDate = {
   accessor: appFields.RELEASE_DATE,
-  Footer: ({selectedFlatRows}: {selectedFlatRows: Row[]}) => {
-    const {minDate, maxDate} = useMemo(
+  Footer: ({ selectedFlatRows }: { selectedFlatRows: Row[] }) => {
+    const { minDate, maxDate } = useMemo(
       () => dateRange(selectedFlatRows, appFields.RELEASE_DATE),
-      [selectedFlatRows]
+      [selectedFlatRows],
     );
 
-    return (minDate && maxDate) ? [
-      minDate.format('LL'),
-      maxDate.format('LL')
-    ].join(' - ') : null;
+    return minDate && maxDate
+      ? [minDate.format("LL"), maxDate.format("LL")].join(" - ")
+      : null;
   },
-  Header: 'Release Date',
+  Header: "Release Date",
   minWidth: 52,
-  sortType: ({
-    values: {
-      [appFields.RELEASE_DATE]: value
-    }
-  }: {values: {[appFields.RELEASE_DATE]: string}}, {
-    values: {
-      [appFields.RELEASE_DATE]: nextValue
-    }
-  }: {values: {[appFields.RELEASE_DATE]: string }}) => {
-    if (
-      (!value && !nextValue) ||
-      (value && !nextValue)
-    ) {
+  sortType: (
+    {
+      values: { [appFields.RELEASE_DATE]: value },
+    }: { values: { [appFields.RELEASE_DATE]: string } },
+    {
+      values: { [appFields.RELEASE_DATE]: nextValue },
+    }: { values: { [appFields.RELEASE_DATE]: string } },
+  ) => {
+    if ((!value && !nextValue) || (value && !nextValue)) {
       return 1;
     }
 
@@ -42,5 +37,5 @@ export const ReleaseDate = {
     const nextDate = new Date(nextValue);
 
     return date > nextDate ? 1 : -1;
-  }
+  },
 };

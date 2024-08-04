@@ -1,5 +1,5 @@
-import { Fragment } from 'react';
-import styled from '@emotion/styled';
+import { Fragment } from "react";
+import styled from "@emotion/styled";
 import {
   useExpanded,
   useFilters,
@@ -9,13 +9,13 @@ import {
   useRowSelect,
   useSortBy,
   useTable,
-} from 'react-table';
-import { AppsTableFilter } from './AppsTableFilter';
-import { DataExport } from './DataExport';
-import { AppsTableHeaderRow } from './AppsTableHeaderRow';
-import { AppsTableRow } from './AppsTableRow';
-import { AppsTableFooter } from './AppsTableFooter';
-import { AppsTablePagination } from './AppsTablePagination';
+} from "react-table";
+import { AppsTableFilter } from "./AppsTableFilter";
+import { DataExport } from "./DataExport";
+import { AppsTableHeaderRow } from "./AppsTableHeaderRow";
+import { AppsTableRow } from "./AppsTableRow";
+import { AppsTableFooter } from "./AppsTableFooter";
+import { AppsTablePagination } from "./AppsTablePagination";
 
 export function AppsTable({ columns, data }) {
   const {
@@ -40,8 +40,11 @@ export function AppsTable({ columns, data }) {
       data,
       initialState: {
         // Workaround to select all rows initially
-        selectedRowIds: data.reduce((allRows, app, index) => ({ ...allRows, [index]: true }), {})
-      }
+        selectedRowIds: data.reduce(
+          (allRows, app, index) => ({ ...allRows, [index]: true }),
+          {},
+        ),
+      },
     },
     useFilters,
     useGlobalFilter,
@@ -67,11 +70,16 @@ export function AppsTable({ columns, data }) {
       <TableContainer>
         <table {...getTableProps()}>
           <thead>
-            {headerGroups.map(headerGroup => {
-              const { key, ...otherHeaderGroupProps } = headerGroup.getHeaderGroupProps();
+            {headerGroups.map((headerGroup) => {
+              const { key, ...otherHeaderGroupProps } =
+                headerGroup.getHeaderGroupProps();
 
               return (
-                <AppsTableHeaderRow key={key} headerGroupProps={otherHeaderGroupProps} {...headerGroup} />
+                <AppsTableHeaderRow
+                  key={key}
+                  headerGroupProps={otherHeaderGroupProps}
+                  {...headerGroup}
+                />
               );
             })}
           </thead>
@@ -88,23 +96,25 @@ export function AppsTable({ columns, data }) {
           <AppsTableFooter footerGroups={footerGroups} />
         </table>
       </TableContainer>
-      <AppsTablePagination {...{
-        canNextPage,
-        canPreviousPage,
-        maxPageSize,
-        nextPage,
-        pageIndex,
-        pageOptions,
-        pageSize,
-        previousPage,
-        setPageSize,
-      }} />
+      <AppsTablePagination
+        {...{
+          canNextPage,
+          canPreviousPage,
+          maxPageSize,
+          nextPage,
+          pageIndex,
+          pageOptions,
+          pageSize,
+          previousPage,
+          setPageSize,
+        }}
+      />
     </Fragment>
   );
 }
 
-const scrollbarThumbColor = '#333333';
-const scrollbarBackgroundColor = '#555555';
+const scrollbarThumbColor = "#333333";
+const scrollbarBackgroundColor = "#555555";
 
 const TableContainer = styled.div`
   width: 100%;

@@ -1,12 +1,14 @@
-import styled from '@emotion/styled';
-import {PersonaState} from 'components/PersonaState';
+import styled from "@emotion/styled";
+import { PersonaState } from "components/PersonaState";
 
 export const FriendSteamLoginStatus = ({
-  personaState
-}: {personaState: number}): JSX.Element => (
+  personaState,
+}: {
+  personaState: number;
+}): JSX.Element => (
   <div>
     <StatusSectionHeader>This user is currently:</StatusSectionHeader>
-    <br/>
+    <br />
     <PersonaState state={personaState} />
   </div>
 );

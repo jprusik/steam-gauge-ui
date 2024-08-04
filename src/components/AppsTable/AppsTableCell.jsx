@@ -1,9 +1,7 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
-export const AppsTableCell = ({children, cellProps}) => (
-  <TableCell {...cellProps}>
-    {children}
-  </TableCell>
+export const AppsTableCell = ({ children, cellProps }) => (
+  <TableCell {...cellProps}>{children}</TableCell>
 );
 
 const TableCell = styled.td`

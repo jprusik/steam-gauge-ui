@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import { AppsTableHeaderCell } from './AppsTableHeaderCell';
+import styled from "@emotion/styled";
+import { AppsTableHeaderCell } from "./AppsTableHeaderCell";
 
 export const AppsTableHeaderRow = ({ headerProps, headers }) => {
   const { key: headerRowKey, ...otherHeaderGroupProps } = headerProps || {};
@@ -17,8 +17,9 @@ export const AppsTableHeaderRow = ({ headerProps, headers }) => {
               ...otherHeaderProps,
               ...column.getSortByToggleProps(),
             }}
-            {...column}>
-            {column.render('Header')}
+            {...column}
+          >
+            {column.render("Header")}
           </AppsTableHeaderCell>
         );
       })}

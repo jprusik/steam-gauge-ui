@@ -1,6 +1,6 @@
 export const getUserMultiplayerAppIds = (
   userApps = [],
-  multiplayerApps = []
+  multiplayerApps = [],
 ) => {
   // @TODO This is comically inefficient, especially considering the multiplayer game list is over 200k records long...
   return userApps
@@ -15,7 +15,7 @@ export const getCommonMultiplayerGames = ({
   friendApps = [],
 }) =>
   friendApps.filter(({ appid }) =>
-    getUserMultiplayerAppIds(userApps, multiplayerApps).includes(appid)
+    getUserMultiplayerAppIds(userApps, multiplayerApps).includes(appid),
   );
 
 export const groupMultiplayerAppsByAccountsOwnedByCount = ({
@@ -25,7 +25,7 @@ export const groupMultiplayerAppsByAccountsOwnedByCount = ({
 }) => {
   const userMultiplayerAppIds = getUserMultiplayerAppIds(
     userApps,
-    multiplayerApps
+    multiplayerApps,
   );
 
   return userFriends.reduce((appsOwnedCounts, { apps = [] }) => {
@@ -52,7 +52,7 @@ export const groupMultiplayerAppsByAccountsPlaytime = ({
 }) => {
   const userMultiplayerAppIds = getUserMultiplayerAppIds(
     userApps,
-    multiplayerApps
+    multiplayerApps,
   );
 
   return userFriends.reduce((appsOwnedPlaytime, { apps = [] }) => {

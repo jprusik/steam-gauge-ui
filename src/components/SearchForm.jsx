@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { resolveUsername } from '../actions';
-import { Loader } from './Loader';
-import './SearchForm.scss';
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { resolveUsername } from "../actions";
+import { Loader } from "./Loader";
+import "./SearchForm.scss";
 
 const isValidSteamIdFormat = (steamId) => !!steamId.match(/^\d+$/g);
 
 export const SearchForm = ({
-  searchType = 'account',
+  searchType = "account",
   hideLabel = false,
   hideInputAddon = false,
   onSearchSuccess = () => {
@@ -16,24 +16,24 @@ export const SearchForm = ({
 }) => {
   let history = useHistory();
 
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const [searchIsActive, setSearchIsActive] = useState(false);
   const [formErrors, setFormErrors] = useState([]);
 
   function loadNextPage(steamAccountId) {
     switch (searchType) {
-      case 'account':
+      case "account":
         return history.push(`/account/${steamAccountId}`);
-      case 'friends':
+      case "friends":
         return history.push(`/friends/${steamAccountId}`);
       default:
-        return history.push('/');
+        return history.push("/");
     }
   }
 
   async function getSteamId() {
     if (!searchInput) {
-      setFormErrors(['No search value was entered.']);
+      setFormErrors(["No search value was entered."]);
       return null;
     }
 
@@ -47,8 +47,8 @@ export const SearchForm = ({
       !returnedId &&
         setFormErrors([
           !steamGaugeSuccess
-            ? 'Steam Gauge encountered problems attempting this search.'
-            : 'Steam did not return any matches for the search value you entered. (ProTip: The username you use to log in to Steam is NOT the same as your public username/id)',
+            ? "Steam Gauge encountered problems attempting this search."
+            : "Steam did not return any matches for the search value you entered. (ProTip: The username you use to log in to Steam is NOT the same as your public username/id)",
         ]);
 
       return returnedId;
@@ -81,7 +81,8 @@ export const SearchForm = ({
     <form
       className="account-search-form"
       onSubmit={handleSubmit}
-      title={`${searchType} search`}>
+      title={`${searchType} search`}
+    >
       {!hideLabel && <label htmlFor="basic-url">Your Steam profile URL:</label>}
       <div className="input-group">
         {!hideInputAddon && (
@@ -103,7 +104,8 @@ export const SearchForm = ({
           <button
             className="btn btn-default search-submit"
             disabled={!searchInput || searchIsActive}
-            type="submit">
+            type="submit"
+          >
             {searchIsActive ? (
               <Loader loaderStyles="height: 20px;" />
             ) : (
@@ -114,9 +116,10 @@ export const SearchForm = ({
       </div>
       {formErrors.length > 0 && (
         <div
-          style={{ marginTop: '1em' }}
+          style={{ marginTop: "1em" }}
           className="alert alert-danger small"
-          role="alert">
+          role="alert"
+        >
           {formErrors.map((error) => (
             <span className="small" key={error}>
               {error}

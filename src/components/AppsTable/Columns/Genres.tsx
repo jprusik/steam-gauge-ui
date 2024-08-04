@@ -1,24 +1,24 @@
-import { useMemo } from 'react';
-import { Row } from 'react-table';
-import { appFields } from 'constants/appFields';
-import { uniqueValueCount } from 'utils/totals';
-import { CommaDelimitedUnorderedList } from 'components/CommaDelimitedUnorderedList';
+import { useMemo } from "react";
+import { Row } from "react-table";
+import { appFields } from "constants/appFields";
+import { uniqueValueCount } from "utils/totals";
+import { CommaDelimitedUnorderedList } from "components/CommaDelimitedUnorderedList";
 
 export const Genres = {
   accessor: appFields.GENRES,
-  Cell: ({row}: {row: Row}) => (
+  Cell: ({ row }: { row: Row }) => (
     <GenresCellValue value={row.values[appFields.GENRES]} />
   ),
   disableSortBy: true,
-  Footer: ({selectedFlatRows}: {selectedFlatRows: Row[]}) => {
+  Footer: ({ selectedFlatRows }: { selectedFlatRows: Row[] }) => {
     const itemList = useMemo(
       () => uniqueValueCount(selectedFlatRows, appFields.GENRES),
-      [selectedFlatRows]
+      [selectedFlatRows],
     );
 
     return `${itemList.length} unique genre(s)`;
   },
-  Header: 'Genres',
+  Header: "Genres",
   minWidth: 50,
 };
 
@@ -28,7 +28,8 @@ export const GenresCellValue = ({ value: genres = [] }) => (
       <li key={genre}>
         <a
           href={`https://store.steampowered.com/tags/en/${genre}`}
-          rel="noopener noreferrer">
+          rel="noopener noreferrer"
+        >
           {genre}
         </a>
       </li>

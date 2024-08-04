@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import { isNumber } from 'utils/math';
+import styled from "@emotion/styled";
+import { isNumber } from "utils/math";
 
 export function AppsTableFooter({ footerGroups }) {
   return (
@@ -18,8 +18,9 @@ export function AppsTableFooter({ footerGroups }) {
                 <AppsTableFooterCell
                   key={footerColumnKey}
                   {...otherFooterColumnProps}
-                  colSpan={isNumber(column.footerSpan) ? column.footerSpan : 1}>
-                  {column.render('Footer')}
+                  colSpan={isNumber(column.footerSpan) ? column.footerSpan : 1}
+                >
+                  {column.render("Footer")}
                 </AppsTableFooterCell>
               );
             })}
@@ -41,14 +42,14 @@ const TableFooterRow = styled.tr`
 `;
 
 const AppsTableFooterCell = styled.td`
-  display: ${({ colSpan }) => (colSpan === 0 ? 'none' : 'table-cell')};
+  display: ${({ colSpan }) => (colSpan === 0 ? "none" : "table-cell")};
   border-bottom: 1px solid rgba(81, 81, 81, 1);
   background-color: #74706f;
   padding: 8px;
   vertical-align: top;
   line-height: 1.43;
   letter-spacing: 0.01071em;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 10px;
   font-weight: bold;
 

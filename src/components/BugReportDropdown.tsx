@@ -1,26 +1,22 @@
-import {Dispatch} from 'react';
-import styled from '@emotion/styled';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import BugReportIcon from '@mui/icons-material/BugReport';
+import { Dispatch } from "react";
+import styled from "@emotion/styled";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import BugReportIcon from "@mui/icons-material/BugReport";
 
 type BugReportDropdownProps = {
   displayDetails: boolean;
   toggleDetails: Dispatch<boolean>;
-}
+};
 
 export const BugReportDropdown = ({
   displayDetails,
-  toggleDetails
+  toggleDetails,
 }: BugReportDropdownProps): JSX.Element => (
   <BugReportTextContainer onClick={() => toggleDetails(!displayDetails)}>
     <BugReportIcon />
     <div>Something off? Report bugs!</div>
-    {displayDetails ? (
-      <ArrowDropUpIcon />
-    ) : (
-      <ArrowDropDownIcon />
-    )}
+    {displayDetails ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
   </BugReportTextContainer>
 );
 

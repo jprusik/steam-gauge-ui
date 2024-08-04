@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { User, UserState } from 'types';
-import { checkLoginStatus } from 'actions';
-import { Body } from 'components/Body';
-import { Footer } from 'components/Footer';
-import { Header } from 'components/Header';
+import { useState } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { User, UserState } from "types";
+import { checkLoginStatus } from "actions";
+import { Body } from "components/Body";
+import { Footer } from "components/Footer";
+import { Header } from "components/Header";
 
 export function App(): JSX.Element {
   const [user, setUser] = useState<User | null>(null);
@@ -18,7 +18,7 @@ export function App(): JSX.Element {
 
       if (userAccountId) {
         setUser({
-          account_id: userAccountId
+          account_id: userAccountId,
         });
       }
 
