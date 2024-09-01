@@ -70,7 +70,7 @@ export function numberValueAverage(
           ? fieldName(row)
           : row.values[fieldName];
 
-      const parsedFieldValue = parseInt(fieldValue);
+      const parsedFieldValue = parseFloat(fieldValue);
 
       if (
         (parsedFieldValue && parsedFieldValue > -1) ||
