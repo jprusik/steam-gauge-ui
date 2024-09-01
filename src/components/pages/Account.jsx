@@ -26,7 +26,7 @@ const getAppsWithDetails = async (apps, searchedUserId) => {
   } = (await fetchAccountApps(searchedUserId, true)) || {};
 
   if (appsDataSuccess) {
-    apps.map((app) => {
+    return apps.map((app) => {
       const appExtraData = extraDataApps.find(
         // map Steam passthrough records <appid: number> to stored DB records <app_id: string>
         ({ app_id }) => app_id === `${app.appid}`,
