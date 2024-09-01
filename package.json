@@ -28,7 +28,7 @@
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost",
   "scripts": {
     "build:watch": "nodemon -x 'npm run build'",
     "build": "rimraf build && . .env && react-scripts build",
@@ -38,6 +38,7 @@
     "serve-build": "http-server ./build",
     "start": ". .env && react-scripts start",
     "test": ". .env && react-scripts test",
+    "eject": ". .env && react-scripts eject",
     "typecheck": "tsc"
   },
   "dependencies": {
