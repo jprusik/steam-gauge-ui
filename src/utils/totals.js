@@ -70,10 +70,15 @@ export function numberValueAverage(
           ? fieldName(row)
           : row.values[fieldName];
 
-      if ((fieldValue && fieldValue > -1) || includeImplicitValues) {
+      const parsedFieldValue = parseInt(fieldValue);
+
+      if (
+        (parsedFieldValue && parsedFieldValue > -1) ||
+        includeImplicitValues
+      ) {
         return {
           count: countAndSum.count + 1,
-          sum: countAndSum.sum + fieldValue,
+          sum: countAndSum.sum + parsedFieldValue,
         };
       }
 
