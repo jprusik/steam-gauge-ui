@@ -83,7 +83,7 @@ function get({
     credentials: "same-origin",
   };
 
-  const apiPath = `/api/1.0/${requestApi}`;
+  const apiPath = `/api/${requestApi}`;
 
   if (useCache) {
     const cachedResponse = checkRequestCache(apiPath);
